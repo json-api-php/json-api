@@ -1,4 +1,4 @@
-# Implementation of [JSON API](jsonapi.org) in PHP
+# Implementation of [JSON API](http://jsonapi.org) in PHP
 
 ## WARNING! Work in progress! The internal library API is not stable yet!
 This library is an attempt to express business rules of JSON API specification in a set of PHP 7 classes.
