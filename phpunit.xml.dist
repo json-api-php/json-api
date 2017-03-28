@@ -3,6 +3,7 @@
         bootstrap="test/bootstrap.php"
         stopOnFailure="false"
         verbose="true"
+        colors="true"
         syntaxCheck="true">
     <testsuites>
         <testsuite name="Main">
