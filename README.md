@@ -39,7 +39,7 @@ $author = Relationship::fromLinkage(
 $author->setLink('self', '/articles/1/relationships/author');
 $author->setLink('related', '/articles/1/author');
 
-$articles = new Resource('articles', '1');
+$articles = new ResourceObject('articles', '1');
 $articles->setRelationship('author', $author);
 $articles->setAttribute('title', 'Rails is Omakase');
 

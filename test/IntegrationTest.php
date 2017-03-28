@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
+
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\Document\Document;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
-use JsonApiPhp\JsonApi\Document\Resource\Resource;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
 use PHPUnit\Framework\TestCase;
 
@@ -37,7 +38,7 @@ class IntegrationTest extends TestCase
 }
 JSON;
 
-        $articles = new Resource('articles', '1');
+        $articles = new ResourceObject('articles', '1');
         $author = Relationship::fromLinkage(
             Linkage::fromSingleResourceId(
                 new ResourceId('people', '9')

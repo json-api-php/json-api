@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test\Document\Resource;
 
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
-use JsonApiPhp\JsonApi\Document\Resource\Resource;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
 use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
 use PHPUnit\Framework\TestCase;
@@ -71,7 +71,7 @@ class ResourceTest extends TestCase
                     ],
                 ],
                 (function () {
-                    $resource = new Resource('books', '42abc');
+                    $resource = new ResourceObject('books', '42abc');
                     $resource->setMeta('foo', 'bar');
                     $resource->setAttribute('attr', 'val');
                     $resource->setLink('self', 'http://localhost');
@@ -90,7 +90,7 @@ class ResourceTest extends TestCase
      */
     public function testAttributeCanNotHaveReservedNames(string $name)
     {
-        $r = new Resource('books', 'abc');
+        $r = new ResourceObject('books', 'abc');
         $r->setAttribute($name, 1);
     }
 
@@ -108,7 +108,7 @@ class ResourceTest extends TestCase
      */
     public function testCanNotSetRelationshipIfAttributeExists()
     {
-        $res = new Resource('books', '1');
+        $res = new ResourceObject('books', '1');
         $res->setAttribute('foo', 'bar');
         $res->setRelationship('foo', Relationship::fromMeta(['a' => 'b']));
     }
@@ -119,7 +119,7 @@ class ResourceTest extends TestCase
      */
     public function testCanNotSetAttributeIfRelationshipExists()
     {
-        $res = new Resource('books', '1');
+        $res = new ResourceObject('books', '1');
         $res->setRelationship('foo', Relationship::fromMeta(['a' => 'b']));
         $res->setAttribute('foo', 'bar');
     }

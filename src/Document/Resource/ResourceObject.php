@@ -8,7 +8,7 @@ use JsonApiPhp\JsonApi\Document\PrimaryDataItem;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 use JsonApiPhp\JsonApi\HasLinksAndMeta;
 
-final class Resource implements PrimaryData, PrimaryDataItem
+final class ResourceObject implements PrimaryData, PrimaryDataItem
 {
     use HasLinksAndMeta;
 
