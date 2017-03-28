@@ -1,0 +1,25 @@
+{
+  "name": "json-api-php/json-api",
+  "description": "jsonapi.org",
+  "type": "library",
+
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexey Karapetov",
+      "email": "karapetov@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.0",
+    "squizlabs/php_codesniffer": "2.8.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "JsonApiPhp\\JsonApi\\": "src/"
+    }
+  }
+}
