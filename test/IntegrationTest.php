@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\Document\Document;
