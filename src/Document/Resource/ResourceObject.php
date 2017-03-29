@@ -32,7 +32,7 @@ final class ResourceObject extends IdentifiableResource
         $this->type = $type;
     }
 
-    public function setAttribute(string $name, $value): void
+    public function setAttribute(string $name, $value)
     {
         if (in_array($name, ['id', 'type'])) {
             throw new \InvalidArgumentException('Invalid attribute name');
@@ -43,7 +43,7 @@ final class ResourceObject extends IdentifiableResource
         $this->attributes[$name] = $value;
     }
 
-    public function setRelationship(string $name, Relationship $relationship): void
+    public function setRelationship(string $name, Relationship $relationship)
     {
         if (isset($this->attributes[$name])) {
             throw new \LogicException("Field $name already exists in attributes");

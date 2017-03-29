@@ -28,14 +28,11 @@ final class Document implements \JsonSerializable
     private $data;
     private $errors;
     private $meta;
-    private $jsonapi;
+    private $json_api;
     private $links;
     private $included;
-    private $sparse = false;
+    private $is_sparse = false;
 
-    /**
-     * Use named constructors instead
-     */
     private function __construct()
     {
     }
@@ -68,14 +65,14 @@ final class Document implements \JsonSerializable
         return $doc;
     }
 
-    public function setApiVersion(string $version = self::DEFAULT_API_VERSION): void
+    public function setApiVersion(string $version = self::DEFAULT_API_VERSION)
     {
-        $this->jsonapi['version'] = $version;
+        $this->json_api['version'] = $version;
     }
 
-    public function setApiMeta(array $meta): void
+    public function setApiMeta(array $meta)
     {
-        $this->jsonapi['meta'] = $meta;
+        $this->json_api['meta'] = $meta;
     }
 
     public function setIncluded(IdentifiableResource ...$included)
@@ -83,27 +80,20 @@ final class Document implements \JsonSerializable
         $this->included = $included;
     }
 
-    public function setSparse()
+    public function setIsSparse()
     {
-        $this->sparse = true;
+        $this->is_sparse = true;
     }
 
     public function jsonSerialize()
     {
-        if ($this->included && !$this->sparse) {
-            foreach ($this->included as $resource) {
-                if ($this->hasLinkTo($resource)) {
-                    continue;
-                }
-                throw new \LogicException("Full linkage is required for $resource");
-            }
-        }
+        $this->enforceFullLinkage();
         return array_filter(
             [
                 'data' => $this->data,
                 'errors' => $this->errors,
                 'meta' => $this->meta,
-                'jsonapi' => $this->jsonapi,
+                'jsonapi' => $this->json_api,
                 'links' => $this->links,
                 'included' => $this->included,
             ],
@@ -113,12 +103,20 @@ final class Document implements \JsonSerializable
         );
     }
 
+    private function enforceFullLinkage()
+    {
+        if ($this->is_sparse || empty($this->included)) {
+            return;
+        }
+        foreach ($this->included as $resource) {
+            if (!$this->hasLinkTo($resource)) {
+                throw new \LogicException("Full linkage is required for $resource");
+            }
+        }
+    }
+
     private function hasLinkTo(IdentifiableResource $resource): bool
     {
-        if (!$this->data) {
-            return false;
-        }
-
         foreach ($this->toDataItems() as $my_resource) {
             if ($my_resource instanceof ResourceObject) {
                 if ($my_resource->hasRelationTo($resource)) {

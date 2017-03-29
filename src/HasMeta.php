@@ -16,12 +16,12 @@ namespace JsonApiPhp\JsonApi;
 
 trait HasMeta
 {
-    public function setMeta(string $key, $val): void
+    public function setMeta(string $key, $val)
     {
         $this->meta[$key] = $val;
     }
 
-    public function replaceMeta(array $meta): void
+    public function replaceMeta(array $meta)
     {
         $this->meta = null;
         foreach ($meta as $key => $value) {

@@ -22,7 +22,7 @@ abstract class IdentifiableResource implements \JsonSerializable
         return $this->type === $that->type && $this->id === $that->id;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return "$this->type:$this->id";
     }

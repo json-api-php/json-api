@@ -26,9 +26,7 @@ final class ResourceId extends IdentifiableResource
     {
         $this->type = $type;
         $this->id = $id;
-        foreach ($meta as $k => $v) {
-            $this->setMeta($k, $v);
-        }
+        $this->replaceMeta($meta);
     }
 
     public function jsonSerialize()
@@ -36,7 +34,7 @@ final class ResourceId extends IdentifiableResource
         return array_filter(
             [
                 'type' => $this->type,
-                'id'   => $this->id,
+                'id' => $this->id,
                 'meta' => $this->meta,
             ],
             function ($v) {
