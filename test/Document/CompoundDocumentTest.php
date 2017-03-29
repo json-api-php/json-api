@@ -35,12 +35,12 @@ class CompoundDocumentTest extends TestCase
         $basket = new ResourceObject('basket', '1');
         $basket->setRelationship(
             'fruits',
-                Relationship::fromLinkage(
-                    Linkage::fromManyResourceIds(
-                        $apple->toId(),
-                        $orange->toId()
-                    )
+            Relationship::fromLinkage(
+                Linkage::fromManyResourceIds(
+                    $apple->toId(),
+                    $orange->toId()
                 )
+            )
         );
         $doc = Document::fromResource($basket);
         $doc->setIncluded($apple, $orange);

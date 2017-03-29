@@ -61,7 +61,6 @@ final class Linkage implements \JsonSerializable
             }
         }
         return false;
-
     }
 
     public function jsonSerialize()

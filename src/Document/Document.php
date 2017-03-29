@@ -120,7 +120,6 @@ final class Document implements \JsonSerializable
         }
 
         foreach ($this->toDataItems() as $my_resource) {
-
             if ($my_resource instanceof ResourceObject) {
                 if ($my_resource->hasRelationTo($resource)) {
                     return true;
@@ -142,6 +141,5 @@ final class Document implements \JsonSerializable
         } else {
             return [];
         }
-
     }
 }

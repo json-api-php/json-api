@@ -51,7 +51,7 @@ final class ResourceObject extends IdentifiableResource
         $this->relationships[$name] = $relationship;
     }
 
-    public function HasRelationTo(IdentifiableResource $resource): bool
+    public function hasRelationTo(IdentifiableResource $resource): bool
     {
         if ($this->relationships) {
             /** @var Relationship $relationship */
@@ -73,12 +73,12 @@ final class ResourceObject extends IdentifiableResource
     {
         return array_filter(
             [
-                'type'          => $this->type,
-                'id'            => $this->id,
-                'attributes'    => $this->attributes,
+                'type' => $this->type,
+                'id' => $this->id,
+                'attributes' => $this->attributes,
                 'relationships' => $this->relationships,
-                'links'         => $this->links,
-                'meta'          => $this->meta,
+                'links' => $this->links,
+                'meta' => $this->meta,
             ],
             function ($v) {
                 return null !== $v;
