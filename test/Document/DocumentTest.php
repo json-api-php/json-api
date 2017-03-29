@@ -1,11 +1,22 @@
 <?php
+/**
+ *
+ *  * This file is part of JSON:API implementation for PHP.
+ *  *
+ *  * (c) Alexey Karapetov <karapetov@gmail.com>
+ *  *
+ *  * For the full copyright and license information, please view the LICENSE
+ *  * file that was distributed with this source code.
+ *  
+ */
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document;
 
 use JsonApiPhp\JsonApi\Document\Document;
 use JsonApiPhp\JsonApi\Document\Error;
-use JsonApiPhp\JsonApi\Document\Resource\NullData;
+use JsonApiPhp\JsonApi\Document\Resource\NullDataInterface;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
 use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
 use PHPUnit\Framework\TestCase;
@@ -135,6 +146,6 @@ class DocumentTest extends TestCase
 
     private function createNullDoc(): Document
     {
-        return Document::fromData(new NullData);
+        return Document::fromData(new NullDataInterface);
     }
 }

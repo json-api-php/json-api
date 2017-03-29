@@ -7,17 +7,13 @@
  *  *
  *  * For the full copyright and license information, please view the LICENSE
  *  * file that was distributed with this source code.
- *  
+ *
  */
 
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Test;
+namespace JsonApiPhp\JsonApi\Document;
 
-trait HasAssertEqualsAsJson
+interface PrimaryDataItemInterface extends \JsonSerializable
 {
-    public static function assertEqualsAsJson($expected, $actual, string $message = '')
-    {
-        self::assertEquals(json_encode($expected), json_encode($actual), $message);
-    }
 }
