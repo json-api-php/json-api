@@ -30,7 +30,7 @@ final class Linkage implements \JsonSerializable
         return new self;
     }
 
-    public static function emptyArrayLinkage()
+    public static function emptyArrayLinkage(): self
     {
         $linkage = new self;
         $linkage->data = [];
@@ -54,7 +54,7 @@ final class Linkage implements \JsonSerializable
     public function isLinkedTo(IdentifiableResource $resource): bool
     {
         if ($this->data) {
-            foreach ((array)$this->data as $my_resource) {
+            foreach ($this->data as $my_resource) {
                 if ($resource->isEqualTo($my_resource)) {
                     return true;
                 }

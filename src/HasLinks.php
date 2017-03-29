@@ -16,7 +16,7 @@ namespace JsonApiPhp\JsonApi;
 
 trait HasLinks
 {
-    public function setLink(string $name, string $value, array $meta = null): void
+    public function setLink(string $name, string $value, array $meta = null)
     {
         $this->links[$name] = $meta ? ['href' => $value, 'meta' => $meta] : $value;
     }

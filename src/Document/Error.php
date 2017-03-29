@@ -29,43 +29,42 @@ final class Error implements \JsonSerializable
     private $source;
     private $meta;
 
-    public function setId(string $id): void
+    public function setId(string $id)
     {
         $this->id = $id;
     }
 
-    public function setAboutLink(string $link): void
+    public function setAboutLink(string $link)
     {
         $this->links['about'] = $link;
     }
 
-    public function setStatus(string $status): void
+    public function setStatus(string $status)
     {
         $this->status = $status;
     }
 
-    public function setCode(string $code): void
+    public function setCode(string $code)
     {
         $this->code = $code;
     }
 
-
-    public function setTitle(string $title): void
+    public function setTitle(string $title)
     {
         $this->title = $title;
     }
 
-    public function setDetail(string $detail): void
+    public function setDetail(string $detail)
     {
         $this->detail = $detail;
     }
 
-    public function setSourcePointer(string $pointer): void
+    public function setSourcePointer(string $pointer)
     {
         $this->source['pointer'] = $pointer;
     }
 
-    public function setSourceParameter(string $parameter): void
+    public function setSourceParameter(string $parameter)
     {
         $this->source['parameter'] = $parameter;
     }
@@ -74,14 +73,14 @@ final class Error implements \JsonSerializable
     {
         return array_filter(
             [
-                'id'     => $this->id,
-                'links'  => $this->links,
+                'id' => $this->id,
+                'links' => $this->links,
                 'status' => $this->status,
-                'code'   => $this->code,
-                'title'  => $this->title,
+                'code' => $this->code,
+                'title' => $this->title,
                 'detail' => $this->detail,
                 'source' => $this->source,
-                'meta'   => $this->meta,
+                'meta' => $this->meta,
             ],
             function ($v) {
                 return null !== $v;
