@@ -12,12 +12,14 @@
 
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Test;
+namespace JsonApiPhp\JsonApi\Document\Resource;
 
-trait HasAssertEqualsAsJson
+use JsonApiPhp\JsonApi\Document\PrimaryDataInterface;
+
+final class NullDataInterface implements PrimaryDataInterface
 {
-    public static function assertEqualsAsJson($expected, $actual, string $message = '')
+    public function jsonSerialize()
     {
-        self::assertEquals(json_encode($expected), json_encode($actual), $message);
+        return null;
     }
 }

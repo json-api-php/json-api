@@ -1,4 +1,15 @@
 <?php
+/**
+ *
+ *  * This file is part of JSON:API implementation for PHP.
+ *  *
+ *  * (c) Alexey Karapetov <karapetov@gmail.com>
+ *  *
+ *  * For the full copyright and license information, please view the LICENSE
+ *  * file that was distributed with this source code.
+ *
+ */
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
@@ -39,14 +50,14 @@ final class Document implements \JsonSerializable
         return $doc;
     }
 
-    public static function fromData(PrimaryData $data): self
+    public static function fromData(PrimaryDataInterface $data): self
     {
         $doc = new self;
         $doc->data = $data;
         return $doc;
     }
 
-    public static function fromDataItems(PrimaryDataItem ...$data): self
+    public static function fromDataItems(PrimaryDataItemInterface ...$data): self
     {
         $doc = new self;
         $doc->data = $data;

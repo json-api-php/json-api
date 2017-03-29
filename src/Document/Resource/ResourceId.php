@@ -1,13 +1,24 @@
 <?php
+/**
+ *
+ *  * This file is part of JSON:API implementation for PHP.
+ *  *
+ *  * (c) Alexey Karapetov <karapetov@gmail.com>
+ *  *
+ *  * For the full copyright and license information, please view the LICENSE
+ *  * file that was distributed with this source code.
+ *
+ */
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
-use JsonApiPhp\JsonApi\Document\PrimaryData;
-use JsonApiPhp\JsonApi\Document\PrimaryDataItem;
+use JsonApiPhp\JsonApi\Document\PrimaryDataInterface;
+use JsonApiPhp\JsonApi\Document\PrimaryDataItemInterface;
 use JsonApiPhp\JsonApi\HasMeta;
 
-final class ResourceId implements PrimaryData, PrimaryDataItem
+final class ResourceId implements PrimaryDataInterface, PrimaryDataItemInterface
 {
     use HasMeta;
 

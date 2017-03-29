@@ -1,4 +1,15 @@
 <?php
+/**
+ *
+ *  * This file is part of JSON:API implementation for PHP.
+ *  *
+ *  * (c) Alexey Karapetov <karapetov@gmail.com>
+ *  *
+ *  * For the full copyright and license information, please view the LICENSE
+ *  * file that was distributed with this source code.
+ *
+ */
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource;
@@ -35,14 +46,14 @@ class ResourceTest extends TestCase
             [
                 [
                     'type' => 'books',
-                    'id'   => '42abc',
+                    'id' => '42abc',
                 ],
                 new ResourceId('books', '42abc'),
             ],
             [
                 [
                     'type' => 'books',
-                    'id'   => '42abc',
+                    'id' => '42abc',
                     'meta' => [
                         'foo' => 'bar',
                     ],
@@ -51,8 +62,8 @@ class ResourceTest extends TestCase
             ],
             [
                 [
-                    'type'       => 'books',
-                    'id'         => '42abc',
+                    'type' => 'books',
+                    'id' => '42abc',
                     'attributes' => [
                         'attr' => 'val',
                     ],
@@ -63,10 +74,10 @@ class ResourceTest extends TestCase
                             ],
                         ],
                     ],
-                    'links'         => [
+                    'links' => [
                         'self' => 'http://localhost',
                     ],
-                    'meta'       => [
+                    'meta' => [
                         'foo' => 'bar',
                     ],
                 ],
