@@ -46,14 +46,14 @@ class ResourceTest extends TestCase
             [
                 [
                     'type' => 'books',
-                    'id'   => '42abc',
+                    'id' => '42abc',
                 ],
                 new ResourceId('books', '42abc'),
             ],
             [
                 [
                     'type' => 'books',
-                    'id'   => '42abc',
+                    'id' => '42abc',
                     'meta' => [
                         'foo' => 'bar',
                     ],
@@ -62,8 +62,8 @@ class ResourceTest extends TestCase
             ],
             [
                 [
-                    'type'       => 'books',
-                    'id'         => '42abc',
+                    'type' => 'books',
+                    'id' => '42abc',
                     'attributes' => [
                         'attr' => 'val',
                     ],
@@ -74,10 +74,10 @@ class ResourceTest extends TestCase
                             ],
                         ],
                     ],
-                    'links'         => [
+                    'links' => [
                         'self' => 'http://localhost',
                     ],
-                    'meta'       => [
+                    'meta' => [
                         'foo' => 'bar',
                     ],
                 ],

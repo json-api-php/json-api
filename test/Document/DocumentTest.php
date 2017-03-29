@@ -7,7 +7,7 @@
  *  *
  *  * For the full copyright and license information, please view the LICENSE
  *  * file that was distributed with this source code.
- *  
+ *
  */
 
 declare(strict_types=1);
@@ -64,7 +64,7 @@ class DocumentTest extends TestCase
             [
                 'data' => [
                     'type' => 'books',
-                    'id'   => 'abc123',
+                    'id' => 'abc123',
                 ],
             ],
             Document::fromData(new ResourceId('books', 'abc123'))
@@ -85,11 +85,11 @@ class DocumentTest extends TestCase
                 'data' => [
                     [
                         'type' => 'books',
-                        'id'   => '12',
+                        'id' => '12',
                     ],
                     [
                         'type' => 'carrots',
-                        'id'   => '42',
+                        'id' => '42',
                     ],
                 ],
             ],
@@ -107,10 +107,10 @@ class DocumentTest extends TestCase
         $doc->setApiMeta(['a' => 'b']);
         $this->assertEqualsAsJson(
             [
-                'data'    => null,
+                'data' => null,
                 'jsonapi' => [
                     'version' => '1.2.3',
-                    'meta'    => ['a' => 'b'],
+                    'meta' => ['a' => 'b'],
                 ],
             ],
             $doc
@@ -124,9 +124,9 @@ class DocumentTest extends TestCase
         $doc->setLink('related', 'http://example.com/rel', ['a' => 'b']);
         $this->assertEqualsAsJson(
             [
-                'data'  => null,
+                'data' => null,
                 'links' => [
-                    'self'    => 'http://example.com/self',
+                    'self' => 'http://example.com/self',
                     'related' => [
                         'href' => 'http://example.com/rel',
                         'meta' => ['a' => 'b'],
