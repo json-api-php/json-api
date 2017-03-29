@@ -59,7 +59,7 @@ JSON;
         $author->setLink('related', '/articles/1/author');
         $articles->setRelationship('author', $author);
         $articles->setAttribute('title', 'Rails is Omakase');
-        $doc = Document::fromData($articles);
+        $doc = Document::fromResource($articles);
 
         $this->assertEquals(
             $json,

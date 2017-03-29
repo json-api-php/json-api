@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
 
+use JsonApiPhp\JsonApi\Document\Resource\IdentifiableResource;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\HasLinksAndMeta;
 
 final class Document implements \JsonSerializable
@@ -23,11 +25,13 @@ final class Document implements \JsonSerializable
 
     use HasLinksAndMeta;
 
-    protected $data;
-    protected $errors;
-    protected $meta;
-    protected $jsonapi;
-    protected $links;
+    private $data;
+    private $errors;
+    private $meta;
+    private $jsonapi;
+    private $links;
+    private $included;
+    private $sparse = false;
 
     /**
      * Use named constructors instead
@@ -50,14 +54,14 @@ final class Document implements \JsonSerializable
         return $doc;
     }
 
-    public static function fromData(PrimaryDataInterface $data): self
+    public static function fromResource(IdentifiableResource $data): self
     {
         $doc = new self;
         $doc->data = $data;
         return $doc;
     }
 
-    public static function fromDataItems(PrimaryDataItemInterface ...$data): self
+    public static function fromResources(IdentifiableResource ...$data): self
     {
         $doc = new self;
         $doc->data = $data;
@@ -74,19 +78,70 @@ final class Document implements \JsonSerializable
         $this->jsonapi['meta'] = $meta;
     }
 
+    public function setIncluded(IdentifiableResource ...$included)
+    {
+        $this->included = $included;
+    }
+
+    public function setSparse()
+    {
+        $this->sparse = true;
+    }
+
     public function jsonSerialize()
     {
+        if ($this->included && !$this->sparse) {
+            foreach ($this->included as $resource) {
+                if ($this->hasLinkTo($resource)) {
+                    continue;
+                }
+                throw new \LogicException("Full linkage is required for $resource");
+            }
+        }
         return array_filter(
             [
-                'data'    => $this->data,
-                'errors'  => $this->errors,
-                'meta'    => $this->meta,
+                'data' => $this->data,
+                'errors' => $this->errors,
+                'meta' => $this->meta,
                 'jsonapi' => $this->jsonapi,
-                'links'   => $this->links,
+                'links' => $this->links,
+                'included' => $this->included,
             ],
             function ($v) {
                 return null !== $v;
             }
         );
+    }
+
+    private function hasLinkTo(IdentifiableResource $resource): bool
+    {
+        if (!$this->data) {
+            return false;
+        }
+
+        foreach ($this->toDataItems() as $my_resource) {
+
+            if ($my_resource instanceof ResourceObject) {
+                if ($my_resource->hasRelationTo($resource)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @return IdentifiableResource[]
+     */
+    private function toDataItems(): array
+    {
+        if ($this->data instanceof IdentifiableResource) {
+            return [$this->data];
+        } elseif (is_array($this->data)) {
+            return $this->data;
+        } else {
+            return [];
+        }
+
     }
 }

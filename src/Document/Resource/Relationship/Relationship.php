@@ -14,13 +14,17 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource\Relationship;
 
+use JsonApiPhp\JsonApi\Document\Resource\IdentifiableResource;
 use JsonApiPhp\JsonApi\HasLinksAndMeta;
 
 final class Relationship implements \JsonSerializable
 {
     use HasLinksAndMeta;
 
-    private $data;
+    /**
+     * @var Linkage
+     */
+    private $linkage = null;
     private $meta;
     private $links;
 
@@ -49,18 +53,23 @@ final class Relationship implements \JsonSerializable
         return $r;
     }
 
-    public static function fromLinkage(Linkage $data): self
+    public static function fromLinkage(Linkage $linkage): self
     {
         $r = new self;
-        $r->data = $data;
+        $r->linkage = $linkage;
         return $r;
+    }
+
+    public function isLinkedTo(IdentifiableResource $resource): bool
+    {
+        return ($this->linkage && $this->linkage->isLinkedTo($resource));
     }
 
     public function jsonSerialize()
     {
         return array_filter(
             [
-                'data'  => $this->data,
+                'data'  => $this->linkage,
                 'links' => $this->links,
                 'meta'  => $this->meta,
             ],

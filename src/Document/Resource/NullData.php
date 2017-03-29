@@ -14,10 +14,13 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
-use JsonApiPhp\JsonApi\Document\PrimaryDataInterface;
-
-final class NullDataInterface implements PrimaryDataInterface
+final class NullData extends IdentifiableResource
 {
+    public function isEqualTo(IdentifiableResource $that): bool
+    {
+        return false;
+    }
+
     public function jsonSerialize()
     {
         return null;
