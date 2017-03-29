@@ -14,16 +14,12 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
-use JsonApiPhp\JsonApi\Document\PrimaryDataInterface;
-use JsonApiPhp\JsonApi\Document\PrimaryDataItemInterface;
 use JsonApiPhp\JsonApi\HasMeta;
 
-final class ResourceId implements PrimaryDataInterface, PrimaryDataItemInterface
+final class ResourceId extends IdentifiableResource
 {
     use HasMeta;
 
-    private $type;
-    private $id;
     private $meta;
 
     public function __construct(string $type, string $id = null, array $meta = [])

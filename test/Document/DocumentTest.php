@@ -16,7 +16,7 @@ namespace JsonApiPhp\JsonApi\Test\Document;
 
 use JsonApiPhp\JsonApi\Document\Document;
 use JsonApiPhp\JsonApi\Document\Error;
-use JsonApiPhp\JsonApi\Document\Resource\NullDataInterface;
+use JsonApiPhp\JsonApi\Document\Resource\NullData;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
 use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
 use PHPUnit\Framework\TestCase;
@@ -67,7 +67,7 @@ class DocumentTest extends TestCase
                     'id' => 'abc123',
                 ],
             ],
-            Document::fromData(new ResourceId('books', 'abc123'))
+            Document::fromResource(new ResourceId('books', 'abc123'))
         );
     }
 
@@ -77,7 +77,7 @@ class DocumentTest extends TestCase
             [
                 'data' => [],
             ],
-            Document::fromDataItems()
+            Document::fromResources()
         );
 
         $this->assertEqualsAsJson(
@@ -93,7 +93,7 @@ class DocumentTest extends TestCase
                     ],
                 ],
             ],
-            Document::fromDataItems(
+            Document::fromResources(
                 new ResourceId('books', '12'),
                 new ResourceId('carrots', '42')
             )
@@ -146,6 +146,6 @@ class DocumentTest extends TestCase
 
     private function createNullDoc(): Document
     {
-        return Document::fromData(new NullDataInterface);
+        return Document::fromResource(new NullData);
     }
 }

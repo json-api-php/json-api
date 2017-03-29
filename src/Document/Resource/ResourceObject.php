@@ -14,17 +14,13 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
-use JsonApiPhp\JsonApi\Document\PrimaryDataInterface;
-use JsonApiPhp\JsonApi\Document\PrimaryDataItemInterface;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 use JsonApiPhp\JsonApi\HasLinksAndMeta;
 
-final class ResourceObject implements PrimaryDataInterface, PrimaryDataItemInterface
+final class ResourceObject extends IdentifiableResource
 {
     use HasLinksAndMeta;
 
-    private $id;
-    private $type;
     private $meta;
     private $links;
     private $attributes;
@@ -55,16 +51,34 @@ final class ResourceObject implements PrimaryDataInterface, PrimaryDataItemInter
         $this->relationships[$name] = $relationship;
     }
 
+    public function hasRelationTo(IdentifiableResource $resource): bool
+    {
+        if ($this->relationships) {
+            /** @var Relationship $relationship */
+            foreach ($this->relationships as $relationship) {
+                if ($relationship->isLinkedTo($resource)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public function toId(): ResourceId
+    {
+        return new ResourceId($this->type, $this->id);
+    }
+
     public function jsonSerialize()
     {
         return array_filter(
             [
-                'type'          => $this->type,
-                'id'            => $this->id,
-                'attributes'    => $this->attributes,
+                'type' => $this->type,
+                'id' => $this->id,
+                'attributes' => $this->attributes,
                 'relationships' => $this->relationships,
-                'links'         => $this->links,
-                'meta'          => $this->meta,
+                'links' => $this->links,
+                'meta' => $this->meta,
             ],
             function ($v) {
                 return null !== $v;

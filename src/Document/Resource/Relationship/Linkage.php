@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource\Relationship;
 
+use JsonApiPhp\JsonApi\Document\Resource\IdentifiableResource;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
 
 final class Linkage implements \JsonSerializable
@@ -48,6 +49,18 @@ final class Linkage implements \JsonSerializable
         $linkage = new self;
         $linkage->data = $data;
         return $linkage;
+    }
+
+    public function isLinkedTo(IdentifiableResource $resource): bool
+    {
+        if ($this->data) {
+            foreach ((array)$this->data as $my_resource) {
+                if ($resource->isEqualTo($my_resource)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public function jsonSerialize()
