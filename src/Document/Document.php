@@ -80,7 +80,7 @@ final class Document implements \JsonSerializable
         $this->included = $included;
     }
 
-    public function setIsSparse()
+    public function markSparse()
     {
         $this->is_sparse = true;
     }
@@ -108,36 +108,34 @@ final class Document implements \JsonSerializable
         if ($this->is_sparse || empty($this->included)) {
             return;
         }
-        foreach ($this->included as $resource) {
-            if (!$this->hasLinkTo($resource)) {
-                throw new \LogicException("Full linkage is required for $resource");
+        foreach ($this->included as $included_resource) {
+            if (!$this->hasLinkTo($included_resource)) {
+                throw new \LogicException("Full linkage is required for $included_resource");
             }
         }
     }
 
     private function hasLinkTo(IdentifiableResource $resource): bool
     {
-        foreach ($this->toDataItems() as $my_resource) {
-            if ($my_resource instanceof ResourceObject) {
-                if ($my_resource->hasRelationTo($resource)) {
-                    return true;
-                }
+        /** @var ResourceObject $my_resource */
+        foreach ($this->toResourceObjects() as $my_resource) {
+            if ($my_resource->hasRelationTo($resource)) {
+                return true;
             }
         }
         return false;
     }
 
-    /**
-     * @return IdentifiableResource[]
-     */
-    private function toDataItems(): array
+    private function toResourceObjects(): \Generator
     {
-        if ($this->data instanceof IdentifiableResource) {
-            return [$this->data];
+        if ($this->data instanceof ResourceObject) {
+            yield $this->data;
         } elseif (is_array($this->data)) {
-            return $this->data;
-        } else {
-            return [];
+            foreach ($this->data as $datum) {
+                if ($datum instanceof ResourceObject) {
+                    yield $datum;
+                }
+            }
         }
     }
 }

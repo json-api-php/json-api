@@ -54,6 +54,9 @@ final class Linkage implements \JsonSerializable
     public function isLinkedTo(IdentifiableResource $resource): bool
     {
         if ($this->data) {
+            if ($this->data instanceof ResourceId) {
+                return $this->data->isEqualTo($resource);
+            }
             foreach ($this->data as $my_resource) {
                 if ($resource->isEqualTo($my_resource)) {
                     return true;
