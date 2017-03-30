@@ -25,4 +25,9 @@ final class NullData extends IdentifiableResource
     {
         return null;
     }
+
+    public function identifies(IdentifiableResource $that): bool
+    {
+        return $this->isEqualTo($that);
+    }
 }

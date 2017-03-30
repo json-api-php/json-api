@@ -117,24 +117,22 @@ final class Document implements \JsonSerializable
 
     private function hasLinkTo(IdentifiableResource $resource): bool
     {
-        /** @var ResourceObject $my_resource */
-        foreach ($this->toResourceObjects() as $my_resource) {
-            if ($my_resource->hasRelationTo($resource)) {
+        /** @var IdentifiableResource $my_resource */
+        foreach ($this->toResources() as $my_resource) {
+            if ($my_resource->identifies($resource)) {
                 return true;
             }
         }
         return false;
     }
 
-    private function toResourceObjects(): \Generator
+    private function toResources(): \Generator
     {
-        if ($this->data instanceof ResourceObject) {
+        if ($this->data instanceof IdentifiableResource) {
             yield $this->data;
         } elseif (is_array($this->data)) {
             foreach ($this->data as $datum) {
-                if ($datum instanceof ResourceObject) {
-                    yield $datum;
-                }
+                yield $datum;
             }
         }
     }

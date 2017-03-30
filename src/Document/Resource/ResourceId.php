@@ -42,4 +42,9 @@ final class ResourceId extends IdentifiableResource
             }
         );
     }
+
+    public function identifies(IdentifiableResource $that): bool
+    {
+        return $this->isEqualTo($that);
+    }
 }

@@ -17,6 +17,13 @@ abstract class IdentifiableResource implements \JsonSerializable
     protected $id;
     protected $type;
 
+    /**
+     * Does this resource identify
+     * @param IdentifiableResource $that
+     * @return bool
+     */
+    abstract public function identifies(IdentifiableResource $that): bool;
+
     public function isEqualTo(IdentifiableResource $that): bool
     {
         return $this->type === $that->type && $this->id === $that->id;
