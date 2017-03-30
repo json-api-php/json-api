@@ -51,19 +51,6 @@ final class ResourceObject extends IdentifiableResource
         $this->relationships[$name] = $relationship;
     }
 
-    public function hasRelationTo(IdentifiableResource $resource): bool
-    {
-        if ($this->relationships) {
-            /** @var Relationship $relationship */
-            foreach ($this->relationships as $relationship) {
-                if ($relationship->isLinkedTo($resource)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public function toId(): ResourceId
     {
         return new ResourceId($this->type, $this->id);
@@ -84,5 +71,23 @@ final class ResourceObject extends IdentifiableResource
                 return null !== $v;
             }
         );
+    }
+
+    public function identifies(IdentifiableResource $that): bool
+    {
+        return $this->isEqualTo($that) || $this->isRelatedTo($that);
+    }
+
+    private function isRelatedTo(IdentifiableResource $resource): bool
+    {
+        if ($this->relationships) {
+            /** @var Relationship $relationship */
+            foreach ($this->relationships as $relationship) {
+                if ($relationship->hasLinkageTo($resource)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

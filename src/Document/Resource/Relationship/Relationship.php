@@ -60,7 +60,7 @@ final class Relationship implements \JsonSerializable
         return $r;
     }
 
-    public function isLinkedTo(IdentifiableResource $resource): bool
+    public function hasLinkageTo(IdentifiableResource $resource): bool
     {
         return ($this->linkage && $this->linkage->isLinkedTo($resource));
     }
