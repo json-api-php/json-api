@@ -102,7 +102,7 @@ class CompoundDocumentTest extends TestCase
     public function testFullLinkageIsNotRequiredIfSparse()
     {
         $doc = Document::fromResource(new NullData);
-        $doc->setIsSparse();
+        $doc->markSparse();
         $doc->setIncluded(
             new ResourceObject('apples', '1')
         );
