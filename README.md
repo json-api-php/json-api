@@ -47,7 +47,8 @@ echo json_encode(Document::fromData($articles), JSON_PRETTY_PRINT);
 ```
 
 Please refer to [the tests](./test) for the full API documentation:
-* [Document](./test/Document/DocumentTest.php)
+* [Documents](./test/Document/DocumentTest.php)
+    * [Compound Documents](./test/Document/CompoundDocumentTest.php)
 * [Errors](./test/Document/ErrorTest.php)
 * [Resources](./test/Document/Resource/ResourceTest.php)
 * [Relationships](./test/Document/Resource/Relationship/RelationshipTest.php)
