@@ -113,6 +113,28 @@ class CompoundDocumentTest extends TestCase
         $this->assertCanBeBuilt($doc);
     }
 
+    public function testIncludedResourceMayBeIdentifiedByAnotherIncludedResource()
+    {
+        /**
+         * BasketID identifies included BasketObject
+         * BasketObject identifies included AppleObject
+         */
+        $apple = new ResourceObject('apples', '1');
+        $apple->setAttribute('color', 'red');
+        $basket = new ResourceObject('basket', '1');
+        $basket->setRelationship(
+            'fruits',
+            Relationship::fromLinkage(
+                Linkage::fromManyResourceIds(
+                    $apple->toId()
+                )
+            )
+        );
+        $doc = Document::fromResource($basket->toId());
+        $doc->setIncluded($apple, $basket);
+        $this->assertCanBeBuilt($doc);
+    }
+
     private function convertToArray($object): array
     {
         return json_decode(json_encode($object), true);
