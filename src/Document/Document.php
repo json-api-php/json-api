@@ -109,9 +109,17 @@ final class Document implements \JsonSerializable
             return;
         }
         foreach ($this->included as $included_resource) {
-            if (!$this->hasLinkTo($included_resource)) {
-                throw new \LogicException("Full linkage is required for $included_resource");
+            if ($this->hasLinkTo($included_resource)) {
+                continue;
             }
+            /** @var IdentifiableResource $another_included_resource */
+            foreach ($this->included as $another_included_resource) {
+                if ($another_included_resource !== $included_resource
+                    && $another_included_resource->identifies($included_resource)) {
+                    continue 2;
+                }
+            }
+            throw new \LogicException("Full linkage is required for $included_resource");
         }
     }
 
