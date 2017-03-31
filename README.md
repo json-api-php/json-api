@@ -1,7 +1,6 @@
 # Implementation of [JSON API](http://jsonapi.org) in PHP
-
-## WARNING! Work in progress! The internal library API is not stable yet!
 This library is an attempt to express business rules of JSON API specification in a set of PHP 7 classes.
+While it is still in `0.*` versions, there are no major changes expected in the internal API.
 
 A simple example to illustrate the general idea. This (slightly modified) JSON representation from
 [the documentation](http://jsonapi.org/format/#document-resource-objects)
