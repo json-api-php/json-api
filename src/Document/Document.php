@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Document;
 
 use JsonApiPhp\JsonApi\Document\Resource\IdentifiableResource;
-use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\HasLinksAndMeta;
 
 final class Document implements \JsonSerializable
@@ -107,10 +106,22 @@ final class Document implements \JsonSerializable
             return;
         }
         foreach ($this->included as $included_resource) {
-            if (!$this->hasLinkTo($included_resource)) {
-                throw new \LogicException("Full linkage is required for $included_resource");
+            if ($this->hasLinkTo($included_resource) || $this->anotherIncludedResourceIdentifies($included_resource)) {
+                continue;
+            }
+            throw new \LogicException("Full linkage is required for $included_resource");
+        }
+    }
+
+    private function anotherIncludedResourceIdentifies(IdentifiableResource $resource): bool
+    {
+        /** @var IdentifiableResource $included_resource */
+        foreach ($this->included as $included_resource) {
+            if ($included_resource !== $resource && $included_resource->identifies($resource)) {
+                return true;
             }
         }
+        return false;
     }
 
     private function hasLinkTo(IdentifiableResource $resource): bool

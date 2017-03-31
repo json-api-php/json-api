@@ -38,7 +38,7 @@ use PHPUnit\Framework\TestCase;
  * Note: Full linkage ensures that included resources are related to either the primary data
  * (which could be resource objects or resource identifier objects) or to each other.
  *
- * @link http://jsonapi.org/format/#document-compound-documents
+ * @see http://jsonapi.org/format/#document-compound-documents
  */
 class CompoundDocumentTest extends TestCase
 {
@@ -108,6 +108,28 @@ class CompoundDocumentTest extends TestCase
         $apple->setAttribute('color', 'red');
         $doc = Document::fromResource($apple->toId());
         $doc->setIncluded($apple);
+        $this->assertCanBeBuilt($doc);
+    }
+
+    public function testIncludedResourceMayBeIdentifiedByAnotherIncludedResource()
+    {
+        /**
+         * BasketID identifies included BasketObject
+         * BasketObject identifies included AppleObject
+         */
+        $apple = new ResourceObject('apples', '1');
+        $apple->setAttribute('color', 'red');
+        $basket = new ResourceObject('basket', '1');
+        $basket->setRelationship(
+            'fruits',
+            Relationship::fromLinkage(
+                Linkage::fromManyResourceIds(
+                    $apple->toId()
+                )
+            )
+        );
+        $doc = Document::fromResource($basket->toId());
+        $doc->setIncluded($apple, $basket);
         $this->assertCanBeBuilt($doc);
     }
 

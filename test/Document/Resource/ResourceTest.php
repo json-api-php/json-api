@@ -18,6 +18,11 @@ use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
 use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Resource Objects
+ *
+ * @see http://jsonapi.org/format/#document-resource-objects
+ */
 class ResourceTest extends TestCase
 {
     use HasAssertEqualsAsJson;
@@ -109,27 +114,5 @@ class ResourceTest extends TestCase
             ['id'],
             ['type'],
         ];
-    }
-
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Field foo already exists in attributes
-     */
-    public function testCanNotSetRelationshipIfAttributeExists()
-    {
-        $res = new ResourceObject('books', '1');
-        $res->setAttribute('foo', 'bar');
-        $res->setRelationship('foo', Relationship::fromMeta(['a' => 'b']));
-    }
-
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Field foo already exists in relationships
-     */
-    public function testCanNotSetAttributeIfRelationshipExists()
-    {
-        $res = new ResourceObject('books', '1');
-        $res->setRelationship('foo', Relationship::fromMeta(['a' => 'b']));
-        $res->setAttribute('foo', 'bar');
     }
 }
