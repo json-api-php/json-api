@@ -109,18 +109,22 @@ final class Document implements \JsonSerializable
             return;
         }
         foreach ($this->included as $included_resource) {
-            if ($this->hasLinkTo($included_resource)) {
+            if ($this->hasLinkTo($included_resource) || $this->anotherIncludedResourceIdentifies($included_resource)) {
                 continue;
-            }
-            /** @var IdentifiableResource $another_included_resource */
-            foreach ($this->included as $another_included_resource) {
-                if ($another_included_resource !== $included_resource
-                    && $another_included_resource->identifies($included_resource)) {
-                    continue 2;
-                }
             }
             throw new \LogicException("Full linkage is required for $included_resource");
         }
+    }
+
+    private function anotherIncludedResourceIdentifies(IdentifiableResource $resource): bool
+    {
+        /** @var IdentifiableResource $included_resource */
+        foreach ($this->included as $included_resource) {
+            if ($included_resource !== $resource && $included_resource->identifies($resource)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private function hasLinkTo(IdentifiableResource $resource): bool
