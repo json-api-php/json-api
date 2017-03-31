@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource\Relationship;
 
-use JsonApiPhp\JsonApi\Document\Resource\NullData;
+use JsonApiPhp\JsonApi\Document\Resource\NullResource;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
 use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
@@ -88,14 +88,14 @@ class LinkageTest extends TestCase
     {
         $apple = new ResourceId('apples', '1');
         $this->assertFalse(Linkage::nullLinkage()->isLinkedTo($apple));
-        $this->assertFalse(Linkage::nullLinkage()->isLinkedTo(new NullData));
+        $this->assertFalse(Linkage::nullLinkage()->isLinkedTo(new NullResource));
     }
 
     public function testEmptyArrayLinkageIsLinkedToNothing()
     {
         $apple = new ResourceId('apples', '1');
         $this->assertFalse(Linkage::emptyArrayLinkage()->isLinkedTo($apple));
-        $this->assertFalse(Linkage::emptyArrayLinkage()->isLinkedTo(new NullData));
+        $this->assertFalse(Linkage::emptyArrayLinkage()->isLinkedTo(new NullResource));
     }
 
     public function testSingleLinkageIsLinkedOnlyToItself()

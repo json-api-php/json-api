@@ -14,7 +14,7 @@ namespace JsonApiPhp\JsonApi\Test\Document;
 
 use JsonApiPhp\JsonApi\Document\Document;
 use JsonApiPhp\JsonApi\Document\Error;
-use JsonApiPhp\JsonApi\Document\Resource\NullData;
+use JsonApiPhp\JsonApi\Document\Resource\NullResource;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
 use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
 use PHPUnit\Framework\TestCase;
@@ -144,6 +144,6 @@ class DocumentTest extends TestCase
 
     private function createNullDoc(): Document
     {
-        return Document::fromResource(new NullData);
+        return Document::fromResource(new NullResource);
     }
 }
