@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
-final class NullData extends IdentifiableResource
+final class NullResource extends IdentifiableResource
 {
     public function isEqualTo(IdentifiableResource $that): bool
     {

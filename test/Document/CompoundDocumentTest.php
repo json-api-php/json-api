@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test\Document;
 
 use JsonApiPhp\JsonApi\Document\Document;
-use JsonApiPhp\JsonApi\Document\Resource\NullData;
+use JsonApiPhp\JsonApi\Document\Resource\NullResource;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
@@ -89,14 +89,14 @@ class CompoundDocumentTest extends TestCase
      */
     public function testFullLinkageIsRequired()
     {
-        $doc = Document::fromResource(new NullData);
+        $doc = Document::fromResource(new NullResource);
         $doc->setIncluded(new ResourceObject('apples', '1'));
         json_encode($doc);
     }
 
     public function testFullLinkageIsNotRequiredIfSparse()
     {
-        $doc = Document::fromResource(new NullData);
+        $doc = Document::fromResource(new NullResource);
         $doc->markSparse();
         $doc->setIncluded(new ResourceObject('apples', '1'));
         $this->assertCanBeBuilt($doc);
