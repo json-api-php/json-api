@@ -18,9 +18,26 @@ use JsonApiPhp\JsonApi\Document\Resource\NullData;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
 use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
-use phpDocumentor\Reflection\DocBlock\Tags\Link;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Resource Linkage
+ *
+ * Resource linkage in a compound document allows a client to link together
+ * all of the included resource objects without having to GET any URLs via links.
+ *
+ * Resource linkage MUST be represented as one of the following:
+ * - null for empty to-one relationships.
+ * - an empty array ([]) for empty to-many relationships.
+ * - a single resource identifier object for non-empty to-one relationships.
+ * - an array of resource identifier objects for non-empty to-many relationships.
+ *
+ * @see http://jsonapi.org/format/#document-resource-object-linkage
+ * @see LinkageTest::testCanCreateNullLinkage()
+ * @see LinkageTest::testCanCreateEmptyArrayLinkage()
+ * @see LinkageTest::testCanCreateFromSingleResourceId()
+ * @see LinkageTest::testCanCreateFromArrayOfResourceIds()
+ */
 class LinkageTest extends TestCase
 {
     use HasAssertEqualsAsJson;
@@ -41,7 +58,7 @@ class LinkageTest extends TestCase
         );
     }
 
-    public function testCanCreateFromResourceId()
+    public function testCanCreateFromSingleResourceId()
     {
         $this->assertEqualsAsJson(
             [
@@ -52,7 +69,7 @@ class LinkageTest extends TestCase
         );
     }
 
-    public function testCanCreateFromResourceIds()
+    public function testCanCreateFromArrayOfResourceIds()
     {
         $this->assertEqualsAsJson(
             [

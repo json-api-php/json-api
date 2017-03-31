@@ -40,7 +40,7 @@ use PHPUnit\Framework\TestCase;
  * Note: Full linkage ensures that included resources are related to either the primary data
  * (which could be resource objects or resource identifier objects) or to each other.
  *
- * @link http://jsonapi.org/format/#document-compound-documents
+ * @see http://jsonapi.org/format/#document-compound-documents
  */
 class CompoundDocumentTest extends TestCase
 {
