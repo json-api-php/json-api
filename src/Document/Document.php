@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Document;
 
 use JsonApiPhp\JsonApi\Document\Resource\IdentifiableResource;
-use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\HasLinksAndMeta;
 
 final class Document implements \JsonSerializable
