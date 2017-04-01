@@ -8,5 +8,5 @@ before_script:
   - composer install
 
 script:
-  - vendor/bin/phpcs
+  - vendor/bin/php-cs-fixer fix -v --dry-run
   - phpunit --coverage-clover build/logs/clover.xml

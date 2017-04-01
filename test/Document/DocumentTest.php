@@ -7,22 +7,27 @@
  *  For the full copyright and license information, please view the LICENSE
  *  file that was distributed with this source code.
  */
-
 declare(strict_types=1);
+
+/*
+ * This file is part of JSON:API implementation for PHP.
+ *
+ * (c) Alexey Karapetov <karapetov@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace JsonApiPhp\JsonApi\Test\Document;
 
 use JsonApiPhp\JsonApi\Document\Document;
 use JsonApiPhp\JsonApi\Document\Error;
 use JsonApiPhp\JsonApi\Document\Resource\NullResource;
-use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
-use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
-use PHPUnit\Framework\TestCase;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
+use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
-class DocumentTest extends TestCase
+class DocumentTest extends BaseTestCase
 {
-    use HasAssertEqualsAsJson;
-
     public function testCanCreateFromMeta()
     {
         $this->assertEqualsAsJson(
@@ -65,7 +70,7 @@ class DocumentTest extends TestCase
                     'id' => 'abc123',
                 ],
             ],
-            Document::fromResource(new ResourceId('books', 'abc123'))
+            Document::fromResource(new ResourceIdentifier('books', 'abc123'))
         );
     }
 
@@ -92,8 +97,8 @@ class DocumentTest extends TestCase
                 ],
             ],
             Document::fromResources(
-                new ResourceId('books', '12'),
-                new ResourceId('carrots', '42')
+                new ResourceIdentifier('books', '12'),
+                new ResourceIdentifier('carrots', '42')
             )
         );
     }

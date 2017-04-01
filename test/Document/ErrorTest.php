@@ -7,18 +7,23 @@
  *  For the full copyright and license information, please view the LICENSE
  *  file that was distributed with this source code.
  */
-
 declare(strict_types=1);
+
+/*
+ * This file is part of JSON:API implementation for PHP.
+ *
+ * (c) Alexey Karapetov <karapetov@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace JsonApiPhp\JsonApi\Document;
 
-use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
-use PHPUnit\Framework\TestCase;
+use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
-class ErrorTest extends TestCase
+class ErrorTest extends BaseTestCase
 {
-    use HasAssertEqualsAsJson;
-
     public function testEmptyErrorIsEmptyObject()
     {
         $this->assertEquals('{}', json_encode(new Error()));
@@ -52,8 +57,8 @@ class ErrorTest extends TestCase
                     'parameter' => 'test_param',
                 ],
                 'meta' => [
-                    'foo' => 'bar'
-                ]
+                    'foo' => 'bar',
+                ],
             ],
             $e
         );

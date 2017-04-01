@@ -9,7 +9,7 @@
   -->
 
 <phpunit
-        bootstrap="test/bootstrap.php"
+        bootstrap="vendor/autoload.php"
         stopOnFailure="false"
         verbose="true"
         colors="true"

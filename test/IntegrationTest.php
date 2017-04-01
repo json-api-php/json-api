@@ -7,16 +7,24 @@
  *  For the full copyright and license information, please view the LICENSE
  *  file that was distributed with this source code.
  */
-
 declare(strict_types=1);
+
+/*
+ * This file is part of JSON:API implementation for PHP.
+ *
+ * (c) Alexey Karapetov <karapetov@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\Document\Document;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
-use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
 use PHPUnit\Framework\TestCase;
 
 class IntegrationTest extends TestCase
@@ -49,8 +57,8 @@ JSON;
 
         $articles = new ResourceObject('articles', '1');
         $author = Relationship::fromLinkage(
-            Linkage::fromSingleResourceId(
-                new ResourceId('people', '9')
+            Linkage::fromSingleIdentifier(
+                new ResourceIdentifier('people', '9')
             )
         );
         $author->setLink('self', '/articles/1/relationships/author');
