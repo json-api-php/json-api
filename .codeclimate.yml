@@ -6,3 +6,5 @@ engines:
         enabled: false
       Naming/ShortVariable:
         enabled: false
+      CleanCode/StaticAccess:
+        enabled: false
