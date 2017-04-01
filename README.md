@@ -31,19 +31,18 @@ A simple example to illustrate the general idea. This (slightly modified) JSON r
 ```
 can be built with the following php code:
 ```php
+$articles = new ResourceObject('articles', '1');
 $author = Relationship::fromLinkage(
-    Linkage::fromSingleResourceId(
-        new ResourceId('people', '9')
+    Linkage::fromSingleIdentifier(
+        new ResourceIdentifier('people', '9')
     )
 );
 $author->setLink('self', '/articles/1/relationships/author');
 $author->setLink('related', '/articles/1/author');
-
-$articles = new ResourceObject('articles', '1');
 $articles->setRelationship('author', $author);
 $articles->setAttribute('title', 'Rails is Omakase');
-
-echo json_encode(Document::fromData($articles), JSON_PRETTY_PRINT);
+$doc = Document::fromResource($articles);
+echo json_encode($doc, JSON_PRETTY_PRINT);
 ```
 
 Please refer to [the tests](./test) for the full API documentation:
