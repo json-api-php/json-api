@@ -7,15 +7,22 @@
  *  For the full copyright and license information, please view the LICENSE
  *  file that was distributed with this source code.
  */
-
 declare(strict_types=1);
+
+/*
+ * This file is part of JSON:API implementation for PHP.
+ *
+ * (c) Alexey Karapetov <karapetov@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource\Relationship;
 
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
-use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
-use PHPUnit\Framework\TestCase;
+use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
 /**
  * Relationships
@@ -47,17 +54,15 @@ use PHPUnit\Framework\TestCase;
  * @see RelationshipTest::testCanCreateFromLinkage())
  * @see RelationshipTest::testCanCreateFromMeta())
  */
-class RelationshipTest extends TestCase
+class RelationshipTest extends BaseTestCase
 {
-    use HasAssertEqualsAsJson;
-
     public function testCanCreateFromSelfLink()
     {
         $this->assertEqualsAsJson(
             [
                 'links' => [
                     'self' => 'http://localhost',
-                ]
+                ],
             ],
             Relationship::fromSelfLink('http://localhost')
         );
@@ -69,7 +74,7 @@ class RelationshipTest extends TestCase
             [
                 'links' => [
                     'related' => 'http://localhost',
-                ]
+                ],
             ],
             Relationship::fromRelatedLink('http://localhost')
         );
@@ -91,7 +96,7 @@ class RelationshipTest extends TestCase
             [
                 'meta' => [
                     'a' => 'b',
-                ]
+                ],
             ],
             Relationship::fromMeta(['a' => 'b'])
         );

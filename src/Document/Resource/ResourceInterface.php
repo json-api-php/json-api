@@ -12,20 +12,9 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
-final class NullResource implements ResourceInterface
+interface ResourceInterface extends \JsonSerializable
 {
-    public function jsonSerialize()
-    {
-        return null;
-    }
+    public function identifies(ResourceInterface $resource): bool;
 
-    public function identifies(ResourceInterface $resource): bool
-    {
-        return false;
-    }
-
-    public function __toString(): string
-    {
-        return 'null';
-    }
+    public function __toString(): string;
 }

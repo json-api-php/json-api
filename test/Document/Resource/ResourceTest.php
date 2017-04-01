@@ -7,26 +7,31 @@
  *  For the full copyright and license information, please view the LICENSE
  *  file that was distributed with this source code.
  */
-
 declare(strict_types=1);
+
+/*
+ * This file is part of JSON:API implementation for PHP.
+ *
+ * (c) Alexey Karapetov <karapetov@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource;
 
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
-use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
-use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
-use PHPUnit\Framework\TestCase;
+use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
 /**
  * Resource Objects
  *
  * @see http://jsonapi.org/format/#document-resource-objects
  */
-class ResourceTest extends TestCase
+class ResourceTest extends BaseTestCase
 {
-    use HasAssertEqualsAsJson;
-
     /**
      * @param array $expected
      * @param mixed $data
@@ -44,14 +49,14 @@ class ResourceTest extends TestCase
                 [
                     'type' => 'books',
                 ],
-                new ResourceId('books'),
+                new ResourceIdentifier('books'),
             ],
             [
                 [
                     'type' => 'books',
                     'id' => '42abc',
                 ],
-                new ResourceId('books', '42abc'),
+                new ResourceIdentifier('books', '42abc'),
             ],
             [
                 [
@@ -61,7 +66,7 @@ class ResourceTest extends TestCase
                         'foo' => 'bar',
                     ],
                 ],
-                new ResourceId('books', '42abc', ['foo' => 'bar']),
+                new ResourceIdentifier('books', '42abc', ['foo' => 'bar']),
             ],
             [
                 [
@@ -91,7 +96,7 @@ class ResourceTest extends TestCase
                     $resource->setLink('self', 'http://localhost');
                     $resource->setRelationship('author', Relationship::fromMeta(['a' => 'b']));
                     return $resource;
-                })()
+                })(),
             ],
         ];
     }

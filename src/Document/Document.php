@@ -1,32 +1,31 @@
 <?php
-/**
- *  This file is part of JSON:API implementation for PHP.
- *
- *  (c) Alexey Karapetov <karapetov@gmail.com>
- *
- *  For the full copyright and license information, please view the LICENSE
- *  file that was distributed with this source code.
- */
-
 declare(strict_types=1);
+
+/*
+ * This file is part of JSON:API implementation for PHP.
+ *
+ * (c) Alexey Karapetov <karapetov@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace JsonApiPhp\JsonApi\Document;
 
-use JsonApiPhp\JsonApi\Document\Resource\IdentifiableResource;
-use JsonApiPhp\JsonApi\HasLinksAndMeta;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceInterface;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 
 final class Document implements \JsonSerializable
 {
     const MEDIA_TYPE = 'application/vnd.api+json';
     const DEFAULT_API_VERSION = '1.0';
 
-    use HasLinksAndMeta;
+    use LinksTrait;
+    use MetaTrait;
 
     private $data;
     private $errors;
-    private $meta;
-    private $json_api;
-    private $links;
+    private $api;
     private $included;
     private $is_sparse = false;
 
@@ -48,14 +47,14 @@ final class Document implements \JsonSerializable
         return $doc;
     }
 
-    public static function fromResource(IdentifiableResource $data): self
+    public static function fromResource(ResourceInterface $data): self
     {
         $doc = new self;
         $doc->data = $data;
         return $doc;
     }
 
-    public static function fromResources(IdentifiableResource ...$data): self
+    public static function fromResources(ResourceInterface ...$data): self
     {
         $doc = new self;
         $doc->data = $data;
@@ -64,15 +63,15 @@ final class Document implements \JsonSerializable
 
     public function setApiVersion(string $version = self::DEFAULT_API_VERSION)
     {
-        $this->json_api['version'] = $version;
+        $this->api['version'] = $version;
     }
 
     public function setApiMeta(array $meta)
     {
-        $this->json_api['meta'] = $meta;
+        $this->api['meta'] = $meta;
     }
 
-    public function setIncluded(IdentifiableResource ...$included)
+    public function setIncluded(ResourceObject ...$included)
     {
         $this->included = $included;
     }
@@ -90,7 +89,7 @@ final class Document implements \JsonSerializable
                 'data' => $this->data,
                 'errors' => $this->errors,
                 'meta' => $this->meta,
-                'jsonapi' => $this->json_api,
+                'jsonapi' => $this->api,
                 'links' => $this->links,
                 'included' => $this->included,
             ],
@@ -113,9 +112,9 @@ final class Document implements \JsonSerializable
         }
     }
 
-    private function anotherIncludedResourceIdentifies(IdentifiableResource $resource): bool
+    private function anotherIncludedResourceIdentifies(ResourceObject $resource): bool
     {
-        /** @var IdentifiableResource $included_resource */
+        /** @var ResourceObject $included_resource */
         foreach ($this->included as $included_resource) {
             if ($included_resource !== $resource && $included_resource->identifies($resource)) {
                 return true;
@@ -124,9 +123,9 @@ final class Document implements \JsonSerializable
         return false;
     }
 
-    private function hasLinkTo(IdentifiableResource $resource): bool
+    private function hasLinkTo(ResourceObject $resource): bool
     {
-        /** @var IdentifiableResource $my_resource */
+        /** @var ResourceInterface $my_resource */
         foreach ($this->toResources() as $my_resource) {
             if ($my_resource->identifies($resource)) {
                 return true;
@@ -135,9 +134,9 @@ final class Document implements \JsonSerializable
         return false;
     }
 
-    private function toResources(): \Generator
+    private function toResources(): \Iterator
     {
-        if ($this->data instanceof IdentifiableResource) {
+        if ($this->data instanceof ResourceInterface) {
             yield $this->data;
         } elseif (is_array($this->data)) {
             foreach ($this->data as $datum) {

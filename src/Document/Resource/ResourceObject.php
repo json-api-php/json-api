@@ -1,34 +1,26 @@
 <?php
-/**
- *  This file is part of JSON:API implementation for PHP.
- *
- *  (c) Alexey Karapetov <karapetov@gmail.com>
- *
- *  For the full copyright and license information, please view the LICENSE
- *  file that was distributed with this source code.
- */
-
 declare(strict_types=1);
+
+/*
+ * This file is part of JSON:API implementation for PHP.
+ *
+ * (c) Alexey Karapetov <karapetov@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
+use JsonApiPhp\JsonApi\Document\LinksTrait;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
-use JsonApiPhp\JsonApi\HasLinksAndMeta;
 
-final class ResourceObject extends IdentifiableResource
+final class ResourceObject extends ResourceIdentifier
 {
-    use HasLinksAndMeta;
+    use LinksTrait;
 
-    private $meta;
-    private $links;
     private $attributes;
     private $relationships;
-
-    public function __construct(string $type, string $id = null)
-    {
-        $this->id = $id;
-        $this->type = $type;
-    }
 
     public function setAttribute(string $name, $value)
     {
@@ -49,9 +41,9 @@ final class ResourceObject extends IdentifiableResource
         $this->relationships[$name] = $relationship;
     }
 
-    public function toId(): ResourceId
+    public function toId(): ResourceIdentifier
     {
-        return new ResourceId($this->type, $this->id);
+        return new ResourceIdentifier($this->type, $this->id);
     }
 
     public function jsonSerialize()
@@ -71,12 +63,7 @@ final class ResourceObject extends IdentifiableResource
         );
     }
 
-    public function identifies(IdentifiableResource $that): bool
-    {
-        return $this->isEqualTo($that) || $this->isRelatedTo($that);
-    }
-
-    private function isRelatedTo(IdentifiableResource $resource): bool
+    public function identifies(ResourceInterface $resource): bool
     {
         if ($this->relationships) {
             /** @var Relationship $relationship */

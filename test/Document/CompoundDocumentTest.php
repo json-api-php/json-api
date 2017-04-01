@@ -7,8 +7,16 @@
  *  For the full copyright and license information, please view the LICENSE
  *  file that was distributed with this source code.
  */
-
 declare(strict_types=1);
+
+/*
+ * This file is part of JSON:API implementation for PHP.
+ *
+ * (c) Alexey Karapetov <karapetov@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace JsonApiPhp\JsonApi\Test\Document;
 
@@ -17,8 +25,7 @@ use JsonApiPhp\JsonApi\Document\Resource\NullResource;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
-use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
-use PHPUnit\Framework\TestCase;
+use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
 /**
  * To reduce the number of HTTP requests, servers MAY allow responses that include related resources
@@ -40,10 +47,8 @@ use PHPUnit\Framework\TestCase;
  *
  * @see http://jsonapi.org/format/#document-compound-documents
  */
-class CompoundDocumentTest extends TestCase
+class CompoundDocumentTest extends BaseTestCase
 {
-    use HasAssertEqualsAsJson;
-
     public function testIncludedResourcesRepresentedAsArray()
     {
         $apple = new ResourceObject('apples', '1');
@@ -54,7 +59,7 @@ class CompoundDocumentTest extends TestCase
         $basket->setRelationship(
             'fruits',
             Relationship::fromLinkage(
-                Linkage::fromManyResourceIds(
+                Linkage::fromManyIdentifiers(
                     $apple->toId(),
                     $orange->toId()
                 )
@@ -123,7 +128,7 @@ class CompoundDocumentTest extends TestCase
         $basket->setRelationship(
             'fruits',
             Relationship::fromLinkage(
-                Linkage::fromManyResourceIds(
+                Linkage::fromManyIdentifiers(
                     $apple->toId()
                 )
             )
