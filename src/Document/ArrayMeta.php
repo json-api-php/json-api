@@ -11,12 +11,10 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
 
-trait MetaTrait
+class ArrayMeta extends Meta
 {
-    protected $meta;
-
-    public function setMeta(Meta $meta)
+    public function __construct(array $array)
     {
-        $this->meta = $meta;
+        parent::__construct((object) $array);
     }
 }

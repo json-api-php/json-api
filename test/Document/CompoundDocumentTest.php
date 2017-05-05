@@ -9,18 +9,9 @@
  */
 declare(strict_types=1);
 
-/*
- * This file is part of JSON:API implementation for PHP.
- *
- * (c) Alexey Karapetov <karapetov@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace JsonApiPhp\JsonApi\Test\Document;
 
-use JsonApiPhp\JsonApi\Document\Document;
+use JsonApiPhp\JsonApi\Document;
 use JsonApiPhp\JsonApi\Document\Resource\NullResource;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
@@ -65,7 +56,7 @@ class CompoundDocumentTest extends BaseTestCase
                 )
             )
         );
-        $doc = Document::fromResource($basket);
+        $doc = \JsonApiPhp\JsonApi\Document::fromResource($basket);
         $doc->setIncluded($apple, $orange);
         $this->assertEquals(
             [
@@ -101,7 +92,7 @@ class CompoundDocumentTest extends BaseTestCase
 
     public function testFullLinkageIsNotRequiredIfSparse()
     {
-        $doc = Document::fromResource(new NullResource);
+        $doc = \JsonApiPhp\JsonApi\Document::fromResource(new NullResource);
         $doc->markSparse();
         $doc->setIncluded(new ResourceObject('apples', '1'));
         $this->assertCanBeBuilt($doc);
@@ -133,7 +124,7 @@ class CompoundDocumentTest extends BaseTestCase
                 )
             )
         );
-        $doc = Document::fromResource($basket->toId());
+        $doc = \JsonApiPhp\JsonApi\Document::fromResource($basket->toId());
         $doc->setIncluded($apple, $basket);
         $this->assertCanBeBuilt($doc);
     }

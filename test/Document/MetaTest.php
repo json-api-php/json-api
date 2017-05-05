@@ -9,14 +9,15 @@
  */
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Document;
+namespace JsonApiPhp\JsonApi\Test\Document;
 
-trait MetaTrait
+use JsonApiPhp\JsonApi\Document\ArrayMeta;
+use PHPUnit\Framework\TestCase;
+
+class MetaTest extends TestCase
 {
-    protected $meta;
-
-    public function setMeta(Meta $meta)
+    public function testPhpArraysAreConvertedToObjects()
     {
-        $this->meta = $meta;
+        $this->assertEquals('{"0":"foo"}', json_encode(new ArrayMeta(['foo'])));
     }
 }

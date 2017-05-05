@@ -1,25 +1,17 @@
 <?php
 /**
- *  * This file is part of JSON:API implementation for PHP.
- *  *
- *  * (c) Alexey Karapetov <karapetov@gmail.com>
- *  *
- *  * For the full copyright and license information, please view the LICENSE
- *  * file that was distributed with this source code.
+ *  This file is part of JSON:API implementation for PHP.
+ *
+ *  (c) Alexey Karapetov <karapetov@gmail.com>
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-/*
- * This file is part of JSON:API implementation for PHP.
- *
- * (c) Alexey Karapetov <karapetov@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace JsonApiPhp\JsonApi\Test\Document\Resource;
 
+use JsonApiPhp\JsonApi\Document\ArrayMeta;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use PHPUnit\Framework\TestCase;
@@ -45,7 +37,7 @@ class ResourceFireldsTest extends TestCase
     {
         $res = new ResourceObject('books', '1');
         $res->setAttribute('foo', 'bar');
-        $res->setRelationship('foo', Relationship::fromMeta(['a' => 'b']));
+        $res->setRelationship('foo', Relationship::fromMeta(new ArrayMeta(['a' => 'b'])));
     }
 
     /**
@@ -55,7 +47,7 @@ class ResourceFireldsTest extends TestCase
     public function testCanNotSetAttributeIfRelationshipExists()
     {
         $res = new ResourceObject('books', '1');
-        $res->setRelationship('foo', Relationship::fromMeta(['a' => 'b']));
+        $res->setRelationship('foo', Relationship::fromMeta(new ArrayMeta(['a' => 'b'])));
         $res->setAttribute('foo', 'bar');
     }
 }
