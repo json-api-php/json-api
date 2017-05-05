@@ -1,18 +1,18 @@
 <?php
-declare(strict_types=1);
-
-/*
- * This file is part of JSON:API implementation for PHP.
+/**
+ *  This file is part of JSON:API implementation for PHP.
  *
- * (c) Alexey Karapetov <karapetov@gmail.com>
+ *  (c) Alexey Karapetov <karapetov@gmail.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
  */
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource\Relationship;
 
 use JsonApiPhp\JsonApi\Document\LinksTrait;
+use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\MetaTrait;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceInterface;
 
@@ -30,10 +30,10 @@ final class Relationship implements \JsonSerializable
     {
     }
 
-    public static function fromMeta(array $meta): self
+    public static function fromMeta(Meta $meta): self
     {
         $r = new self;
-        $r->replaceMeta($meta);
+        $r->setMeta($meta);
         return $r;
     }
 

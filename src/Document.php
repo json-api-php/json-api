@@ -1,21 +1,24 @@
 <?php
+/**
+ *  This file is part of JSON:API implementation for PHP.
+ *
+ *  (c) Alexey Karapetov <karapetov@gmail.com>
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ */
 declare(strict_types=1);
 
-/*
- * This file is part of JSON:API implementation for PHP.
- *
- * (c) Alexey Karapetov <karapetov@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+namespace JsonApiPhp\JsonApi;
 
-namespace JsonApiPhp\JsonApi\Document;
-
+use JsonApiPhp\JsonApi\Document\Error;
+use JsonApiPhp\JsonApi\Document\LinksTrait;
+use JsonApiPhp\JsonApi\Document\Meta;
+use JsonApiPhp\JsonApi\Document\MetaTrait;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceInterface;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 
-final class Document implements \JsonSerializable
+class Document implements \JsonSerializable
 {
     const MEDIA_TYPE = 'application/vnd.api+json';
     const DEFAULT_API_VERSION = '1.0';
@@ -33,10 +36,10 @@ final class Document implements \JsonSerializable
     {
     }
 
-    public static function fromMeta(array $meta): self
+    public static function fromMeta(Meta $meta): self
     {
         $doc = new self;
-        $doc->replaceMeta($meta);
+        $doc->setMeta($meta);
         return $doc;
     }
 

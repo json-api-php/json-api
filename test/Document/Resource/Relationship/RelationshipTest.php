@@ -9,17 +9,10 @@
  */
 declare(strict_types=1);
 
-/*
- * This file is part of JSON:API implementation for PHP.
- *
- * (c) Alexey Karapetov <karapetov@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace JsonApiPhp\JsonApi\Test\Document\Resource\Relationship;
 
+use JsonApiPhp\JsonApi\Document\ArrayMeta;
+use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
@@ -98,7 +91,7 @@ class RelationshipTest extends BaseTestCase
                     'a' => 'b',
                 ],
             ],
-            Relationship::fromMeta(['a' => 'b'])
+            Relationship::fromMeta(new ArrayMeta(['a' => 'b']))
         );
     }
 }

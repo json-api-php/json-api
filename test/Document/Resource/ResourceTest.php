@@ -9,17 +9,9 @@
  */
 declare(strict_types=1);
 
-/*
- * This file is part of JSON:API implementation for PHP.
- *
- * (c) Alexey Karapetov <karapetov@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace JsonApiPhp\JsonApi\Test\Document\Resource;
 
+use JsonApiPhp\JsonApi\Document\ArrayMeta;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
@@ -66,7 +58,7 @@ class ResourceTest extends BaseTestCase
                         'foo' => 'bar',
                     ],
                 ],
-                new ResourceIdentifier('books', '42abc', ['foo' => 'bar']),
+                new ResourceIdentifier('books', '42abc', new ArrayMeta(['foo' => 'bar'])),
             ],
             [
                 [
@@ -91,10 +83,10 @@ class ResourceTest extends BaseTestCase
                 ],
                 (function () {
                     $resource = new ResourceObject('books', '42abc');
-                    $resource->setMeta('foo', 'bar');
+                    $resource->setMeta(new ArrayMeta(['foo' => 'bar']));
                     $resource->setAttribute('attr', 'val');
                     $resource->setLink('self', 'http://localhost');
-                    $resource->setRelationship('author', Relationship::fromMeta(['a' => 'b']));
+                    $resource->setRelationship('author', Relationship::fromMeta(new ArrayMeta(['a' => 'b'])));
                     return $resource;
                 })(),
             ],

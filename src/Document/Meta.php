@@ -11,12 +11,17 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
 
-trait MetaTrait
+class Meta implements \JsonSerializable
 {
-    protected $meta;
+    private $data;
 
-    public function setMeta(Meta $meta)
+    public function __construct(\stdClass $data)
     {
-        $this->meta = $meta;
+        $this->data = $data;
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->data;
     }
 }

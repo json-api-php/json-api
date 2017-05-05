@@ -1,17 +1,17 @@
 <?php
-declare(strict_types=1);
-
-/*
- * This file is part of JSON:API implementation for PHP.
+/**
+ *  This file is part of JSON:API implementation for PHP.
  *
- * (c) Alexey Karapetov <karapetov@gmail.com>
+ *  (c) Alexey Karapetov <karapetov@gmail.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
  */
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
+use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\MetaTrait;
 
 class ResourceIdentifier implements ResourceInterface
@@ -21,11 +21,13 @@ class ResourceIdentifier implements ResourceInterface
     protected $type;
     protected $id;
 
-    public function __construct(string $type, string $id = null, array $meta = [])
+    public function __construct(string $type, string $id = null, Meta $meta = null)
     {
         $this->type = $type;
         $this->id = $id;
-        $this->replaceMeta($meta);
+        if ($meta) {
+            $this->setMeta($meta);
+        }
     }
 
     public function jsonSerialize()
