@@ -14,7 +14,7 @@ namespace JsonApiPhp\JsonApi\Document\Resource;
 use JsonApiPhp\JsonApi\Document\LinksTrait;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 
-final class ResourceObject extends ResourceIdentifier
+class ResourceObject extends ResourceIdentifier
 {
     use LinksTrait;
 
