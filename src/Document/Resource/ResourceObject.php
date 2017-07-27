@@ -79,7 +79,7 @@ class ResourceObject extends ResourceIdentifier
     }
 
     /**
-     * @param string $name
+     * @param  string $name
      * @return bool
      */
     private function isReservedName(string $name): bool
