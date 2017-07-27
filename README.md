@@ -50,3 +50,6 @@ Please refer to [the tests](./test) for the full API documentation:
 * [Resources](./test/Document/Resource/ResourceTest.php)
 * [Relationships](./test/Document/Resource/Relationship/RelationshipTest.php)
 * [Linkage](./test/Document/Resource/Relationship/LinkageTest.php)
+
+## Installation
+With [composer](https://getcomposer.org/): `json-api-php/json-api`.
