@@ -1,6 +1,6 @@
 {
   "name": "json-api-php/json-api",
-  "description": "jsonapi.org",
+  "description": "An attempt to express JSON API specs (jsonapi.org) in object-oriented way as a set of PHP 7 classes",
   "type": "library",
 
   "license": "MIT",
