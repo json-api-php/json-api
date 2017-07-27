@@ -27,7 +27,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @see http://jsonapi.org/format/#document-resource-object-fields
  */
-class ResourceFireldsTest extends TestCase
+class ResourceFieldsTest extends TestCase
 {
     /**
      * @expectedException \LogicException
@@ -49,5 +49,37 @@ class ResourceFireldsTest extends TestCase
         $res = new ResourceObject('books', '1');
         $res->setRelationship('foo', Relationship::fromMeta(new ArrayMeta(['a' => 'b'])));
         $res->setAttribute('foo', 'bar');
+    }
+
+    /**
+     * @param string $name
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Can not use a reserved name
+     * @dataProvider             invalidAttributeNames
+     */
+    public function testAttributeCanNotHaveReservedNames(string $name)
+    {
+        $res = new ResourceObject('books', 'abc');
+        $res->setAttribute($name, 1);
+    }
+
+    /**
+     * @param string $name
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Can not use a reserved name
+     * @dataProvider             invalidAttributeNames
+     */
+    public function testRelationshipCanNotHaveReservedNames(string $name)
+    {
+        $res = new ResourceObject('books', 'abc');
+        $res->setRelationship($name, Relationship::fromMeta(new ArrayMeta(['a' => 'b'])));
+    }
+
+    public function invalidAttributeNames(): array
+    {
+        return [
+            ['id'],
+            ['type'],
+        ];
     }
 }

@@ -92,24 +92,4 @@ class ResourceTest extends BaseTestCase
             ],
         ];
     }
-
-    /**
-     * @param string $name
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid attribute name
-     * @dataProvider             invalidAttributeNames
-     */
-    public function testAttributeCanNotHaveReservedNames(string $name)
-    {
-        $r = new ResourceObject('books', 'abc');
-        $r->setAttribute($name, 1);
-    }
-
-    public function invalidAttributeNames(): array
-    {
-        return [
-            ['id'],
-            ['type'],
-        ];
-    }
 }

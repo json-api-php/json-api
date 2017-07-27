@@ -23,8 +23,8 @@ class ResourceObject extends ResourceIdentifier
 
     public function setAttribute(string $name, $value)
     {
-        if (in_array($name, ['id', 'type'])) {
-            throw new \InvalidArgumentException('Invalid attribute name');
+        if ($this->isReservedName($name)) {
+            throw new \InvalidArgumentException('Can not use a reserved name');
         }
         if (isset($this->relationships[$name])) {
             throw new \LogicException("Field $name already exists in relationships");
@@ -34,6 +34,9 @@ class ResourceObject extends ResourceIdentifier
 
     public function setRelationship(string $name, Relationship $relationship)
     {
+        if ($this->isReservedName($name)) {
+            throw new \InvalidArgumentException('Can not use a reserved name');
+        }
         if (isset($this->attributes[$name])) {
             throw new \LogicException("Field $name already exists in attributes");
         }
@@ -73,5 +76,14 @@ class ResourceObject extends ResourceIdentifier
             }
         }
         return false;
+    }
+
+    /**
+     * @param  string $name
+     * @return bool
+     */
+    private function isReservedName(string $name): bool
+    {
+        return in_array($name, ['id', 'type']);
     }
 }
