@@ -11,13 +11,13 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document;
 
-use JsonApiPhp\JsonApi\Document\ArrayMeta;
+use JsonApiPhp\JsonApi\Document\Meta;
 use PHPUnit\Framework\TestCase;
 
 class MetaTest extends TestCase
 {
     public function testPhpArraysAreConvertedToObjects()
     {
-        $this->assertEquals('{"0":"foo"}', json_encode(new ArrayMeta(['foo'])));
+        $this->assertEquals('{"0":"foo"}', json_encode(Meta::fromArray(['foo'])));
     }
 }

@@ -20,6 +20,11 @@ class Meta implements \JsonSerializable
         $this->data = $data;
     }
 
+    public static function fromArray(array $array): self
+    {
+        return new self((object) $array);
+    }
+
     public function jsonSerialize()
     {
         return $this->data;

@@ -37,8 +37,8 @@ class IntegrationTest extends TestCase
                     "id": "9"
                 },
                 "links": {
-                    "self": "\/articles\/1\/relationships\/author",
-                    "related": "\/articles\/1\/author"
+                    "self": "/articles/1/relationships/author",
+                    "related": "/articles/1/author"
                 }
             }
         }
@@ -60,7 +60,7 @@ JSON;
 
         $this->assertEquals(
             $json,
-            json_encode($doc, JSON_PRETTY_PRINT)
+            json_encode($doc, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
         );
     }
 }
