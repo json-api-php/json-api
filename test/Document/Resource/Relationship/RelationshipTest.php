@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource\Relationship;
 
-use JsonApiPhp\JsonApi\Document\ArrayMeta;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
@@ -91,7 +90,7 @@ class RelationshipTest extends BaseTestCase
                     'a' => 'b',
                 ],
             ],
-            Relationship::fromMeta(new ArrayMeta(['a' => 'b']))
+            Relationship::fromMeta(Meta::fromArray(['a' => 'b']))
         );
     }
 }

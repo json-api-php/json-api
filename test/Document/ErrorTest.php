@@ -31,7 +31,7 @@ class ErrorTest extends BaseTestCase
         $e->setDetail('Nothing is found');
         $e->setSourcePointer('/data');
         $e->setSourceParameter('test_param');
-        $e->setMeta(new ArrayMeta(['foo' => 'bar']));
+        $e->setMeta(Meta::fromArray(['foo' => 'bar']));
 
         $this->assertEqualsAsJson(
             [

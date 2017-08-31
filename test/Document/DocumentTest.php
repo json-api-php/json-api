@@ -12,8 +12,8 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test\Document;
 
 use JsonApiPhp\JsonApi\Document;
-use JsonApiPhp\JsonApi\Document\ArrayMeta;
 use JsonApiPhp\JsonApi\Document\Error;
+use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\NullResource;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
@@ -24,7 +24,7 @@ class DocumentTest extends BaseTestCase
     {
         $this->assertEqualsAsJson(
             ['meta' => ['foo' => 'bar']],
-            Document::fromMeta(new ArrayMeta(['foo' => 'bar']))
+            Document::fromMeta(Meta::fromArray(['foo' => 'bar']))
         );
     }
 

@@ -10,7 +10,9 @@
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
-
+/**
+ * @deprecated to be removed in 1.0, use Meta::fromArray()
+ */
 class ArrayMeta extends Meta
 {
     public function __construct(array $array)
