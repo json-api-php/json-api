@@ -1,7 +1,7 @@
 # Implementation of [JSON API](http://jsonapi.org) in PHP 7
 This library is an attempt to express business rules of JSON API specification in a set of PHP 7 classes.
 
-A simple example to illustrate the general idea. This (slightly modified) JSON representation from
+A simple example to illustrate the general idea. This JSON representation from
 [the documentation](http://jsonapi.org/format/#document-resource-objects)
 
 ```json
@@ -19,8 +19,8 @@ A simple example to illustrate the general idea. This (slightly modified) JSON r
                     "id": "9"
                 },
                 "links": {
-                    "self": "\/articles\/1\/relationships\/author",
-                    "related": "\/articles\/1\/author"
+                    "self": "/articles/1/relationships/author",
+                    "related": "/articles/1/author"
                 }
             }
         }
@@ -29,6 +29,7 @@ A simple example to illustrate the general idea. This (slightly modified) JSON r
 ```
 can be built with the following php code:
 ```php
+<?php
 $articles = new ResourceObject('articles', '1');
 $author = Relationship::fromLinkage(
     Linkage::fromSingleIdentifier(
@@ -40,7 +41,7 @@ $author->setLink('related', '/articles/1/author');
 $articles->setRelationship('author', $author);
 $articles->setAttribute('title', 'Rails is Omakase');
 $doc = Document::fromResource($articles);
-echo json_encode($doc, JSON_PRETTY_PRINT);
+echo json_encode($doc, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 ```
 
 Please refer to [the tests](./test) for the full API documentation:
