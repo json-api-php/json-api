@@ -13,7 +13,6 @@ namespace JsonApiPhp\JsonApi\Test\Document;
 
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
-use PHPUnit\Framework\TestCase;
 
 class MetaTest extends BaseTestCase
 {

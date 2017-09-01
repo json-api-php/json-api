@@ -26,7 +26,7 @@ class ResourceTest extends BaseTestCase
 {
     /**
      * @param string $expected
-     * @param mixed $data
+     * @param mixed  $data
      * @dataProvider resourceProvider
      */
     public function testSerialization(string $expected, $data)
