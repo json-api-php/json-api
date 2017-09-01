@@ -23,7 +23,7 @@ use JsonApiPhp\JsonApi\Test\BaseTestCase;
  * all of the included resource objects without having to GET any URLs via links.
  *
  * Resource linkage MUST be represented as one of the following:
- * - null for empty to-one relationships.
+ * - null for empty-to-one relationships.
  * - an empty array ([]) for empty to-many relationships.
  * - a single resource identifier object for non-empty to-one relationships.
  * - an array of resource identifier objects for non-empty to-many relationships.
@@ -38,45 +38,52 @@ class LinkageTest extends BaseTestCase
 {
     public function testCanCreateNullLinkage()
     {
-        $this->assertEqualsAsJson(
-            null,
+        $this->assertEncodesTo(
+            'null',
             Linkage::nullLinkage()
         );
     }
 
     public function testCanCreateEmptyArrayLinkage()
     {
-        $this->assertEqualsAsJson(
-            [],
+        $this->assertEncodesTo(
+            '[]',
             Linkage::emptyArrayLinkage()
         );
     }
 
     public function testCanCreateFromSingleResourceId()
     {
-        $this->assertEqualsAsJson(
-            [
-                'type' => 'books',
-                'id' => 'abc',
-            ],
+        $this->assertEncodesTo(
+            '
+            {
+                "type": "books",
+                "id": "abc"
+            }
+            ',
             Linkage::fromSingleIdentifier(new ResourceIdentifier('books', 'abc'))
         );
     }
 
     public function testCanCreateFromArrayOfResourceIds()
     {
-        $this->assertEqualsAsJson(
+        $this->assertEncodesTo(
+            '
             [
-                [
-                    'type' => 'books',
-                    'id' => 'abc',
-                ],
-                [
-                    'type' => 'squirrels',
-                    'id' => '123',
-                ],
-            ],
-            Linkage::fromManyIdentifiers(new ResourceIdentifier('books', 'abc'), new ResourceIdentifier('squirrels', '123'))
+                {
+                    "type": "books",
+                    "id": "abc"
+                },
+                {
+                    "type": "squirrels",
+                    "id": "123"
+                }
+            ]
+            ',
+            Linkage::fromManyIdentifiers(
+                new ResourceIdentifier('books', 'abc'),
+                new ResourceIdentifier('squirrels', '123')
+            )
         );
     }
 

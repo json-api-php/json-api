@@ -45,8 +45,9 @@ echo json_encode($doc, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 ```
 
 Please refer to [the tests](./test) for the full API documentation:
-* [Documents](./test/Document/DocumentTest.php)
-    * [Compound Documents](./test/Document/CompoundDocumentTest.php)
+* [Documents](./test/Document/DocumentTest.php). Creating documents with primary data, errors, and meta. 
+Adding links and API version to a document.
+    * [Compound Documents](./test/Document/CompoundDocumentTest.php). Resource linkage.
 * [Errors](./test/Document/ErrorTest.php)
 * [Resources](./test/Document/Resource/ResourceTest.php)
 * [Relationships](./test/Document/Resource/Relationship/RelationshipTest.php)

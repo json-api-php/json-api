@@ -40,13 +40,17 @@ use JsonApiPhp\JsonApi\Test\BaseTestCase;
  */
 class CompoundDocumentTest extends BaseTestCase
 {
+    /**
+     * In a compound document, all included resources MUST be represented as an array of resource objects
+     * in a top-level included member.
+     */
     public function testIncludedResourcesRepresentedAsArray()
     {
         $apple = new ResourceObject('apples', '1');
         $apple->setAttribute('color', 'red');
         $orange = new ResourceObject('oranges', '1');
         $orange->setAttribute('color', 'orange');
-        $basket = new ResourceObject('basket', '1');
+        $basket = new ResourceObject('baskets', '1');
         $basket->setRelationship(
             'fruits',
             Relationship::fromLinkage(
@@ -56,26 +60,48 @@ class CompoundDocumentTest extends BaseTestCase
                 )
             )
         );
-        $doc = \JsonApiPhp\JsonApi\Document::fromResource($basket);
+        $doc = Document::fromResource($basket);
         $doc->setIncluded($apple, $orange);
-        $this->assertEquals(
-            [
-                [
-                    'type' => 'apples',
-                    'id' => '1',
-                    'attributes' => [
-                        'color' => 'red',
-                    ],
-                ],
-                [
-                    'type' => 'oranges',
-                    'id' => '1',
-                    'attributes' => [
-                        'color' => 'orange',
-                    ],
-                ],
-            ],
-            $this->convertToArray($doc)['included']
+        $this->assertEncodesTo(
+            '
+            {
+                "data": {
+                    "type": "baskets",
+                    "id": "1",
+                    "relationships": {
+                        "fruits": {
+                            "data": [
+                                {
+                                    "type": "apples",
+                                    "id": "1"
+                                },
+                                {
+                                    "type": "oranges",
+                                    "id": "1"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "included": [
+                    {
+                        "type": "apples",
+                        "id": "1",
+                        "attributes": {
+                            "color": "red"
+                        }
+                    },
+                    {
+                        "type": "oranges",
+                        "id": "1",
+                        "attributes": {
+                            "color": "orange"
+                        }
+                    }
+                ]
+            }
+            ',
+            $doc
         );
     }
 
@@ -90,12 +116,28 @@ class CompoundDocumentTest extends BaseTestCase
         json_encode($doc);
     }
 
+    /**
+     * A compound document must be explicitly marked as sparse. In this case full linkage is not required.
+     */
     public function testFullLinkageIsNotRequiredIfSparse()
     {
-        $doc = \JsonApiPhp\JsonApi\Document::fromResource(new NullResource);
+        $doc = Document::fromResource(new NullResource);
         $doc->markSparse();
         $doc->setIncluded(new ResourceObject('apples', '1'));
-        $this->assertCanBeBuilt($doc);
+        $this->assertEncodesTo(
+            '
+            {
+                "data": null,
+                "included": [
+                    {
+                        "type": "apples",
+                        "id": "1"
+                    }
+                ]
+            }
+            ',
+            $doc
+        );
     }
 
     public function testIncludedResourceMayBeIdentifiedByPrimaryData()
@@ -104,7 +146,7 @@ class CompoundDocumentTest extends BaseTestCase
         $apple->setAttribute('color', 'red');
         $doc = Document::fromResource($apple->toId());
         $doc->setIncluded($apple);
-        $this->assertCanBeBuilt($doc);
+        $this->assertJson(json_encode($doc));
     }
 
     public function testIncludedResourceMayBeIdentifiedByAnotherIncludedResource()
@@ -124,18 +166,8 @@ class CompoundDocumentTest extends BaseTestCase
                 )
             )
         );
-        $doc = \JsonApiPhp\JsonApi\Document::fromResource($basket->toId());
+        $doc = Document::fromResource($basket->toId());
         $doc->setIncluded($apple, $basket);
-        $this->assertCanBeBuilt($doc);
-    }
-
-    private function convertToArray($object): array
-    {
-        return json_decode(json_encode($object), true);
-    }
-
-    private function assertCanBeBuilt($doc)
-    {
-        $this->assertInternalType('string', json_encode($doc));
+        $this->assertJson(json_encode($doc));
     }
 }
