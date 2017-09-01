@@ -15,8 +15,8 @@ use PHPUnit\Framework\TestCase;
 
 abstract class BaseTestCase extends TestCase
 {
-    public static function assertEqualsAsJson($expected, $actual, string $message = '')
+    public static function assertEncodesTo(string $expected, $obj, string $message = '')
     {
-        self::assertEquals(json_encode($expected), json_encode($actual), $message);
+        self::assertEquals(json_encode(json_decode($expected)), json_encode($obj), $message);
     }
 }

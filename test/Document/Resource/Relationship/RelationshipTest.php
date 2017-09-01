@@ -50,46 +50,54 @@ class RelationshipTest extends BaseTestCase
 {
     public function testCanCreateFromSelfLink()
     {
-        $this->assertEqualsAsJson(
-            [
-                'links' => [
-                    'self' => 'http://localhost',
-                ],
-            ],
+        $this->assertEncodesTo(
+            '
+            {
+                "links": {
+                    "self": "http://localhost"
+                }
+            }
+            ',
             Relationship::fromSelfLink('http://localhost')
         );
     }
 
     public function testCanCreateFromRelatedLink()
     {
-        $this->assertEqualsAsJson(
-            [
-                'links' => [
-                    'related' => 'http://localhost',
-                ],
-            ],
+        $this->assertEncodesTo(
+            '
+            {
+                "links": {
+                    "related": "http://localhost"
+                }
+            }        
+           ',
             Relationship::fromRelatedLink('http://localhost')
         );
     }
 
     public function testCanCreateFromLinkage()
     {
-        $this->assertEqualsAsJson(
-            [
-                'data' => null,
-            ],
+        $this->assertEncodesTo(
+            '
+            {
+                "data": null
+            }
+            ',
             Relationship::fromLinkage(Linkage::nullLinkage())
         );
     }
 
     public function testCanCreateFromMeta()
     {
-        $this->assertEqualsAsJson(
-            [
-                'meta' => [
-                    'a' => 'b',
-                ],
-            ],
+        $this->assertEncodesTo(
+            '
+            {
+                "meta": {
+                    "a": "b"
+                }
+            }
+            ',
             Relationship::fromMeta(Meta::fromArray(['a' => 'b']))
         );
     }

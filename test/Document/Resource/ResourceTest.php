@@ -25,62 +25,61 @@ use JsonApiPhp\JsonApi\Test\BaseTestCase;
 class ResourceTest extends BaseTestCase
 {
     /**
-     * @param array $expected
+     * @param string $expected
      * @param mixed $data
      * @dataProvider resourceProvider
      */
-    public function testSerialization(array $expected, $data)
+    public function testSerialization(string $expected, $data)
     {
-        $this->assertEqualsAsJson($expected, $data);
+        $this->assertEncodesTo($expected, $data);
     }
 
     public function resourceProvider()
     {
         return [
             [
-                [
-                    'type' => 'books',
-                ],
+                '{"type": "books"}',
                 new ResourceIdentifier('books'),
             ],
             [
-                [
-                    'type' => 'books',
-                    'id' => '42abc',
-                ],
+                '{"type":"books","id":"42abc"}',
                 new ResourceIdentifier('books', '42abc'),
             ],
             [
-                [
-                    'type' => 'books',
-                    'id' => '42abc',
-                    'meta' => [
-                        'foo' => 'bar',
-                    ],
-                ],
+                '
+                {
+                    "type": "books",
+                    "id": "42abc",
+                    "meta": {
+                        "foo":"bar"
+                    }
+                }
+                ',
                 new ResourceIdentifier('books', '42abc', Meta::fromArray(['foo' => 'bar'])),
             ],
             [
-                [
-                    'type' => 'books',
-                    'id' => '42abc',
-                    'attributes' => [
-                        'attr' => 'val',
-                    ],
-                    'relationships' => [
-                        'author' => [
-                            'meta' => [
-                                'a' => 'b',
-                            ],
-                        ],
-                    ],
-                    'links' => [
-                        'self' => 'http://localhost',
-                    ],
-                    'meta' => [
-                        'foo' => 'bar',
-                    ],
-                ],
+                '
+                {
+                    "type": "books",
+                    "id": "42abc",
+                    "attributes": {
+                        "attr": "val"
+                    },
+                    "relationships": {
+                        "author": {
+                            "meta": {
+                                "a": "b"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "http://localhost"
+                    },
+                    "meta": {
+                        "foo": "bar"
+                    }
+                }
+                ',
                 (function () {
                     $resource = new ResourceObject('books', '42abc');
                     $resource->setMeta(Meta::fromArray(['foo' => 'bar']));

@@ -17,7 +17,7 @@ class ErrorTest extends BaseTestCase
 {
     public function testEmptyErrorIsEmptyObject()
     {
-        $this->assertEquals('{}', json_encode(new Error()));
+        $this->assertEncodesTo('{}', new Error());
     }
 
     public function testErrorWithFullSetOfProperties()
@@ -33,24 +33,26 @@ class ErrorTest extends BaseTestCase
         $e->setSourceParameter('test_param');
         $e->setMeta(Meta::fromArray(['foo' => 'bar']));
 
-        $this->assertEqualsAsJson(
-            [
-                'id' => 'test_id',
-                'links' => [
-                    'about' => 'http://localhost',
-                ],
-                'status' => '404',
-                'code' => 'OMG',
-                'title' => 'Error',
-                'detail' => 'Nothing is found',
-                'source' => [
-                    'pointer' => '/data',
-                    'parameter' => 'test_param',
-                ],
-                'meta' => [
-                    'foo' => 'bar',
-                ],
-            ],
+        $this->assertEncodesTo(
+            '
+            {
+                "id": "test_id",
+                "links": {
+                    "about":"http://localhost"
+                },
+                "status": "404",
+                "code": "OMG",
+                "title": "Error",
+                "detail": "Nothing is found",
+                "source": {
+                    "pointer": "/data",
+                    "parameter": "test_param"
+                },
+                "meta": {
+                    "foo":"bar"
+                }
+            }
+            ',
             $e
         );
     }
