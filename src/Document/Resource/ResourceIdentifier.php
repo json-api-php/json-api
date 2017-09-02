@@ -44,6 +44,9 @@ class ResourceIdentifier implements ResourceInterface
         );
     }
 
+    /**
+     * @deprecated to be removed in 1.0
+     */
     public function __toString(): string
     {
         return sprintf("%s:%s", $this->type, $this->id ?: 'null');
