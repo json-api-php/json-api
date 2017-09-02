@@ -23,6 +23,9 @@ final class NullResource implements ResourceInterface
         return false;
     }
 
+    /**
+     * @deprecated to be removed in 1.0
+     */
     public function __toString(): string
     {
         return 'null';
