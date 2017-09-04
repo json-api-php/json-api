@@ -14,7 +14,8 @@ namespace JsonApiPhp\JsonApi\Document\Resource\Relationship;
 use JsonApiPhp\JsonApi\Document\LinksTrait;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\MetaTrait;
-use JsonApiPhp\JsonApi\Document\Resource\ResourceInterface;
+use JsonApiPhp\JsonApi\Document\Resource\Linkage\LinkageInterface;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 
 final class Relationship implements \JsonSerializable
 {
@@ -22,7 +23,7 @@ final class Relationship implements \JsonSerializable
     use MetaTrait;
 
     /**
-     * @var Linkage
+     * @var LinkageInterface
      */
     private $linkage = null;
 
@@ -51,14 +52,14 @@ final class Relationship implements \JsonSerializable
         return $r;
     }
 
-    public static function fromLinkage(Linkage $linkage): self
+    public static function fromLinkage(LinkageInterface $linkage): self
     {
         $r = new self;
         $r->linkage = $linkage;
         return $r;
     }
 
-    public function hasLinkageTo(ResourceInterface $resource): bool
+    public function hasLinkageTo(ResourceObject $resource): bool
     {
         return ($this->linkage && $this->linkage->isLinkedTo($resource));
     }

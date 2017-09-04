@@ -17,6 +17,10 @@ abstract class BaseTestCase extends TestCase
 {
     public static function assertEncodesTo(string $expected, $obj, string $message = '')
     {
-        self::assertEquals(json_encode(json_decode($expected)), json_encode($obj), $message);
+        self::assertEquals(
+            json_decode($expected),
+            json_decode(json_encode($obj, JSON_UNESCAPED_SLASHES)),
+            $message
+        );
     }
 }

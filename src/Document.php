@@ -15,7 +15,13 @@ use JsonApiPhp\JsonApi\Document\Error;
 use JsonApiPhp\JsonApi\Document\LinksTrait;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\MetaTrait;
-use JsonApiPhp\JsonApi\Document\Resource\ResourceInterface;
+use JsonApiPhp\JsonApi\Document\PrimaryData\MultiIdentifierData;
+use JsonApiPhp\JsonApi\Document\PrimaryData\MultiResourceData;
+use JsonApiPhp\JsonApi\Document\PrimaryData\NullData;
+use JsonApiPhp\JsonApi\Document\PrimaryData\PrimaryDataInterface;
+use JsonApiPhp\JsonApi\Document\PrimaryData\SingleIdentifierData;
+use JsonApiPhp\JsonApi\Document\PrimaryData\SingleResourceData;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 
 class Document implements \JsonSerializable
@@ -26,11 +32,23 @@ class Document implements \JsonSerializable
     use LinksTrait;
     use MetaTrait;
 
+    /**
+     * @var PrimaryDataInterface
+     */
     private $data;
+
+    /**
+     * @var Error[]
+     */
     private $errors;
+
     private $api;
+
+    /**
+     * @var ResourceObject[]
+     */
     private $included;
-    private $is_sparse = false;
+    private $sparse = false;
 
     private function __construct()
     {
@@ -50,17 +68,38 @@ class Document implements \JsonSerializable
         return $doc;
     }
 
-    public static function fromResource(ResourceInterface $data): self
+    public static function fromResource(ResourceObject $resource): self
     {
         $doc = new self;
-        $doc->data = $data;
+        $doc->data = new SingleResourceData($resource);
         return $doc;
     }
 
-    public static function fromResources(ResourceInterface ...$data): self
+    public static function fromResources(ResourceObject ...$resources): self
     {
         $doc = new self;
-        $doc->data = $data;
+        $doc->data = new MultiResourceData(...$resources);
+        return $doc;
+    }
+
+    public static function fromIdentifier(ResourceIdentifier $identifier)
+    {
+        $doc = new self;
+        $doc->data = new SingleIdentifierData($identifier);
+        return $doc;
+    }
+
+    public static function fromIdentifiers(ResourceIdentifier... $identifiers)
+    {
+        $doc = new self;
+        $doc->data = new MultiIdentifierData(...$identifiers);
+        return $doc;
+    }
+
+    public static function nullDocument()
+    {
+        $doc = new self;
+        $doc->data = new NullData();
         return $doc;
     }
 
@@ -69,19 +108,27 @@ class Document implements \JsonSerializable
         $this->api['version'] = $version;
     }
 
-    public function setApiMeta(array $meta)
+    public function setApiMeta(Meta $meta)
     {
         $this->api['meta'] = $meta;
     }
 
-    public function setIncluded(ResourceObject ...$included)
+    public function setIncluded(ResourceObject ...$resources)
     {
-        $this->included = $included;
+        if (null === $this->data) {
+            throw new \LogicException('Document with no data cannot contain included resources');
+        }
+        foreach ($resources as $resource) {
+            if (isset($this->included[(string) $resource->toIdentifier()])) {
+                throw new \LogicException("Resource {$resource->toIdentifier()} is already included");
+            }
+            $this->included[(string) $resource->toIdentifier()] = $resource;
+        }
     }
 
     public function markSparse()
     {
-        $this->is_sparse = true;
+        $this->sparse = true;
     }
 
     public function jsonSerialize()
@@ -94,7 +141,7 @@ class Document implements \JsonSerializable
                 'meta' => $this->meta,
                 'jsonapi' => $this->api,
                 'links' => $this->links,
-                'included' => $this->included,
+                'included' => $this->included ? array_values($this->included) : null,
             ],
             function ($v) {
                 return null !== $v;
@@ -104,47 +151,19 @@ class Document implements \JsonSerializable
 
     private function enforceFullLinkage()
     {
-        if ($this->is_sparse || empty($this->included)) {
+        if ($this->sparse || empty($this->included)) {
             return;
         }
-        foreach ($this->included as $included_resource) {
-            if ($this->hasLinkTo($included_resource) || $this->anotherIncludedResourceIdentifies($included_resource)) {
+        foreach ($this->included as $included) {
+            if ($this->data->hasLinkTo($included)) {
                 continue;
             }
-            throw new \LogicException("Full linkage is required for $included_resource");
-        }
-    }
-
-    private function anotherIncludedResourceIdentifies(ResourceObject $resource): bool
-    {
-        /** @var ResourceObject $included_resource */
-        foreach ($this->included as $included_resource) {
-            if ($included_resource !== $resource && $included_resource->identifies($resource)) {
-                return true;
+            foreach ($this->included as $anotherIncluded) {
+                if ($anotherIncluded->identifies($included)) {
+                    continue 2;
+                }
             }
-        }
-        return false;
-    }
-
-    private function hasLinkTo(ResourceObject $resource): bool
-    {
-        /** @var ResourceInterface $my_resource */
-        foreach ($this->toResources() as $my_resource) {
-            if ($my_resource->identifies($resource)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private function toResources(): \Iterator
-    {
-        if ($this->data instanceof ResourceInterface) {
-            yield $this->data;
-        } elseif (is_array($this->data)) {
-            foreach ($this->data as $datum) {
-                yield $datum;
-            }
+            throw new \LogicException("Full linkage is required for {$included->toIdentifier()}");
         }
     }
 }
