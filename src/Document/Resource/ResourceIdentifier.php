@@ -12,22 +12,18 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
 use JsonApiPhp\JsonApi\Document\Meta;
-use JsonApiPhp\JsonApi\Document\MetaTrait;
 
-class ResourceIdentifier implements ResourceInterface
+class ResourceIdentifier implements \JsonSerializable
 {
-    use MetaTrait;
+    private $type;
+    private $id;
+    private $meta;
 
-    protected $type;
-    protected $id;
-
-    public function __construct(string $type, string $id = null, Meta $meta = null)
+    public function __construct(string $type, string $id, Meta $meta = null)
     {
         $this->type = $type;
         $this->id = $id;
-        if ($meta) {
-            $this->setMeta($meta);
-        }
+        $this->meta = $meta;
     }
 
     public function jsonSerialize()
@@ -44,19 +40,18 @@ class ResourceIdentifier implements ResourceInterface
         );
     }
 
-    /**
-     * @deprecated to be removed in 1.0
-     */
-    public function __toString(): string
+    public function identifies(ResourceObject $resource): bool
     {
-        return sprintf("%s:%s", $this->type, $this->id ?: 'null');
+        return $resource->toIdentifier()->equals($this);
     }
 
-    public function identifies(ResourceInterface $resource): bool
+    public function __toString(): string
     {
-        return $resource instanceof self
-            && $this->type === $resource->type
-            && $this->id !== null
-            && $this->id === $resource->id;
+        return "$this->type:$this->id";
+    }
+
+    private function equals(ResourceIdentifier $that)
+    {
+        return $this->type === $that->type && $this->id === $that->id;
     }
 }

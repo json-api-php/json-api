@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\Document;
-use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
+use JsonApiPhp\JsonApi\Document\Resource\Linkage\SingleLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
@@ -48,7 +48,7 @@ JSON;
 
         $articles = new ResourceObject('articles', '1');
         $author = Relationship::fromLinkage(
-            Linkage::fromSingleIdentifier(
+            new SingleLinkage(
                 new ResourceIdentifier('people', '9')
             )
         );

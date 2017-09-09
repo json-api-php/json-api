@@ -12,14 +12,33 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
 use JsonApiPhp\JsonApi\Document\LinksTrait;
+use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 
-class ResourceObject extends ResourceIdentifier
+class ResourceObject implements \JsonSerializable
 {
     use LinksTrait;
 
+    private $type;
+    private $id;
+    private $meta;
     private $attributes;
+
+    /**
+     * @var Relationship[]
+     */
     private $relationships;
+
+    public function __construct(string $type, string $id = null)
+    {
+        $this->type = $type;
+        $this->id = $id;
+    }
+
+    public function setMeta(Meta $meta)
+    {
+        $this->meta = $meta;
+    }
 
     public function setAttribute(string $name, $value)
     {
@@ -43,7 +62,7 @@ class ResourceObject extends ResourceIdentifier
         $this->relationships[$name] = $relationship;
     }
 
-    public function toId(): ResourceIdentifier
+    public function toIdentifier(): ResourceIdentifier
     {
         return new ResourceIdentifier($this->type, $this->id);
     }
@@ -65,10 +84,9 @@ class ResourceObject extends ResourceIdentifier
         );
     }
 
-    public function identifies(ResourceInterface $resource): bool
+    public function identifies(ResourceObject $resource): bool
     {
         if ($this->relationships) {
-            /** @var Relationship $relationship */
             foreach ($this->relationships as $relationship) {
                 if ($relationship->hasLinkageTo($resource)) {
                     return true;
@@ -78,10 +96,6 @@ class ResourceObject extends ResourceIdentifier
         return false;
     }
 
-    /**
-     * @param  string $name
-     * @return bool
-     */
     private function isReservedName(string $name): bool
     {
         return in_array($name, ['id', 'type']);
