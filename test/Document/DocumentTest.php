@@ -14,7 +14,6 @@ namespace JsonApiPhp\JsonApi\Test\Document;
 use JsonApiPhp\JsonApi\Document;
 use JsonApiPhp\JsonApi\Document\Error;
 use JsonApiPhp\JsonApi\Document\Meta;
-use JsonApiPhp\JsonApi\Document\Resource\NullResource;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
@@ -91,7 +90,7 @@ class DocumentTest extends BaseTestCase
                 "data": null
             }
             ',
-            Document::fromResource(new NullResource),
+            Document::nullDocument(),
             'The simplest document possible contains null'
         );
 
@@ -104,7 +103,7 @@ class DocumentTest extends BaseTestCase
                 }
             }        
             ',
-            Document::fromResource(new ResourceIdentifier('books', 'abc123')),
+            Document::fromIdentifier(new ResourceIdentifier('books', 'abc123')),
             'Resource identifier can be used as primary data'
         );
 
@@ -141,7 +140,7 @@ class DocumentTest extends BaseTestCase
                 ]
             }
             ',
-            Document::fromResources(
+            Document::fromIdentifiers(
                 new ResourceIdentifier('books', '12'),
                 new ResourceIdentifier('carrots', '42')
             ),
@@ -157,11 +156,11 @@ class DocumentTest extends BaseTestCase
      */
     public function testDocumentCanHaveExtraProperties()
     {
-        $doc = Document::fromResource(
+        $doc = Document::fromIdentifier(
             new ResourceIdentifier('apples', '42')
         );
         $doc->setApiVersion('1.0');
-        $doc->setApiMeta(['a' => 'b']);
+        $doc->setApiMeta(Meta::fromArray(['a' => 'b']));
         $doc->setMeta(Meta::fromArray(['test' => 'test']));
         $doc->setLink('self', 'http://example.com/self');
         $doc->setLink('related', 'http://example.com/rel', ['foo' => 'bar']);

@@ -11,9 +11,12 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource\Relationship;
 
-use JsonApiPhp\JsonApi\Document\Resource\NullResource;
+use JsonApiPhp\JsonApi\Document\Resource\Linkage\MultiLinkage;
+use JsonApiPhp\JsonApi\Document\Resource\Linkage\NullLinkage;
+use JsonApiPhp\JsonApi\Document\Resource\Linkage\SingleLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
 /**
@@ -40,7 +43,7 @@ class LinkageTest extends BaseTestCase
     {
         $this->assertEncodesTo(
             'null',
-            Linkage::nullLinkage()
+            new NullLinkage()
         );
     }
 
@@ -48,7 +51,7 @@ class LinkageTest extends BaseTestCase
     {
         $this->assertEncodesTo(
             '[]',
-            Linkage::emptyArrayLinkage()
+            new MultiLinkage()
         );
     }
 
@@ -61,7 +64,7 @@ class LinkageTest extends BaseTestCase
                 "id": "abc"
             }
             ',
-            Linkage::fromSingleIdentifier(new ResourceIdentifier('books', 'abc'))
+            new SingleLinkage(new ResourceIdentifier('books', 'abc'))
         );
     }
 
@@ -80,7 +83,7 @@ class LinkageTest extends BaseTestCase
                 }
             ]
             ',
-            Linkage::fromManyIdentifiers(
+            new MultiLinkage(
                 new ResourceIdentifier('books', 'abc'),
                 new ResourceIdentifier('squirrels', '123')
             )
@@ -89,24 +92,22 @@ class LinkageTest extends BaseTestCase
 
     public function testNullLinkageIsLinkedToNothing()
     {
-        $apple = new ResourceIdentifier('apples', '1');
-        $this->assertFalse(Linkage::nullLinkage()->isLinkedTo($apple));
-        $this->assertFalse(Linkage::nullLinkage()->isLinkedTo(new NullResource));
+        $apple = new ResourceObject('apples', '1');
+        $this->assertFalse((new NullLinkage())->isLinkedTo($apple));
     }
 
     public function testEmptyArrayLinkageIsLinkedToNothing()
     {
-        $apple = new ResourceIdentifier('apples', '1');
-        $this->assertFalse(Linkage::emptyArrayLinkage()->isLinkedTo($apple));
-        $this->assertFalse(Linkage::emptyArrayLinkage()->isLinkedTo(new NullResource));
+        $apple = new ResourceObject('apples', '1');
+        $this->assertFalse((new MultiLinkage())->isLinkedTo($apple));
     }
 
     public function testSingleLinkageIsLinkedOnlyToItself()
     {
-        $apple = new ResourceIdentifier('apples', '1');
-        $orange = new ResourceIdentifier('oranges', '1');
+        $apple = new ResourceObject('apples', '1');
+        $orange = new ResourceObject('oranges', '1');
 
-        $linkage = Linkage::fromSingleIdentifier($apple);
+        $linkage = new SingleLinkage($apple->toIdentifier());
 
         $this->assertTrue($linkage->isLinkedTo($apple));
         $this->assertFalse($linkage->isLinkedTo($orange));
@@ -114,11 +115,11 @@ class LinkageTest extends BaseTestCase
 
     public function testMultiLinkageIsLinkedOnlyToItsMembers()
     {
-        $apple = new ResourceIdentifier('apples', '1');
-        $orange = new ResourceIdentifier('oranges', '1');
-        $banana = new ResourceIdentifier('bananas', '1');
+        $apple = new ResourceObject('apples', '1');
+        $orange = new ResourceObject('oranges', '1');
+        $banana = new ResourceObject('bananas', '1');
 
-        $linkage = Linkage::fromManyIdentifiers($apple, $orange);
+        $linkage = new MultiLinkage($apple->toIdentifier(), $orange->toIdentifier());
 
         $this->assertTrue($linkage->isLinkedTo($apple));
         $this->assertTrue($linkage->isLinkedTo($orange));

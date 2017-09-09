@@ -39,7 +39,7 @@ class ResourceTest extends BaseTestCase
         return [
             [
                 '{"type": "books"}',
-                new ResourceIdentifier('books'),
+                new ResourceObject('books'),
             ],
             [
                 '{"type":"books","id":"42abc"}',
