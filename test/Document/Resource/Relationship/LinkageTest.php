@@ -15,7 +15,6 @@ namespace JsonApiPhp\JsonApi\Test\Document\Resource\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\MultiLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\NullLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\SingleLinkage;
-use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
