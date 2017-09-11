@@ -22,12 +22,12 @@ trait LinksTrait
      */
     protected $links;
 
-    public function setLink(string $name, string $url): void
+    public function setLink(string $name, string $url)
     {
         $this->links[$name] = new Link($url);
     }
 
-    public function setLinkObject(string $name, LinkInterface $link): void
+    public function setLinkObject(string $name, LinkInterface $link)
     {
         $this->links[$name] = $link;
     }
