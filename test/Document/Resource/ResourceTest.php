@@ -7,10 +7,12 @@
  *  For the full copyright and license information, please view the LICENSE
  *  file that was distributed with this source code.
  */
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource;
 
+use JsonApiPhp\JsonApi\Document\Link\Link;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;

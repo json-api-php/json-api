@@ -8,16 +8,9 @@
  *  file that was distributed with this source code.
  */
 
-declare(strict_types=1);
+namespace JsonApiPhp\JsonApi\Document\Link;
 
-namespace JsonApiPhp\JsonApi\Document;
-
-trait MetaTrait
+interface LinkInterface extends \JsonSerializable
 {
-    protected $meta;
-
-    public function setMeta(Meta $meta)
-    {
-        $this->meta = $meta;
-    }
+    public function jsonSerialize();
 }

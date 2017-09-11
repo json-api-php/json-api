@@ -7,10 +7,12 @@
  *  For the full copyright and license information, please view the LICENSE
  *  file that was distributed with this source code.
  */
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource\Relationship;
 
+use JsonApiPhp\JsonApi\Document\Link\Link;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\NullLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
@@ -59,7 +61,7 @@ class RelationshipTest extends BaseTestCase
                 }
             }
             ',
-            Relationship::fromSelfLink('http://localhost')
+            Relationship::fromSelfLink(new Link('http://localhost'))
         );
     }
 
@@ -73,7 +75,7 @@ class RelationshipTest extends BaseTestCase
                 }
             }        
            ',
-            Relationship::fromRelatedLink('http://localhost')
+            Relationship::fromRelatedLink(new Link('http://localhost'))
         );
     }
 
