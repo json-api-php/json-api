@@ -27,17 +27,17 @@ A simple example to illustrate the general idea. This JSON representation from
     }
 }
 ```
-can be built with the following php code:
+can be built with the following php code (less imports):
 ```php
 <?php
 $articles = new ResourceObject('articles', '1');
 $author = Relationship::fromLinkage(
-    Linkage::fromSingleIdentifier(
+    new SingleLinkage(
         new ResourceIdentifier('people', '9')
     )
 );
 $author->setLink('self', '/articles/1/relationships/author');
-$author->setLink('related', '/articles/1/author');
+$author->setLink('related','/articles/1/author');
 $articles->setRelationship('author', $author);
 $articles->setAttribute('title', 'Rails is Omakase');
 $doc = Document::fromResource($articles);

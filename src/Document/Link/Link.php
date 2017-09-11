@@ -10,15 +10,19 @@
 
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Test\Document;
+namespace JsonApiPhp\JsonApi\Document\Link;
 
-use JsonApiPhp\JsonApi\Document\Meta;
-use JsonApiPhp\JsonApi\Test\BaseTestCase;
-
-class MetaTest extends BaseTestCase
+final class Link implements LinkInterface
 {
-    public function testPhpArraysAreConvertedToObjects()
+    private $url;
+
+    public function __construct(string $url)
     {
-        $this->assertEncodesTo('{"0":"foo"}', Meta::fromArray(['foo']));
+        $this->url = $url;
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->url;
     }
 }

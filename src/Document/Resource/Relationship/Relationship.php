@@ -7,10 +7,12 @@
  *  For the full copyright and license information, please view the LICENSE
  *  file that was distributed with this source code.
  */
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource\Relationship;
 
+use JsonApiPhp\JsonApi\Document\Link\LinkInterface;
 use JsonApiPhp\JsonApi\Document\LinksTrait;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\MetaTrait;
@@ -38,17 +40,17 @@ final class Relationship implements \JsonSerializable
         return $r;
     }
 
-    public static function fromSelfLink(string $link, array $meta = null): self
+    public static function fromSelfLink(LinkInterface $link): self
     {
         $r = new self;
-        $r->setLink('self', $link, $meta);
+        $r->setLinkObject('self', $link);
         return $r;
     }
 
-    public static function fromRelatedLink(string $link, array $meta = null): self
+    public static function fromRelatedLink(LinkInterface $link): self
     {
         $r = new self;
-        $r->setLink('related', $link, $meta);
+        $r->setLinkObject('related', $link);
         return $r;
     }
 

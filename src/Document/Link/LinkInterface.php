@@ -10,14 +10,9 @@
 
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Document;
+namespace JsonApiPhp\JsonApi\Document\Link;
 
-trait MetaTrait
+interface LinkInterface extends \JsonSerializable
 {
-    protected $meta;
-
-    public function setMeta(Meta $meta)
-    {
-        $this->meta = $meta;
-    }
+    public function jsonSerialize();
 }

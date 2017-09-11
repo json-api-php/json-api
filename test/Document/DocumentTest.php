@@ -7,12 +7,14 @@
  *  For the full copyright and license information, please view the LICENSE
  *  file that was distributed with this source code.
  */
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document;
 
 use JsonApiPhp\JsonApi\Document;
 use JsonApiPhp\JsonApi\Document\Error;
+use JsonApiPhp\JsonApi\Document\Link\LinkObject;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
@@ -163,7 +165,7 @@ class DocumentTest extends BaseTestCase
         $doc->setApiMeta(Meta::fromArray(['a' => 'b']));
         $doc->setMeta(Meta::fromArray(['test' => 'test']));
         $doc->setLink('self', 'http://example.com/self');
-        $doc->setLink('related', 'http://example.com/rel', ['foo' => 'bar']);
+        $doc->setLinkObject('related', new LinkObject('http://example.com/rel', Meta::fromArray(['foo' => 'bar'])));
         $this->assertEncodesTo(
             '
             {

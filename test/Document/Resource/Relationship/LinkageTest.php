@@ -7,6 +7,7 @@
  *  For the full copyright and license information, please view the LICENSE
  *  file that was distributed with this source code.
  */
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource\Relationship;
@@ -14,7 +15,6 @@ namespace JsonApiPhp\JsonApi\Test\Document\Resource\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\MultiLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\NullLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\SingleLinkage;
-use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
