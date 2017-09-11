@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\Document;
-use JsonApiPhp\JsonApi\Document\Link\Link;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\SingleLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
@@ -55,7 +54,7 @@ JSON;
             )
         );
         $author->setLink('self', '/articles/1/relationships/author');
-        $author->setLink('related','/articles/1/author');
+        $author->setLink('related', '/articles/1/author');
         $articles->setRelationship('author', $author);
         $articles->setAttribute('title', 'Rails is Omakase');
         $doc = Document::fromResource($articles);

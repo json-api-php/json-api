@@ -14,7 +14,6 @@ namespace JsonApiPhp\JsonApi\Test\Document;
 
 use JsonApiPhp\JsonApi\Document;
 use JsonApiPhp\JsonApi\Document\Error;
-use JsonApiPhp\JsonApi\Document\Link\Link;
 use JsonApiPhp\JsonApi\Document\Link\LinkObject;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
