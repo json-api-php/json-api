@@ -21,6 +21,7 @@ return PhpCsFixer\Config::create()
         'method_separation' => true,
         'native_function_casing' => true,
         'no_blank_lines_after_class_opening' => true,
+        'no_blank_lines_after_phpdoc' => true,
         'no_empty_statement' => true,
         'no_extra_consecutive_blank_lines' => true,
         'no_leading_import_slash' => true,
