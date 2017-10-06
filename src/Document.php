@@ -74,21 +74,21 @@ class Document implements \JsonSerializable
         return $doc;
     }
 
-    public static function fromIdentifier(ResourceIdentifier $identifier)
+    public static function fromIdentifier(ResourceIdentifier $identifier): self
     {
         $doc = new self;
         $doc->data = new SingleIdentifierData($identifier);
         return $doc;
     }
 
-    public static function fromIdentifiers(ResourceIdentifier... $identifiers)
+    public static function fromIdentifiers(ResourceIdentifier... $identifiers): self
     {
         $doc = new self;
         $doc->data = new MultiIdentifierData(...$identifiers);
         return $doc;
     }
 
-    public static function nullDocument()
+    public static function nullDocument(): self
     {
         $doc = new self;
         $doc->data = new NullData();
