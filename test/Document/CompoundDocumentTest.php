@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test\Document;
 
 use JsonApiPhp\JsonApi\Document;
-use JsonApiPhp\JsonApi\Document\Link\Link;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\MultiLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\SingleLinkage;
