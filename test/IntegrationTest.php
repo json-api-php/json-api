@@ -1,24 +1,13 @@
 <?php
-/**
- *
- *  * This file is part of JSON:API implementation for PHP.
- *  *
- *  * (c) Alexey Karapetov <karapetov@gmail.com>
- *  *
- *  * For the full copyright and license information, please view the LICENSE
- *  * file that was distributed with this source code.
- *
- */
-
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
-use JsonApiPhp\JsonApi\Document\Document;
-use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
+use JsonApiPhp\JsonApi\Document;
+use JsonApiPhp\JsonApi\Document\Resource\Linkage\SingleLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
-use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
 use PHPUnit\Framework\TestCase;
 
 class IntegrationTest extends TestCase
@@ -40,8 +29,8 @@ class IntegrationTest extends TestCase
                     "id": "9"
                 },
                 "links": {
-                    "self": "\/articles\/1\/relationships\/author",
-                    "related": "\/articles\/1\/author"
+                    "self": "/articles/1/relationships/author",
+                    "related": "/articles/1/author"
                 }
             }
         }
@@ -51,8 +40,8 @@ JSON;
 
         $articles = new ResourceObject('articles', '1');
         $author = Relationship::fromLinkage(
-            Linkage::fromSingleResourceId(
-                new ResourceId('people', '9')
+            new SingleLinkage(
+                new ResourceIdentifier('people', '9')
             )
         );
         $author->setLink('self', '/articles/1/relationships/author');
@@ -63,7 +52,7 @@ JSON;
 
         $this->assertEquals(
             $json,
-            json_encode($doc, JSON_PRETTY_PRINT)
+            json_encode($doc, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
         );
     }
 }

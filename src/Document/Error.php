@@ -1,24 +1,11 @@
 <?php
-/**
- *
- *  * This file is part of JSON:API implementation for PHP.
- *  *
- *  * (c) Alexey Karapetov <karapetov@gmail.com>
- *  *
- *  * For the full copyright and license information, please view the LICENSE
- *  * file that was distributed with this source code.
- *
- */
-
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
 
-use JsonApiPhp\JsonApi\HasMeta;
-
 final class Error implements \JsonSerializable
 {
-    use HasMeta;
+    use MetaTrait;
 
     private $id;
     private $links;
@@ -27,7 +14,14 @@ final class Error implements \JsonSerializable
     private $title;
     private $detail;
     private $source;
-    private $meta;
+
+    /**
+     * @param string $id
+     */
+    public function __construct(string $id = null)
+    {
+        $this->id = $id;
+    }
 
     public function setId(string $id)
     {
@@ -85,6 +79,6 @@ final class Error implements \JsonSerializable
             function ($v) {
                 return null !== $v;
             }
-        ) ?: (object)[];
+        ) ?: (object) [];
     }
 }

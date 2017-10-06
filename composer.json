@@ -1,6 +1,6 @@
 {
   "name": "json-api-php/json-api",
-  "description": "jsonapi.org",
+  "description": "An attempt to express JSON API specs (jsonapi.org) in object-oriented way as a set of PHP 7 classes",
   "type": "library",
 
   "license": "MIT",
@@ -15,11 +15,19 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^6.0",
-    "squizlabs/php_codesniffer": "2.8.*"
+    "friendsofphp/php-cs-fixer": "^2.2"
   },
   "autoload": {
     "psr-4": {
       "JsonApiPhp\\JsonApi\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "JsonApiPhp\\JsonApi\\Test\\": "test/"
+    }
+  },
+  "scripts": {
+    "test": "php-cs-fixer fix -v --dry-run --ansi && phpunit --colors=always"
   }
 }

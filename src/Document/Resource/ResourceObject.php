@@ -1,41 +1,41 @@
 <?php
-/**
- *
- *  * This file is part of JSON:API implementation for PHP.
- *  *
- *  * (c) Alexey Karapetov <karapetov@gmail.com>
- *  *
- *  * For the full copyright and license information, please view the LICENSE
- *  * file that was distributed with this source code.
- *
- */
-
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
+use JsonApiPhp\JsonApi\Document\LinksTrait;
+use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
-use JsonApiPhp\JsonApi\HasLinksAndMeta;
 
-final class ResourceObject extends IdentifiableResource
+class ResourceObject implements \JsonSerializable
 {
-    use HasLinksAndMeta;
+    use LinksTrait;
 
+    private $type;
+    private $id;
     private $meta;
-    private $links;
     private $attributes;
+
+    /**
+     * @var Relationship[]
+     */
     private $relationships;
 
     public function __construct(string $type, string $id = null)
     {
-        $this->id = $id;
         $this->type = $type;
+        $this->id = $id;
+    }
+
+    public function setMeta(Meta $meta)
+    {
+        $this->meta = $meta;
     }
 
     public function setAttribute(string $name, $value)
     {
-        if (in_array($name, ['id', 'type'])) {
-            throw new \InvalidArgumentException('Invalid attribute name');
+        if ($this->isReservedName($name)) {
+            throw new \InvalidArgumentException('Can not use a reserved name');
         }
         if (isset($this->relationships[$name])) {
             throw new \LogicException("Field $name already exists in relationships");
@@ -45,28 +45,18 @@ final class ResourceObject extends IdentifiableResource
 
     public function setRelationship(string $name, Relationship $relationship)
     {
+        if ($this->isReservedName($name)) {
+            throw new \InvalidArgumentException('Can not use a reserved name');
+        }
         if (isset($this->attributes[$name])) {
             throw new \LogicException("Field $name already exists in attributes");
         }
         $this->relationships[$name] = $relationship;
     }
 
-    public function hasRelationTo(IdentifiableResource $resource): bool
+    public function toIdentifier(): ResourceIdentifier
     {
-        if ($this->relationships) {
-            /** @var Relationship $relationship */
-            foreach ($this->relationships as $relationship) {
-                if ($relationship->isLinkedTo($resource)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public function toId(): ResourceId
-    {
-        return new ResourceId($this->type, $this->id);
+        return new ResourceIdentifier($this->type, $this->id);
     }
 
     public function jsonSerialize()
@@ -84,5 +74,22 @@ final class ResourceObject extends IdentifiableResource
                 return null !== $v;
             }
         );
+    }
+
+    public function identifies(ResourceObject $resource): bool
+    {
+        if ($this->relationships) {
+            foreach ($this->relationships as $relationship) {
+                if ($relationship->hasLinkageTo($resource)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private function isReservedName(string $name): bool
+    {
+        return in_array($name, ['id', 'type']);
     }
 }

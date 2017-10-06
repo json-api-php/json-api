@@ -1,151 +1,190 @@
 <?php
-/**
- *
- *  * This file is part of JSON:API implementation for PHP.
- *  *
- *  * (c) Alexey Karapetov <karapetov@gmail.com>
- *  *
- *  * For the full copyright and license information, please view the LICENSE
- *  * file that was distributed with this source code.
- *
- */
-
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document;
 
-use JsonApiPhp\JsonApi\Document\Document;
+use JsonApiPhp\JsonApi\Document;
 use JsonApiPhp\JsonApi\Document\Error;
-use JsonApiPhp\JsonApi\Document\Resource\NullData;
-use JsonApiPhp\JsonApi\Document\Resource\ResourceId;
-use JsonApiPhp\JsonApi\Test\HasAssertEqualsAsJson;
-use PHPUnit\Framework\TestCase;
+use JsonApiPhp\JsonApi\Document\Link\LinkObject;
+use JsonApiPhp\JsonApi\Document\Meta;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
+use JsonApiPhp\JsonApi\Test\BaseTestCase;
+use JsonApiPhp\JsonApi\Test\Document\Resource\Relationship\LinkageTest;
+use JsonApiPhp\JsonApi\Test\Document\Resource\ResourceTest;
 
-class DocumentTest extends TestCase
+/**
+ * This is the JSON document's top level object
+ */
+class DocumentTest extends BaseTestCase
 {
-    use HasAssertEqualsAsJson;
-
-    public function testCanCreateFromMeta()
+    /**
+     * A valid document may contain just a meta object.
+     */
+    public function testDocumentMayContainJustMeta()
     {
-        $this->assertEqualsAsJson(
-            ['meta' => ['foo' => 'bar']],
-            Document::fromMeta(['foo' => 'bar'])
-        );
-    }
-
-    public function testCanCreateFromErrors()
-    {
-        $this->assertEqualsAsJson(
-            ['errors' => []],
-            Document::fromErrors()
-        );
-
-        $this->assertEqualsAsJson(
-            [
-                'errors' => [
-                    ['id' => 'first'],
-                ],
-            ],
-            $this->createErrorDoc()
-        );
-    }
-
-    public function testCanCreateNullDocument()
-    {
-        $this->assertEqualsAsJson(
-            ['data' => null],
-            $this->createNullDoc()
-        );
-    }
-
-    public function testCanCreateFromResourceId()
-    {
-        $this->assertEqualsAsJson(
-            [
-                'data' => [
-                    'type' => 'books',
-                    'id' => 'abc123',
-                ],
-            ],
-            Document::fromResource(new ResourceId('books', 'abc123'))
-        );
-    }
-
-    public function testCanCreateFromMultipleItems()
-    {
-        $this->assertEqualsAsJson(
-            [
-                'data' => [],
-            ],
-            Document::fromResources()
-        );
-
-        $this->assertEqualsAsJson(
-            [
-                'data' => [
-                    [
-                        'type' => 'books',
-                        'id' => '12',
-                    ],
-                    [
-                        'type' => 'carrots',
-                        'id' => '42',
-                    ],
-                ],
-            ],
-            Document::fromResources(
-                new ResourceId('books', '12'),
-                new ResourceId('carrots', '42')
+        $this->assertEncodesTo(
+            '
+            {
+                "meta": {
+                    "foo": "bar"
+                }
+            }
+            ',
+            Document::fromMeta(
+                Meta::fromArray(['foo' => 'bar'])
             )
         );
     }
 
-    public function testDocumentMayContainVersion()
+    /**
+     * A valid document may contain just an array of errors.
+     * The array of errors may even be empty, the documentation does not explicitly restrict it.
+     */
+    public function testDocumentMayContainJustErrors()
     {
-        $doc = $this->createNullDoc();
-        $doc->setApiVersion('1.2.3');
-        $doc->setApiMeta(['a' => 'b']);
-        $this->assertEqualsAsJson(
-            [
-                'data' => null,
-                'jsonapi' => [
-                    'version' => '1.2.3',
-                    'meta' => ['a' => 'b'],
-                ],
-            ],
-            $doc
+        $this->assertEncodesTo(
+            '
+            {
+                "errors": [
+                    {
+                        "id": "first"
+                    }
+                ]
+            }
+            ',
+            Document::fromErrors(new Error('first'))
+        );
+
+        $this->assertEncodesTo(
+            '
+            {
+                "errors": []
+            }
+            ',
+            Document::fromErrors()
         );
     }
 
-    public function testDocumentMayContainLinks()
+    /**
+     * A valid document may contain just a primary data object.
+     * The primary data object is represented by ResourceInterface (@see ResourceTest for details).
+     * Here is how a document can be created from different kinds of resources:
+     * - null resource
+     * - resource identifier
+     * - full-fledged resource object
+     * - an array of resource objects/identifiers
+     */
+    public function testDocumentMayContainJustData()
     {
-        $doc = $this->createNullDoc();
+        $this->assertEncodesTo(
+            '
+            {
+                "data": null
+            }
+            ',
+            Document::nullDocument(),
+            'The simplest document possible contains null'
+        );
+
+        $this->assertEncodesTo(
+            '
+            {
+                "data": {
+                    "type": "books",
+                    "id": "abc123"
+                }
+            }        
+            ',
+            Document::fromIdentifier(new ResourceIdentifier('books', 'abc123')),
+            'Resource identifier can be used as primary data'
+        );
+
+        $apple = new ResourceObject('apples', '007');
+        $apple->setAttribute('color', 'red');
+        $this->assertEncodesTo(
+            '
+            {
+                "data": {
+                    "type": "apples",
+                    "id": "007",
+                    "attributes": {
+                        "color": "red"
+                    }
+                }
+            }        
+            ',
+            Document::fromResource($apple),
+            'Full-fledged resource object'
+        );
+
+        $this->assertEncodesTo(
+            '
+            {
+                "data": [
+                    {
+                        "type": "books",
+                        "id": "12"
+                    },
+                    {
+                        "type": "carrots",
+                        "id": "42"
+                    }
+                ]
+            }
+            ',
+            Document::fromIdentifiers(
+                new ResourceIdentifier('books', '12'),
+                new ResourceIdentifier('carrots', '42')
+            ),
+            'An array of resource identifiers'
+        );
+    }
+
+    /**
+     * When a document is created, it is possible to add more stuff to it:
+     * - API details
+     * - meta
+     * - links (@see LinkageTest for details)
+     */
+    public function testDocumentCanHaveExtraProperties()
+    {
+        $doc = Document::fromIdentifier(
+            new ResourceIdentifier('apples', '42')
+        );
+        $doc->setApiVersion('1.0');
+        $doc->setApiMeta(Meta::fromArray(['a' => 'b']));
+        $doc->setMeta(Meta::fromArray(['test' => 'test']));
         $doc->setLink('self', 'http://example.com/self');
-        $doc->setLink('related', 'http://example.com/rel', ['a' => 'b']);
-        $this->assertEqualsAsJson(
-            [
-                'data' => null,
-                'links' => [
-                    'self' => 'http://example.com/self',
-                    'related' => [
-                        'href' => 'http://example.com/rel',
-                        'meta' => ['a' => 'b'],
-                    ],
-                ],
-            ],
+        $doc->setLinkObject('related', new LinkObject('http://example.com/rel', Meta::fromArray(['foo' => 'bar'])));
+        $this->assertEncodesTo(
+            '
+            {
+                "data": {
+                    "type": "apples",
+                    "id": "42"
+                },
+                "meta": {
+                    "test": "test"
+                },
+                "jsonapi": {
+                    "version": "1.0",
+                    "meta": {
+                        "a": "b"
+                    }
+                },
+                "links": {
+                    "self": "http://example.com/self",
+                    "related": {
+                        "href": "http://example.com/rel",
+                        "meta": {
+                            "foo": "bar"
+                        }
+                    }
+                }
+            }
+            ',
             $doc
         );
-    }
-
-    private function createErrorDoc(): Document
-    {
-        $e = new Error();
-        $e->setId('first');
-        return Document::fromErrors($e);
-    }
-
-    private function createNullDoc(): Document
-    {
-        return Document::fromResource(new NullData);
     }
 }
