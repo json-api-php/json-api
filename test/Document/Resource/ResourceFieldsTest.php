@@ -47,7 +47,7 @@ class ResourceFieldsTest extends TestCase
      * @param string $name
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Can not use a reserved name
-     * @dataProvider             invalidAttributeNames
+     * @dataProvider             reservedAttributeNames
      */
     public function testAttributeCanNotHaveReservedNames(string $name)
     {
@@ -59,7 +59,7 @@ class ResourceFieldsTest extends TestCase
      * @param string $name
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Can not use a reserved name
-     * @dataProvider             invalidAttributeNames
+     * @dataProvider             reservedAttributeNames
      */
     public function testRelationshipCanNotHaveReservedNames(string $name)
     {
@@ -67,11 +67,64 @@ class ResourceFieldsTest extends TestCase
         $res->setRelationship($name, Relationship::fromMeta(Meta::fromArray(['a' => 'b'])));
     }
 
-    public function invalidAttributeNames(): array
+    /**
+     * @param string $name
+     * @expectedException \OutOfBoundsException
+     * @expectedExceptionMessage Not a valid attribute name
+     * @dataProvider             invalidAttributeNames
+     */
+    public function testAttributeNameIsNotValid(string $name)
+    {
+        $res = new ResourceObject('books', 'abc');
+        $res->setAttribute($name, 1);
+    }
+    
+    /**
+     * @param string $name
+     * @dataProvider             validAttributeNames
+     */
+    public function testAttributeNameIsValid(string $name)
+    {
+        $res = new ResourceObject('books', 'abc');
+        $res->setAttribute($name, 1);
+    }
+    
+    public function reservedAttributeNames(): array
     {
         return [
             ['id'],
             ['type'],
+        ];
+    }
+    
+    public function invalidAttributeNames(): array
+    {
+        return [
+            ['_abcde'],
+            ['abcd_'],
+            ['abc$EDS'],
+            ['#abcde'],
+            ['abcde('],
+            ['b_'],
+            ['_a'],
+            ['$ab_c-d'],
+            ['-abc'],
+        ];
+    }
+    
+    public function validAttributeNames(): array
+    {
+        return [
+            ['abcd'],
+            ['abcA4C'],
+            ['abc_d3f45'],
+            ['abd_eca'],
+            ['a'],
+            ['b'],
+            ['ab'],
+            ['a-bc_de'],
+            ['abcéêçèÇ_n'],
+            ['abc 汉字 abc'],
         ];
     }
 }
