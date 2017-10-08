@@ -87,6 +87,7 @@ class ResourceFieldsTest extends TestCase
     {
         $res = new ResourceObject('books', 'abc');
         $res->setAttribute($name, 1);
+        $this->assertTrue(true);
     }
     
     public function reservedAttributeNames(): array
