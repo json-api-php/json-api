@@ -78,7 +78,7 @@ class ResourceFieldsTest extends TestCase
         $res = new ResourceObject('books', 'abc');
         $res->setAttribute($name, 1);
     }
-    
+
     /**
      * @param string $name
      * @dataProvider             validAttributeNames
@@ -89,7 +89,7 @@ class ResourceFieldsTest extends TestCase
         $res->setAttribute($name, 1);
         $this->assertTrue(true);
     }
-    
+
     public function reservedAttributeNames(): array
     {
         return [
@@ -97,7 +97,7 @@ class ResourceFieldsTest extends TestCase
             ['type'],
         ];
     }
-    
+
     public function invalidAttributeNames(): array
     {
         return [
@@ -112,7 +112,7 @@ class ResourceFieldsTest extends TestCase
             ['-abc'],
         ];
     }
-    
+
     public function validAttributeNames(): array
     {
         return [
