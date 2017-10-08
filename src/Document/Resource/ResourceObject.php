@@ -37,6 +37,9 @@ class ResourceObject implements \JsonSerializable
         if ($this->isReservedName($name)) {
             throw new \InvalidArgumentException('Can not use a reserved name');
         }
+        if (!$this->isValidMemberName($name)) {
+            throw new \OutOfBoundsException('Not a valid attribute name');
+        }
         if (isset($this->relationships[$name])) {
             throw new \LogicException("Field $name already exists in relationships");
         }
@@ -91,5 +94,10 @@ class ResourceObject implements \JsonSerializable
     private function isReservedName(string $name): bool
     {
         return in_array($name, ['id', 'type']);
+    }
+    
+    private function isValidMemberName(string $name): bool
+    {
+        return preg_match('/^(?=[^-_ ])[a-zA-Z0-9\x{0080}-\x{FFFF}-_ ]*(?<=[^-_ ])$/u', $name);
     }
 }
