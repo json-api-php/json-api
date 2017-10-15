@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\Document\Link\Link;
+use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use PHPUnit\Framework\TestCase;
@@ -43,6 +44,48 @@ class MemberNamesTest extends TestCase
     {
         $res = new ResourceObject('books', 'abc');
         $res->setRelationship($name, Relationship::fromSelfLink(new Link('https://example.com')));
+    }
+
+    /**
+     * @param string $name
+     * @expectedException \OutOfBoundsException
+     * @expectedExceptionMessage Not a valid attribute name
+     * @dataProvider             invalidAttributeNames
+     */
+    public function testInvalidMetaNames(string $name)
+    {
+        Meta::fromArray(
+            [
+                'copyright' => 'Copyright 2015 Example Corp.',
+                'authors' => [
+                    [
+                        'firstname' => 'Yehuda',
+                        $name => 'Katz',
+                    ],
+                ],
+            ]
+        );
+    }
+
+    /**
+     * @param string $name
+     * @dataProvider             validAttributeNames
+     */
+    public function testValidMetaNames(string $name)
+    {
+        $meta = Meta::fromArray(
+            [
+                'copyright' => 'Copyright 2015 Example Corp.',
+                'authors' => [
+                    [
+                        'firstname' => 'Yehuda',
+                        $name => 'Katz',
+                    ],
+                ],
+            ]
+        );
+
+        $this->assertInternalType('string', json_encode($meta));
     }
 
     /**
