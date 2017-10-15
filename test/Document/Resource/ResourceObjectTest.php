@@ -39,7 +39,6 @@ class ResourceObjectTest extends BaseTestCase
      * - meta: a meta object containing non-standard meta-information about a resource
      *   that can not be represented as an attribute or relationship.
      */
-
     public function testResourceObjectMayContainAttributes()
     {
         $apple = new ResourceObject('apples', '1');

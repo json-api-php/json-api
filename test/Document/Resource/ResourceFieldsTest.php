@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource;
 
-use JsonApiPhp\JsonApi\Document\Link\Link;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
