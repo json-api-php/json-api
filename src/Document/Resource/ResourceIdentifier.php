@@ -7,8 +7,19 @@ use JsonApiPhp\JsonApi\Document\Meta;
 
 class ResourceIdentifier implements \JsonSerializable
 {
+    /**
+     * @var string
+     */
     private $type;
+
+    /**
+     * @var string
+     */
     private $id;
+
+    /**
+     * @var Meta
+     */
     private $meta;
 
     public function __construct(string $type, string $id, Meta $meta = null)

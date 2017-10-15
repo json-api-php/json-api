@@ -11,7 +11,7 @@ use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 use JsonApiPhp\JsonApi\Test\Document\Resource\Relationship\LinkageTest;
-use JsonApiPhp\JsonApi\Test\Document\Resource\ResourceTest;
+use JsonApiPhp\JsonApi\Test\Document\Resource\ResourceObjectTest;
 
 /**
  * This is the JSON document's top level object
@@ -68,7 +68,7 @@ class DocumentTest extends BaseTestCase
 
     /**
      * A valid document may contain just a primary data object.
-     * The primary data object is represented by ResourceInterface (@see ResourceTest for details).
+     * The primary data object is represented by ResourceInterface (@see ResourceObjectTest for details).
      * Here is how a document can be created from different kinds of resources:
      * - null resource
      * - resource identifier

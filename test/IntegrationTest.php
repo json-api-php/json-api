@@ -5,7 +5,7 @@ namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\Document;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\SingleLinkage;
-use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
+use JsonApiPhp\JsonApi\Document\Resource\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use PHPUnit\Framework\TestCase;
