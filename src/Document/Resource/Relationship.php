@@ -1,14 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Document\Resource\Relationship;
+namespace JsonApiPhp\JsonApi\Document\Resource;
 
 use JsonApiPhp\JsonApi\Document\Link\LinkInterface;
 use JsonApiPhp\JsonApi\Document\LinksTrait;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\MetaTrait;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\LinkageInterface;
-use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 
 final class Relationship implements \JsonSerializable
 {

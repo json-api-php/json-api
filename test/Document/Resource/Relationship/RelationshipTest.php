@@ -6,8 +6,8 @@ namespace JsonApiPhp\JsonApi\Test\Document\Resource\Relationship;
 use JsonApiPhp\JsonApi\Document\Link\Link;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\NullLinkage;
+use JsonApiPhp\JsonApi\Document\Resource\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
-use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
 /**
@@ -52,7 +52,7 @@ class RelationshipTest extends BaseTestCase
                 }
             }
             ',
-            Relationship::fromSelfLink(new Link('http://localhost'))
+            \JsonApiPhp\JsonApi\Document\Resource\Relationship::fromSelfLink(new Link('http://localhost'))
         );
     }
 
@@ -66,7 +66,7 @@ class RelationshipTest extends BaseTestCase
                 }
             }        
            ',
-            Relationship::fromRelatedLink(new Link('http://localhost'))
+            \JsonApiPhp\JsonApi\Document\Resource\Relationship::fromRelatedLink(new Link('http://localhost'))
         );
     }
 
@@ -78,7 +78,7 @@ class RelationshipTest extends BaseTestCase
                 "data": null
             }
             ',
-            Relationship::fromLinkage(new NullLinkage())
+            \JsonApiPhp\JsonApi\Document\Resource\Relationship::fromLinkage(new NullLinkage())
         );
     }
 

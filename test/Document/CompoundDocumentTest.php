@@ -7,7 +7,7 @@ use JsonApiPhp\JsonApi\Document;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\MultiLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\SingleLinkage;
-use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
+use JsonApiPhp\JsonApi\Document\Resource\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
@@ -159,12 +159,24 @@ class CompoundDocumentTest extends BaseTestCase
     /**
      * @expectedException \LogicException
      * @expectedExceptionMessage Full linkage is required for apples:1
+     * @dataProvider             documentsWithoutFullLinkage
+     * @param Document $doc
      */
-    public function testFullLinkageIsRequired()
+    public function testFullLinkageIsRequired(Document $doc)
     {
-        $doc = Document::nullDocument();
         $doc->setIncluded(new ResourceObject('apples', '1'));
         json_encode($doc);
+    }
+
+    public function documentsWithoutFullLinkage(): array
+    {
+        return [
+            [Document::nullDocument()],
+            [Document::fromIdentifier(new ResourceIdentifier('oranges', '1'))],
+            [Document::fromIdentifiers(new ResourceIdentifier('oranges', '1'), new ResourceIdentifier('oranges', '2'))],
+            [Document::fromResource(new ResourceObject('oranges', '1'))],
+            [Document::fromResources(new ResourceObject('oranges', '1'), new ResourceObject('oranges', '1'))],
+        ];
     }
 
     /**

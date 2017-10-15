@@ -5,7 +5,6 @@ namespace JsonApiPhp\JsonApi\Document\Resource;
 
 use JsonApiPhp\JsonApi\Document\LinksTrait;
 use JsonApiPhp\JsonApi\Document\Meta;
-use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
 
 class ResourceObject implements \JsonSerializable
 {
@@ -35,13 +34,13 @@ class ResourceObject implements \JsonSerializable
     public function setAttribute(string $name, $value)
     {
         if ($this->isReservedName($name)) {
-            throw new \InvalidArgumentException('Can not use a reserved name');
+            throw new \InvalidArgumentException("Can not use a reserved name '$name'");
         }
         if (!$this->isValidMemberName($name)) {
-            throw new \OutOfBoundsException('Not a valid attribute name');
+            throw new \OutOfBoundsException("Not a valid attribute name '$name'");
         }
         if (isset($this->relationships[$name])) {
-            throw new \LogicException("Field $name already exists in relationships");
+            throw new \LogicException("Field '$name' already exists in relationships");
         }
         $this->attributes[$name] = $value;
     }
@@ -49,10 +48,13 @@ class ResourceObject implements \JsonSerializable
     public function setRelationship(string $name, Relationship $relationship)
     {
         if ($this->isReservedName($name)) {
-            throw new \InvalidArgumentException('Can not use a reserved name');
+            throw new \InvalidArgumentException("Can not use a reserved name '$name'");
+        }
+        if (!$this->isValidMemberName($name)) {
+            throw new \OutOfBoundsException("Not a valid attribute name '$name'");
         }
         if (isset($this->attributes[$name])) {
-            throw new \LogicException("Field $name already exists in attributes");
+            throw new \LogicException("Field '$name' already exists in attributes");
         }
         $this->relationships[$name] = $relationship;
     }

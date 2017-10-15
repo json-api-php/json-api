@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test\Document\Resource;
 
 use JsonApiPhp\JsonApi\Document\Meta;
-use JsonApiPhp\JsonApi\Document\Resource\Relationship\Relationship;
+use JsonApiPhp\JsonApi\Document\Resource\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +23,7 @@ class ResourceFieldsTest extends TestCase
 {
     /**
      * @expectedException \LogicException
-     * @expectedExceptionMessage Field foo already exists in attributes
+     * @expectedExceptionMessage Field 'foo' already exists in attributes
      */
     public function testCanNotSetRelationshipIfAttributeExists()
     {
@@ -34,7 +34,7 @@ class ResourceFieldsTest extends TestCase
 
     /**
      * @expectedException \LogicException
-     * @expectedExceptionMessage Field foo already exists in relationships
+     * @expectedExceptionMessage Field 'foo' already exists in relationships
      */
     public function testCanNotSetAttributeIfRelationshipExists()
     {
@@ -67,65 +67,11 @@ class ResourceFieldsTest extends TestCase
         $res->setRelationship($name, Relationship::fromMeta(Meta::fromArray(['a' => 'b'])));
     }
 
-    /**
-     * @param string $name
-     * @expectedException \OutOfBoundsException
-     * @expectedExceptionMessage Not a valid attribute name
-     * @dataProvider             invalidAttributeNames
-     */
-    public function testAttributeNameIsNotValid(string $name)
-    {
-        $res = new ResourceObject('books', 'abc');
-        $res->setAttribute($name, 1);
-    }
-
-    /**
-     * @param string $name
-     * @dataProvider             validAttributeNames
-     */
-    public function testAttributeNameIsValid(string $name)
-    {
-        $res = new ResourceObject('books', 'abc');
-        $res->setAttribute($name, 1);
-        $this->assertTrue(true);
-    }
-
     public function reservedAttributeNames(): array
     {
         return [
             ['id'],
             ['type'],
-        ];
-    }
-
-    public function invalidAttributeNames(): array
-    {
-        return [
-            ['_abcde'],
-            ['abcd_'],
-            ['abc$EDS'],
-            ['#abcde'],
-            ['abcde('],
-            ['b_'],
-            ['_a'],
-            ['$ab_c-d'],
-            ['-abc'],
-        ];
-    }
-
-    public function validAttributeNames(): array
-    {
-        return [
-            ['abcd'],
-            ['abcA4C'],
-            ['abc_d3f45'],
-            ['abd_eca'],
-            ['a'],
-            ['b'],
-            ['ab'],
-            ['a-bc_de'],
-            ['abcéêçèÇ_n'],
-            ['abc 汉字 abc'],
         ];
     }
 }
