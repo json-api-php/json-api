@@ -29,6 +29,6 @@
     }
   },
   "scripts": {
-    "test": "php-cs-fixer fix -v --dry-run --ansi && phpunit --colors=always --coverage-text && doc2test"
+    "test": "php-cs-fixer fix -v --dry-run --ansi && phpunit --colors=always --coverage-text"
   }
 }
