@@ -3,7 +3,7 @@ This library is an attempt to express business rules of JSON API specification i
 
 A simple example to illustrate the general idea. This JSON representation from
 [the documentation](http://jsonapi.org/format/#document-resource-objects)
-
+<!-- name=my_json -->
 ```json
 {
     "data": {
@@ -28,19 +28,20 @@ A simple example to illustrate the general idea. This JSON representation from
 }
 ```
 can be built with the following php code (less imports):
+<!-- assert=output expect=my_json -->
 ```php
 <?php
-$articles = new ResourceObject('articles', '1');
-$author = Relationship::fromLinkage(
-    new SingleLinkage(
-        new ResourceIdentifier('people', '9')
+$articles = new \JsonApiPhp\JsonApi\Document\Resource\ResourceObject('articles', '1');
+$author = \JsonApiPhp\JsonApi\Document\Resource\Relationship::fromLinkage(
+    new \JsonApiPhp\JsonApi\Document\Resource\Linkage\SingleLinkage(
+        new \JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier('people', '9')
     )
 );
 $author->setLink('self', '/articles/1/relationships/author');
 $author->setLink('related','/articles/1/author');
 $articles->setRelationship('author', $author);
 $articles->setAttribute('title', 'Rails is Omakase');
-$doc = Document::fromResource($articles);
+$doc = \JsonApiPhp\JsonApi\Document::fromResource($articles);
 echo json_encode($doc, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 ```
 

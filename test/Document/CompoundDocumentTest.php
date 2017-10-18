@@ -77,10 +77,18 @@ class CompoundDocumentTest extends BaseTestCase
 
         $doc = Document::fromResources($article);
         $doc->setIncluded($dan, $comment05, $comment12);
+        $doc->setLink('self', 'http://example.com/articles');
+        $doc->setLink('next', 'http://example.com/articles?page[offset]=2');
+        $doc->setLink('last', 'http://example.com/articles?page[offset]=10');
 
         $this->assertEncodesTo(
             '
             {
+              "links": {
+                "self": "http://example.com/articles",
+                "next": "http://example.com/articles?page[offset]=2",
+                "last": "http://example.com/articles?page[offset]=10"
+              },
               "data": [{
                 "type": "articles",
                 "id": "1",
