@@ -16,7 +16,7 @@ trait LinksTrait
     public function setLink(string $name, string $url)
     {
         $this->init();
-        $this->links->set(new MemberName($name),  new Link($url));
+        $this->links->set(new MemberName($name), new Link($url));
     }
 
     public function setLinkObject(string $name, LinkInterface $link)
@@ -27,7 +27,7 @@ trait LinksTrait
 
     private function init()
     {
-        if (!$this->links) {
+        if (! $this->links) {
             $this->links = new Container();
         }
     }
