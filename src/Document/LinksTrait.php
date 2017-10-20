@@ -9,17 +9,26 @@ use JsonApiPhp\JsonApi\Document\Link\LinkInterface;
 trait LinksTrait
 {
     /**
-     * @var LinkInterface[]
+     * @var Container|null
      */
     protected $links;
 
     public function setLink(string $name, string $url)
     {
-        $this->links[$name] = new Link($url);
+        $this->init();
+        $this->links->set(new MemberName($name),  new Link($url));
     }
 
     public function setLinkObject(string $name, LinkInterface $link)
     {
-        $this->links[$name] = $link;
+        $this->init();
+        $this->links->set(new MemberName($name), $link);
+    }
+
+    private function init()
+    {
+        if (!$this->links) {
+            $this->links = new Container();
+        }
     }
 }

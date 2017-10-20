@@ -14,7 +14,7 @@ class MemberNamesTest extends TestCase
     /**
      * @param string $name
      * @expectedException \OutOfBoundsException
-     * @expectedExceptionMessage Not a valid attribute name
+     * @expectedExceptionMessage Invalid member name
      * @dataProvider             invalidAttributeNames
      */
     public function testInvalidAttributeNamesAreNotAllowed(string $name)
@@ -24,20 +24,22 @@ class MemberNamesTest extends TestCase
     }
 
     /**
+     * The values of type members MUST adhere to the same constraints as member names.
+     *
      * @param string $name
-     * @dataProvider             validAttributeNames
+     * @expectedException \OutOfBoundsException
+     * @expectedExceptionMessage Invalid resource type
+     * @dataProvider             invalidAttributeNames
      */
-    public function testValidAttributeNamesCanBeSet(string $name)
+    public function testInvalidTypesAreNotAllowed(string $name)
     {
-        $res = new ResourceObject('books', 'abc');
-        $res->setAttribute($name, 1);
-        $this->assertInternalType('string', json_encode($res));
+        new ResourceObject($name, 'abc');
     }
 
     /**
      * @param string $name
      * @expectedException \OutOfBoundsException
-     * @expectedExceptionMessage Not a valid attribute name
+     * @expectedExceptionMessage Invalid member name
      * @dataProvider             invalidAttributeNames
      */
     public function testInvalidRelationshipNamesAreNotAllowed(string $name)
@@ -49,7 +51,7 @@ class MemberNamesTest extends TestCase
     /**
      * @param string $name
      * @expectedException \OutOfBoundsException
-     * @expectedExceptionMessage Not a valid attribute name
+     * @expectedExceptionMessage Invalid member name
      * @dataProvider             invalidAttributeNames
      */
     public function testInvalidMetaNames(string $name)
@@ -67,38 +69,6 @@ class MemberNamesTest extends TestCase
         );
     }
 
-    /**
-     * @param string $name
-     * @dataProvider             validAttributeNames
-     */
-    public function testValidMetaNames(string $name)
-    {
-        $meta = Meta::fromArray(
-            [
-                'copyright' => 'Copyright 2015 Example Corp.',
-                'authors' => [
-                    [
-                        'firstname' => 'Yehuda',
-                        $name => 'Katz',
-                    ],
-                ],
-            ]
-        );
-
-        $this->assertInternalType('string', json_encode($meta));
-    }
-
-    /**
-     * @param string $name
-     * @dataProvider             validAttributeNames
-     */
-    public function testValidRelationshipNamesCanBeSet(string $name)
-    {
-        $res = new ResourceObject('books', 'abc');
-        $res->setRelationship($name, Relationship::fromSelfLink(new Link('https://example.com')));
-        $this->assertInternalType('string', json_encode($res));
-    }
-
     public function invalidAttributeNames(): array
     {
         return [
@@ -111,22 +81,6 @@ class MemberNamesTest extends TestCase
             ['_a'],
             ['$ab_c-d'],
             ['-abc'],
-        ];
-    }
-
-    public function validAttributeNames(): array
-    {
-        return [
-            ['abcd'],
-            ['abcA4C'],
-            ['abc_d3f45'],
-            ['abd_eca'],
-            ['a'],
-            ['b'],
-            ['ab'],
-            ['a-bc_de'],
-            ['abcéêçèÇ_n'],
-            ['abc 汉字 abc'],
         ];
     }
 }
