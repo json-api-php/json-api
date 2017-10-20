@@ -5,13 +5,14 @@ namespace JsonApiPhp\JsonApi\Document;
 
 class Meta implements \JsonSerializable
 {
+    /**
+     * @var Container
+     */
     private $data;
 
     public function __construct(\stdClass $data)
     {
-        $this->validateObject($data);
-
-        $this->data = $data;
+        $this->data = $this->toContainer($data);
     }
 
     public static function fromArray(array $array): self
@@ -24,21 +25,43 @@ class Meta implements \JsonSerializable
         return $this->data;
     }
 
-    private function validateObject($object)
+    private function toContainer($object): Container
     {
+        $c = new Container();
         foreach ($object as $name => $value) {
-            if (is_string($name) && !$this->isValidMemberName($name)) {
-                throw new \OutOfBoundsException("Not a valid attribute name '$name'");
+            if (is_object($object)) {
+                $name = (string) $name;
             }
-
-            if (is_array($value) || $value instanceof \stdClass) {
-                $this->validateObject($value);
+            if ($this->canConvert($value)) {
+                $value = $this->toContainer($value);
+            } else {
+                $value = $this->traverse($value);
             }
+            $c->set(new MemberName($name), $value);
         }
+        return $c;
     }
 
-    private function isValidMemberName(string $name): bool
+    private function traverse($value)
     {
-        return preg_match('/^(?=[^-_ ])[a-zA-Z0-9\x{0080}-\x{FFFF}-_ ]*(?<=[^-_ ])$/u', $name) === 1;
+        if ($this->canConvert($value)) {
+            return $this->toContainer($value);
+        }
+        if (is_array($value)) {
+            foreach ($value as $k => $v) {
+                $value[$k] = $this->traverse($v);
+            }
+        }
+        return $value;
+    }
+
+    private function canConvert($v): bool
+    {
+        return is_object($v)
+            || (
+                is_array($v)
+                && $v !== []
+                && array_keys($v) !== range(0, count($v) - 1)
+            );
     }
 }
