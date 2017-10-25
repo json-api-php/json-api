@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource;
 
-use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
@@ -39,7 +38,7 @@ class ResourceIdentifierTest extends BaseTestCase
                 }
             }
             ',
-            new ResourceIdentifier('books', '1', Meta::fromArray(['foo' => 'bar']))
+            new ResourceIdentifier('books', '1', ['foo' => 'bar'])
         );
     }
 }

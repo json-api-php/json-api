@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
 
+use function JsonApiPhp\JsonApi\filterNulls;
+
 final class Error implements \JsonSerializable
 {
     use MetaTrait;
@@ -65,20 +67,15 @@ final class Error implements \JsonSerializable
 
     public function jsonSerialize()
     {
-        return array_filter(
-            [
-                'id' => $this->id,
-                'links' => $this->links,
-                'status' => $this->status,
-                'code' => $this->code,
-                'title' => $this->title,
-                'detail' => $this->detail,
-                'source' => $this->source,
-                'meta' => $this->meta,
-            ],
-            function ($v) {
-                return null !== $v;
-            }
-        ) ?: (object) [];
+        return filterNulls([
+            'id' => $this->id,
+            'links' => $this->links,
+            'status' => $this->status,
+            'code' => $this->code,
+            'title' => $this->title,
+            'detail' => $this->detail,
+            'source' => $this->source,
+            'meta' => $this->meta,
+        ]) ?: (object) [];
     }
 }

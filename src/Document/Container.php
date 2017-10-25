@@ -3,25 +3,31 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
 
-class Container implements \JsonSerializable, \IteratorAggregate
+use function JsonApiPhp\JsonApi\isValidMemberName;
+
+final class Container implements \JsonSerializable
 {
     private $data;
 
-    public function set(MemberName $name, $value)
+    public function __construct(iterable $data = null)
     {
-        if (! $this->data) {
-            $this->data = (object) [];
+        if ($data) {
+            foreach ($data as $k => $v) {
+                $this->set((string) $k, $v);
+            }
         }
-        $this->data->$name = $value;
     }
 
-    public function getIterator(): \Traversable
+    public function set(string $name, $value)
     {
-        return $this->data;
+        if (! isValidMemberName($name)) {
+            throw new \OutOfBoundsException("Invalid member name '$name'");
+        }
+        $this->data[$name] = $value;
     }
 
     public function jsonSerialize()
     {
-        return $this->data;
+        return (object) $this->data;
     }
 }

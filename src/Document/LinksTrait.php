@@ -3,32 +3,16 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
 
-use JsonApiPhp\JsonApi\Document\Link\Link;
-use JsonApiPhp\JsonApi\Document\Link\LinkInterface;
-
 trait LinksTrait
 {
     /**
-     * @var Container|null
+     * @var Container
      */
     protected $links;
 
-    public function setLink(string $name, string $url)
+    public function setLink(string $name, string $url, iterable $meta = null)
     {
-        $this->init();
-        $this->links->set(new MemberName($name), new Link($url));
-    }
-
-    public function setLinkObject(string $name, LinkInterface $link)
-    {
-        $this->init();
-        $this->links->set(new MemberName($name), $link);
-    }
-
-    private function init()
-    {
-        if (! $this->links) {
-            $this->links = new Container();
-        }
+        $this->links = $this->links ?: new Container();
+        $this->links->set($name, $meta ? ['meta' => new Container($meta), 'href' => $url] : $url);
     }
 }
