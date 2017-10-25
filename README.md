@@ -32,7 +32,9 @@ can be built with the following php code:
 ```php
 <?php
 use \JsonApiPhp\JsonApi\Document;
-use \JsonApiPhp\JsonApi\Document\Resource\{Linkage\SingleLinkage, Relationship, ResourceIdentifier, ResourceObject};
+use \JsonApiPhp\JsonApi\Document\Resource\{
+    Linkage\SingleLinkage, Relationship, ResourceIdentifier, ResourceObject
+};
 
 $author = Relationship::fromLinkage(new SingleLinkage(new ResourceIdentifier('people', '9')));
 $author->setLink('self', '/articles/1/relationships/author');
