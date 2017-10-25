@@ -5,8 +5,6 @@ namespace JsonApiPhp\JsonApi\Test\Document;
 
 use JsonApiPhp\JsonApi\Document;
 use JsonApiPhp\JsonApi\Document\Error;
-use JsonApiPhp\JsonApi\Document\Link\LinkObject;
-use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
@@ -31,9 +29,7 @@ class DocumentTest extends BaseTestCase
                 }
             }
             ',
-            Document::fromMeta(
-                Meta::fromArray(['foo' => 'bar'])
-            )
+            Document::fromMeta(['foo' => 'bar'])
         );
     }
 
@@ -153,10 +149,10 @@ class DocumentTest extends BaseTestCase
             new ResourceIdentifier('apples', '42')
         );
         $doc->setApiVersion('1.0');
-        $doc->setApiMeta(Meta::fromArray(['a' => 'b']));
-        $doc->setMeta(Meta::fromArray(['test' => 'test']));
+        $doc->setApiMeta(['a' => 'b']);
+        $doc->setMeta(['test' => 'test']);
         $doc->setLink('self', 'http://example.com/self');
-        $doc->setLinkObject('related', new LinkObject('http://example.com/rel', Meta::fromArray(['foo' => 'bar'])));
+        $doc->setLink('related', 'http://example.com/rel', ['foo' => 'bar']);
         $this->assertEncodesTo(
             '
             {

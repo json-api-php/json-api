@@ -7,8 +7,8 @@ trait MetaTrait
 {
     protected $meta;
 
-    public function setMeta(Meta $meta)
+    public function setMeta(iterable $meta): void
     {
-        $this->meta = $meta;
+        $this->meta = new Container($meta);
     }
 }

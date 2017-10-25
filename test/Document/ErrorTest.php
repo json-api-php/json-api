@@ -23,7 +23,7 @@ class ErrorTest extends BaseTestCase
         $e->setDetail('Nothing is found');
         $e->setSourcePointer('/data');
         $e->setSourceParameter('test_param');
-        $e->setMeta(Meta::fromArray(['foo' => 'bar']));
+        $e->setMeta(['foo' => 'bar']);
 
         $this->assertEncodesTo(
             '

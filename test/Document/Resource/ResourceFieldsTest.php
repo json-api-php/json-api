@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource;
 
-use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use PHPUnit\Framework\TestCase;
@@ -29,7 +28,7 @@ class ResourceFieldsTest extends TestCase
     {
         $res = new ResourceObject('books', '1');
         $res->setAttribute('foo', 'bar');
-        $res->setRelationship('foo', Relationship::fromMeta(Meta::fromArray(['a' => 'b'])));
+        $res->setRelationship('foo', Relationship::fromMeta(['a' => 'b']));
     }
 
     /**
@@ -39,7 +38,7 @@ class ResourceFieldsTest extends TestCase
     public function testCanNotSetAttributeIfRelationshipExists()
     {
         $res = new ResourceObject('books', '1');
-        $res->setRelationship('foo', Relationship::fromMeta(Meta::fromArray(['a' => 'b'])));
+        $res->setRelationship('foo', Relationship::fromMeta(['a' => 'b']));
         $res->setAttribute('foo', 'bar');
     }
 
@@ -64,7 +63,7 @@ class ResourceFieldsTest extends TestCase
     public function testRelationshipCanNotHaveReservedNames(string $name)
     {
         $res = new ResourceObject('books', 'abc');
-        $res->setRelationship($name, Relationship::fromMeta(Meta::fromArray(['a' => 'b'])));
+        $res->setRelationship($name, Relationship::fromMeta(['a' => 'b']));
     }
 
     public function reservedAttributeNames(): array
