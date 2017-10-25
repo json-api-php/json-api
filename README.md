@@ -34,10 +34,10 @@ can be built with the following php code:
 use \JsonApiPhp\JsonApi\Document;
 use \JsonApiPhp\JsonApi\Document\Resource\{Linkage\SingleLinkage, Relationship, ResourceIdentifier, ResourceObject};
 
-$articles = new ResourceObject('articles', '1');
 $author = Relationship::fromLinkage(new SingleLinkage(new ResourceIdentifier('people', '9')));
 $author->setLink('self', '/articles/1/relationships/author');
 $author->setLink('related', '/articles/1/author');
+$articles = new ResourceObject('articles', '1');
 $articles->setRelationship('author', $author);
 $articles->setAttribute('title', 'Rails is Omakase');
 echo json_encode(Document::fromResource($articles), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
