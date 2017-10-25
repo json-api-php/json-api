@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
+use JsonApiPhp\JsonApi\Document\Container;
 use JsonApiPhp\JsonApi\Document\Error;
 use JsonApiPhp\JsonApi\Document\LinksTrait;
-use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\MetaTrait;
 use JsonApiPhp\JsonApi\Document\PrimaryData\MultiIdentifierData;
 use JsonApiPhp\JsonApi\Document\PrimaryData\MultiResourceData;
@@ -16,7 +16,7 @@ use JsonApiPhp\JsonApi\Document\PrimaryData\SingleResourceData;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 
-class Document implements \JsonSerializable
+final class Document implements \JsonSerializable
 {
     const MEDIA_TYPE = 'application/vnd.api+json';
     const DEFAULT_API_VERSION = '1.0';
@@ -46,7 +46,7 @@ class Document implements \JsonSerializable
     {
     }
 
-    public static function fromMeta(Meta $meta): self
+    public static function fromMeta(iterable $meta): self
     {
         $doc = new self;
         $doc->setMeta($meta);
@@ -100,12 +100,12 @@ class Document implements \JsonSerializable
         $this->api['version'] = $version;
     }
 
-    public function setApiMeta(Meta $meta)
+    public function setApiMeta(iterable $meta): void
     {
-        $this->api['meta'] = $meta;
+        $this->api['meta'] = new Container($meta);
     }
 
-    public function setIncluded(ResourceObject ...$resources)
+    public function setIncluded(ResourceObject ...$resources): void
     {
         if (null === $this->data) {
             throw new \LogicException('Document with no data cannot contain included resources');
@@ -118,7 +118,7 @@ class Document implements \JsonSerializable
         }
     }
 
-    public function markSparse()
+    public function markSparse(): void
     {
         $this->sparse = true;
     }
@@ -126,22 +126,17 @@ class Document implements \JsonSerializable
     public function jsonSerialize()
     {
         $this->enforceFullLinkage();
-        return array_filter(
-            [
-                'data' => $this->data,
-                'errors' => $this->errors,
-                'meta' => $this->meta,
-                'jsonapi' => $this->api,
-                'links' => $this->links,
-                'included' => $this->included ? array_values($this->included) : null,
-            ],
-            function ($v) {
-                return null !== $v;
-            }
-        );
+        return filterNulls([
+            'data' => $this->data,
+            'errors' => $this->errors,
+            'meta' => $this->meta,
+            'jsonapi' => $this->api,
+            'links' => $this->links,
+            'included' => $this->included ? array_values($this->included) : null,
+        ]);
     }
 
-    private function enforceFullLinkage()
+    private function enforceFullLinkage(): void
     {
         if ($this->sparse || empty($this->included)) {
             return;

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource;
 
-use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\SingleLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship;
 use JsonApiPhp\JsonApi\Document\Resource\ResourceIdentifier;
@@ -91,7 +90,7 @@ class ResourceObjectTest extends BaseTestCase
     public function testResourceObjectMayContainMeta()
     {
         $article = new ResourceObject('articles', '1');
-        $article->setMeta(Meta::fromArray(['tags' => ['cool', 'new']]));
+        $article->setMeta(['tags' => ['cool', 'new']]);
         $this->assertEncodesTo(
             '
             {

@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
-use JsonApiPhp\JsonApi\Document\Meta;
+use JsonApiPhp\JsonApi\Document\Container;
+use function JsonApiPhp\JsonApi\filterNulls;
+use function JsonApiPhp\JsonApi\isValidResourceType;
 
-class ResourceIdentifier implements \JsonSerializable
+final class ResourceIdentifier implements \JsonSerializable
 {
     /**
      * @var string
@@ -17,30 +19,27 @@ class ResourceIdentifier implements \JsonSerializable
      */
     private $id;
 
-    /**
-     * @var Meta
-     */
     private $meta;
 
-    public function __construct(string $type, string $id, Meta $meta = null)
+    public function __construct(string $type, string $id, iterable $meta = null)
     {
+        if (! isValidResourceType($type)) {
+            throw new \OutOfBoundsException("Invalid resource type '$type'");
+        }
         $this->type = $type;
         $this->id = $id;
-        $this->meta = $meta;
+        if ($meta) {
+            $this->meta = new Container($meta);
+        }
     }
 
     public function jsonSerialize()
     {
-        return array_filter(
-            [
-                'type' => $this->type,
-                'id' => $this->id,
-                'meta' => $this->meta,
-            ],
-            function ($v) {
-                return null !== $v;
-            }
-        );
+        return filterNulls([
+            'type' => $this->type,
+            'id' => $this->id,
+            'meta' => $this->meta,
+        ]);
     }
 
     public function identifies(ResourceObject $resource): bool
@@ -48,13 +47,13 @@ class ResourceIdentifier implements \JsonSerializable
         return $resource->toIdentifier()->equals($this);
     }
 
-    public function __toString(): string
-    {
-        return "$this->type:$this->id";
-    }
-
     private function equals(ResourceIdentifier $that)
     {
         return $this->type === $that->type && $this->id === $that->id;
+    }
+
+    public function __toString(): string
+    {
+        return "$this->type:$this->id";
     }
 }

@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
+use JsonApiPhp\JsonApi\Document\Container;
 use JsonApiPhp\JsonApi\Document\LinksTrait;
-use JsonApiPhp\JsonApi\Document\Meta;
+use function JsonApiPhp\JsonApi\filterNulls;
+use function JsonApiPhp\JsonApi\isValidMemberName;
+use function JsonApiPhp\JsonApi\isValidResourceType;
 
-class ResourceObject implements \JsonSerializable
+final class ResourceObject implements \JsonSerializable
 {
     use LinksTrait;
 
@@ -22,13 +25,16 @@ class ResourceObject implements \JsonSerializable
 
     public function __construct(string $type, string $id = null)
     {
+        if (! isValidResourceType($type)) {
+            throw new \OutOfBoundsException("Invalid resource type '$type'");
+        }
         $this->type = $type;
         $this->id = $id;
     }
 
-    public function setMeta(Meta $meta)
+    public function setMeta(iterable $meta)
     {
-        $this->meta = $meta;
+        $this->meta = new Container($meta);
     }
 
     public function setAttribute(string $name, $value)
@@ -36,8 +42,8 @@ class ResourceObject implements \JsonSerializable
         if ($this->isReservedName($name)) {
             throw new \InvalidArgumentException("Can not use a reserved name '$name'");
         }
-        if (!$this->isValidMemberName($name)) {
-            throw new \OutOfBoundsException("Not a valid attribute name '$name'");
+        if (! isValidMemberName($name)) {
+            throw new \OutOfBoundsException("Invalid member name '$name'");
         }
         if (isset($this->relationships[$name])) {
             throw new \LogicException("Field '$name' already exists in relationships");
@@ -50,8 +56,8 @@ class ResourceObject implements \JsonSerializable
         if ($this->isReservedName($name)) {
             throw new \InvalidArgumentException("Can not use a reserved name '$name'");
         }
-        if (!$this->isValidMemberName($name)) {
-            throw new \OutOfBoundsException("Not a valid attribute name '$name'");
+        if (! isValidMemberName($name)) {
+            throw new \OutOfBoundsException("Invalid member name '$name'");
         }
         if (isset($this->attributes[$name])) {
             throw new \LogicException("Field '$name' already exists in attributes");
@@ -66,19 +72,14 @@ class ResourceObject implements \JsonSerializable
 
     public function jsonSerialize()
     {
-        return array_filter(
-            [
-                'type' => $this->type,
-                'id' => $this->id,
-                'attributes' => $this->attributes,
-                'relationships' => $this->relationships,
-                'links' => $this->links,
-                'meta' => $this->meta,
-            ],
-            function ($v) {
-                return null !== $v;
-            }
-        );
+        return filterNulls([
+            'type' => $this->type,
+            'id' => $this->id,
+            'attributes' => $this->attributes,
+            'relationships' => $this->relationships,
+            'links' => $this->links,
+            'meta' => $this->meta,
+        ]);
     }
 
     public function identifies(ResourceObject $resource): bool
@@ -96,10 +97,5 @@ class ResourceObject implements \JsonSerializable
     private function isReservedName(string $name): bool
     {
         return in_array($name, ['id', 'type']);
-    }
-
-    private function isValidMemberName(string $name): bool
-    {
-        return preg_match('/^(?=[^-_ ])[a-zA-Z0-9\x{0080}-\x{FFFF}-_ ]*(?<=[^-_ ])$/u', $name) === 1;
     }
 }

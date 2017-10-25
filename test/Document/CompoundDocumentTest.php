@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test\Document;
 
 use JsonApiPhp\JsonApi\Document;
-use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\MultiLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\SingleLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship;
@@ -289,7 +288,7 @@ class CompoundDocumentTest extends BaseTestCase
      */
     public function testIncludedMustOnlyBePresentWithData()
     {
-        $doc = Document::fromMeta(Meta::fromArray(['foo' => 'bar']));
+        $doc = Document::fromMeta(['foo' => 'bar']);
         $doc->setIncluded(new ResourceObject('apples', '1'));
     }
 }

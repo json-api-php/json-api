@@ -3,11 +3,8 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\Document\Resource\Relationship;
 
-use JsonApiPhp\JsonApi\Document\Link\Link;
-use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\NullLinkage;
 use JsonApiPhp\JsonApi\Document\Resource\Relationship;
-use JsonApiPhp\JsonApi\Document\Resource\Relationship\Linkage;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
 /**
@@ -35,10 +32,10 @@ use JsonApiPhp\JsonApi\Test\BaseTestCase;
  * pagination links under the links member, as described below.
  *
  * @see http://jsonapi.org/format/#document-resource-object-relationships
- * @see RelationshipTest::testCanCreateFromSelfLink()
- * @see RelationshipTest::testCanCreateFromRelatedLink())
- * @see RelationshipTest::testCanCreateFromLinkage())
- * @see RelationshipTest::testCanCreateFromMeta())
+ * @see RelationshipTest::testCanCreateFromSelfLink
+ * @see RelationshipTest::testCanCreateFromRelatedLink
+ * @see RelationshipTest::testCanCreateFromLinkage
+ * @see RelationshipTest::testCanCreateFromMeta
  */
 class RelationshipTest extends BaseTestCase
 {
@@ -52,7 +49,7 @@ class RelationshipTest extends BaseTestCase
                 }
             }
             ',
-            \JsonApiPhp\JsonApi\Document\Resource\Relationship::fromSelfLink(new Link('http://localhost'))
+            Relationship::fromSelfLink('http://localhost')
         );
     }
 
@@ -66,7 +63,7 @@ class RelationshipTest extends BaseTestCase
                 }
             }        
            ',
-            \JsonApiPhp\JsonApi\Document\Resource\Relationship::fromRelatedLink(new Link('http://localhost'))
+            Relationship::fromRelatedLink('http://localhost')
         );
     }
 
@@ -78,7 +75,7 @@ class RelationshipTest extends BaseTestCase
                 "data": null
             }
             ',
-            \JsonApiPhp\JsonApi\Document\Resource\Relationship::fromLinkage(new NullLinkage())
+            Relationship::fromLinkage(new NullLinkage())
         );
     }
 
@@ -92,7 +89,7 @@ class RelationshipTest extends BaseTestCase
                 }
             }
             ',
-            Relationship::fromMeta(Meta::fromArray(['a' => 'b']))
+            Relationship::fromMeta(['a' => 'b'])
         );
     }
 }

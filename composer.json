@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "php": ">=7.0"
+    "php": ">=7.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.0",
@@ -21,7 +21,10 @@
   "autoload": {
     "psr-4": {
       "JsonApiPhp\\JsonApi\\": "src/"
-    }
+    },
+    "files": [
+      "src/functions.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
@@ -29,6 +32,6 @@
     }
   },
   "scripts": {
-    "test": "php-cs-fixer fix -v --dry-run --ansi && phpunit --colors=always --coverage-text"
+    "test": "php-cs-fixer fix -v --dry-run --ansi && phpunit --colors=always --coverage-text && vendor/bin/doc2test && vendor/bin/phpunit -c doc-test/phpunit.xml --coverage-text"
   }
 }

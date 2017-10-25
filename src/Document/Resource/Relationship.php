@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Resource;
 
-use JsonApiPhp\JsonApi\Document\Link\LinkInterface;
 use JsonApiPhp\JsonApi\Document\LinksTrait;
-use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Document\MetaTrait;
 use JsonApiPhp\JsonApi\Document\Resource\Linkage\LinkageInterface;
+use function JsonApiPhp\JsonApi\filterNulls;
 
 final class Relationship implements \JsonSerializable
 {
@@ -23,24 +22,24 @@ final class Relationship implements \JsonSerializable
     {
     }
 
-    public static function fromMeta(Meta $meta): self
+    public static function fromMeta(iterable $meta): self
     {
         $r = new self;
         $r->setMeta($meta);
         return $r;
     }
 
-    public static function fromSelfLink(LinkInterface $link): self
+    public static function fromSelfLink(string $url, iterable $meta = null): self
     {
         $r = new self;
-        $r->setLinkObject('self', $link);
+        $r->setLink('self', $url, $meta);
         return $r;
     }
 
-    public static function fromRelatedLink(LinkInterface $link): self
+    public static function fromRelatedLink(string $url, iterable $meta = null): self
     {
         $r = new self;
-        $r->setLinkObject('related', $link);
+        $r->setLink('related', $url, $meta);
         return $r;
     }
 
@@ -58,15 +57,10 @@ final class Relationship implements \JsonSerializable
 
     public function jsonSerialize()
     {
-        return array_filter(
-            [
-                'data' => $this->linkage,
-                'links' => $this->links,
-                'meta' => $this->meta,
-            ],
-            function ($v) {
-                return null !== $v;
-            }
-        );
+        return filterNulls([
+            'data' => $this->linkage,
+            'links' => $this->links,
+            'meta' => $this->meta,
+        ]);
     }
 }
