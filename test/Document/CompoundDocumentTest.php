@@ -164,7 +164,7 @@ class CompoundDocumentTest extends BaseTestCase
     }
 
     /**
-     * @expectedException \LogicException
+     * @expectedException \DomainException
      * @expectedExceptionMessage Full linkage is required for apples:1
      * @dataProvider             documentsWithoutFullLinkage
      * @param Document $doc
@@ -269,7 +269,7 @@ class CompoundDocumentTest extends BaseTestCase
 
     /**
      * A compound document MUST NOT include more than one resource object for each type and id pair.
-     * @expectedException \LogicException
+     * @expectedException \DomainException
      * @expectedExceptionMessage Resource apples:1 is already included
      */
     public function testCanNotBeManyIncludedResourcesWithEqualIdentifiers()
@@ -283,7 +283,7 @@ class CompoundDocumentTest extends BaseTestCase
 
     /**
      * If a document does not contain a top-level data key, the included member MUST NOT be present either.
-     * @expectedException \LogicException
+     * @expectedException \DomainException
      * @expectedExceptionMessage Document with no data cannot contain included resources
      */
     public function testIncludedMustOnlyBePresentWithData()
