@@ -108,11 +108,11 @@ final class Document implements \JsonSerializable
     public function setIncluded(ResourceObject ...$resources): void
     {
         if (null === $this->data) {
-            throw new \LogicException('Document with no data cannot contain included resources');
+            throw new \DomainException('Document with no data cannot contain included resources');
         }
         foreach ($resources as $resource) {
             if (isset($this->included[(string) $resource->toIdentifier()])) {
-                throw new \LogicException("Resource {$resource->toIdentifier()} is already included");
+                throw new \DomainException("Resource {$resource->toIdentifier()} is already included");
             }
             $this->included[(string) $resource->toIdentifier()] = $resource;
         }
@@ -150,7 +150,7 @@ final class Document implements \JsonSerializable
                     continue 2;
                 }
             }
-            throw new \LogicException("Full linkage is required for {$included->toIdentifier()}");
+            throw new \DomainException("Full linkage is required for {$included->toIdentifier()}");
         }
     }
 }

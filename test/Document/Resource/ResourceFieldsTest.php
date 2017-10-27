@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 class ResourceFieldsTest extends TestCase
 {
     /**
-     * @expectedException \LogicException
+     * @expectedException \DomainException
      * @expectedExceptionMessage Field 'foo' already exists in attributes
      */
     public function testCanNotSetRelationshipIfAttributeExists()
@@ -32,7 +32,7 @@ class ResourceFieldsTest extends TestCase
     }
 
     /**
-     * @expectedException \LogicException
+     * @expectedException \DomainException
      * @expectedExceptionMessage Field 'foo' already exists in relationships
      */
     public function testCanNotSetAttributeIfRelationshipExists()
@@ -44,7 +44,7 @@ class ResourceFieldsTest extends TestCase
 
     /**
      * @param string $name
-     * @expectedException \InvalidArgumentException
+     * @expectedException \DomainException
      * @expectedExceptionMessage Can not use a reserved name
      * @dataProvider             reservedAttributeNames
      */
@@ -56,7 +56,7 @@ class ResourceFieldsTest extends TestCase
 
     /**
      * @param string $name
-     * @expectedException \InvalidArgumentException
+     * @expectedException \DomainException
      * @expectedExceptionMessage Can not use a reserved name
      * @dataProvider             reservedAttributeNames
      */

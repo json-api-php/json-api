@@ -46,7 +46,7 @@ final class ResourceObject implements \JsonSerializable
             throw new \OutOfBoundsException("Invalid member name '$name'");
         }
         if (isset($this->relationships[$name])) {
-            throw new \LogicException("Field '$name' already exists in relationships");
+            throw new \DomainException("Field '$name' already exists in relationships");
         }
         $this->attributes[$name] = $value;
     }
@@ -60,7 +60,7 @@ final class ResourceObject implements \JsonSerializable
             throw new \OutOfBoundsException("Invalid member name '$name'");
         }
         if (isset($this->attributes[$name])) {
-            throw new \LogicException("Field '$name' already exists in attributes");
+            throw new \DomainException("Field '$name' already exists in attributes");
         }
         $this->relationships[$name] = $relationship;
     }
