@@ -5,7 +5,7 @@ namespace JsonApiPhp\JsonApi\Document\PrimaryData;
 
 use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 
-final class NullData implements PrimaryDataInterface
+class NullData extends PrimaryData
 {
     public function hasLinkTo(ResourceObject $resource): bool
     {

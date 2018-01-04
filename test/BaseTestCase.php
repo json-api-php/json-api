@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class BaseTestCase extends TestCase
 {
-    public static function assertEncodesTo(string $expected, $obj, string $message = '')
+    public static function assertEncodesTo(string $expected, object $obj, string $message = '')
     {
         self::assertEquals(
             json_decode($expected),
