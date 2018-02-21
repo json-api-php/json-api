@@ -5,6 +5,7 @@ php:
 
 before_script:
   - composer install
+  - mkdir -p build/logs
 
 script:
   - vendor/bin/php-cs-fixer fix -v --dry-run
