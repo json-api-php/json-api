@@ -9,4 +9,3 @@ before_script:
 script:
   - vendor/bin/php-cs-fixer fix -v --dry-run
   - phpunit --coverage-clover build/logs/clover.xml
-  - vendor/bin/doc2test && vendor/bin/phpunit -c doc-test/phpunit.xml
