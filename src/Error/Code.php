@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\Document\AttachableValue;
+use JsonApiPhp\JsonApi\AttachableValue;
 
-class Code
+final class Code
     extends AttachableValue
     implements ErrorMember
 {

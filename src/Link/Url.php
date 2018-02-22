@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
+use JsonApiPhp\JsonApi\JsonSerializableValue;
 
-class Url
+final class Url
     extends JsonSerializableValue
     implements Link
 {

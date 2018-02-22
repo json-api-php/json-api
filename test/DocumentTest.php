@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\DataDocument;
-use JsonApiPhp\JsonApi\Document\JsonApi;
-use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Error\Error;
 use JsonApiPhp\JsonApi\Error\Id;
 use JsonApiPhp\JsonApi\ErrorDocument;
+use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
+use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\MetaDocument;
 use JsonApiPhp\JsonApi\PrimaryData\NullData;
 

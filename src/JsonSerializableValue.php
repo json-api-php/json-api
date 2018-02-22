@@ -1,8 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Document;
+namespace JsonApiPhp\JsonApi;
 
+/**
+ * @internal
+ */
 class JsonSerializableValue implements \JsonSerializable
 {
     private $value;

@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\Document\AttachableValue;
+use JsonApiPhp\JsonApi\AttachableValue;
 use JsonApiPhp\JsonApi\Error\Source\SourceMember;
 use function JsonApiPhp\JsonApi\combine;
 
-class Source
+final class Source
     extends AttachableValue
     implements ErrorMember
 {

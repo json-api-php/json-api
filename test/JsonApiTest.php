@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
-use JsonApiPhp\JsonApi\Document\JsonApi;
 use JsonApiPhp\JsonApi\Document\JsonApi\Version;
-use JsonApiPhp\JsonApi\Document\Meta;
+use JsonApiPhp\JsonApi\JsonApi;
+use JsonApiPhp\JsonApi\Meta;
 
 class JsonApiTest extends BaseTestCase
 {

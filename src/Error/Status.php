@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\Document\AttachableValue;
+use JsonApiPhp\JsonApi\AttachableValue;
 
 final class Status
     extends AttachableValue

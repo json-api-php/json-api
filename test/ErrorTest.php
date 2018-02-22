@@ -14,6 +14,7 @@ use JsonApiPhp\JsonApi\Error\Source\Pointer;
 use JsonApiPhp\JsonApi\Error\Status;
 use JsonApiPhp\JsonApi\Error\Title;
 use JsonApiPhp\JsonApi\Link\Url;
+use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
 class ErrorTest extends BaseTestCase

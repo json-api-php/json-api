@@ -5,6 +5,9 @@ namespace JsonApiPhp\JsonApi\Error\Source;
 
 use JsonApiPhp\JsonApi\DocumentMember;
 
+/**
+ * @internal
+ */
 interface SourceMember extends DocumentMember
 {
 }

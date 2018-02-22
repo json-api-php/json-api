@@ -1,10 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Document;
-
-use JsonApiPhp\JsonApi\DataDocumentMember;
-use JsonApiPhp\JsonApi\TopLevelDocumentMember;
+namespace JsonApiPhp\JsonApi;
 
 final class JsonApi
     extends AttachableValue

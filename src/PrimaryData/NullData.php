@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
-use JsonApiPhp\JsonApi\Document\AttachableValue;
+use JsonApiPhp\JsonApi\AttachableValue;
 
-class NullData
+final class NullData
     extends AttachableValue
     implements PrimaryData
 {

@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
-use JsonApiPhp\JsonApi\Document\Meta;
+use JsonApiPhp\JsonApi\JsonSerializableValue;
+use JsonApiPhp\JsonApi\Meta;
 
-class LinkObject
+final class LinkObject
     extends JsonSerializableValue
     implements Link
 {

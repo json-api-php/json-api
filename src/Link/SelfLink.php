@@ -5,7 +5,7 @@ namespace JsonApiPhp\JsonApi\Link;
 
 use JsonApiPhp\JsonApi\DataDocumentMember;
 
-class SelfLink extends NamedLink implements DataDocumentMember
+final class SelfLink extends AttachableLink implements DataDocumentMember
 {
     public function __construct(Link $link)
     {

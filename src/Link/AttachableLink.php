@@ -3,14 +3,17 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\Document\AttachableValue;
+use JsonApiPhp\JsonApi\AttachableValue;
 
-abstract class NamedLink
+/**
+ * @internal
+ */
+class AttachableLink
     extends AttachableValue
 {
-    public function __construct(string $name, Link $link)
+    public function __construct(string $key, Link $link)
     {
-        parent::__construct($name, $link);
+        parent::__construct($key, $link);
     }
 
     function attachTo(object $o)
