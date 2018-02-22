@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
+use JsonApiPhp\JsonApi\Document\AttachableValue;
 
 class Id
-    extends JsonSerializableValue
+    extends AttachableValue
     implements ErrorMember
 {
     /**
@@ -14,11 +14,6 @@ class Id
      */
     public function __construct(string $id)
     {
-        parent::__construct($id);
-    }
-
-    public function attachTo(object $o): void
-    {
-        $o->id = $this;
+        parent::__construct('id', $id);
     }
 }

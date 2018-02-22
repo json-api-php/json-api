@@ -3,19 +3,14 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\Document\Attachable;
-use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
+use JsonApiPhp\JsonApi\Document\AttachableValue;
 
 abstract class NamedLink
-    extends JsonSerializableValue
-    implements Attachable
+    extends AttachableValue
 {
-    private $name;
-
     public function __construct(string $name, Link $link)
     {
-        parent::__construct($link);
-        $this->name = $name;
+        parent::__construct($name, $link);
     }
 
     function attachTo(object $o)
@@ -23,6 +18,6 @@ abstract class NamedLink
         if (!isset($o->links)) {
             $o->links = (object)[];
         }
-        $o->links->{$this->name} = $this;
+        parent::attachTo($o->links);
     }
 }

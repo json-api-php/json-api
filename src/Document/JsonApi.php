@@ -7,7 +7,7 @@ use JsonApiPhp\JsonApi\DataDocumentMember;
 use JsonApiPhp\JsonApi\TopLevelDocumentMember;
 
 final class JsonApi
-    extends JsonSerializableValue
+    extends AttachableValue
     implements TopLevelDocumentMember, DataDocumentMember
 {
     public function __construct(string $version, Meta $meta = null)
@@ -19,11 +19,6 @@ final class JsonApi
             $meta->attachTo($jsonapi);
         }
 
-        parent::__construct($jsonapi);
-    }
-
-    public function attachTo(object $o): void
-    {
-        $o->jsonapi = $this;
+        parent::__construct('jsonapi', $jsonapi);
     }
 }

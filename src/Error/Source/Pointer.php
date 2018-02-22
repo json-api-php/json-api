@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Error\Source;
 
-use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
+use JsonApiPhp\JsonApi\Document\AttachableValue;
 
 final class Pointer
-    extends JsonSerializableValue
+    extends AttachableValue
     implements SourceMember
 {
     /**
@@ -14,11 +14,6 @@ final class Pointer
      */
     public function __construct(string $pointer)
     {
-        parent::__construct($pointer);
-    }
-
-    public function attachTo(object $o): void
-    {
-        $o->pointer = $this;
+        parent::__construct('pointer', $pointer);
     }
 }

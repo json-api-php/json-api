@@ -11,7 +11,7 @@ use JsonApiPhp\JsonApi\Error\ErrorMember;
 use JsonApiPhp\JsonApi\TopLevelDocumentMember;
 
 final class Meta
-    extends JsonSerializableValue
+    extends AttachableValue
     implements ErrorMember, TopLevelDocumentMember, DataDocumentMember
 {
     /**
@@ -19,11 +19,6 @@ final class Meta
      */
     public function __construct($meta)
     {
-        parent::__construct((object) $meta);
-    }
-
-    public function attachTo(object $o): void
-    {
-        $o->meta = $this;
+        parent::__construct('meta', (object) $meta);
     }
 }

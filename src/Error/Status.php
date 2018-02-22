@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
+use JsonApiPhp\JsonApi\Document\AttachableValue;
 
 final class Status
-    extends JsonSerializableValue
+    extends AttachableValue
     implements ErrorMember
 {
     /**
@@ -14,11 +14,6 @@ final class Status
      */
     public function __construct(string $status)
     {
-        parent::__construct($status);
-    }
-
-    public function attachTo(object $o): void
-    {
-        $o->status = $this;
+        parent::__construct('status', $status);
     }
 }
