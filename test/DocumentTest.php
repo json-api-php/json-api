@@ -147,12 +147,13 @@ class DocumentTest extends BaseTestCase
                 "data": {
                     "type": "apples",
                     "id": "1",
+                    "meta": {"foo": "bar"}
                 }
             }
             '
             ,
             new DataDocument(
-                new ResourceIdentifier('apples', '1')
+                new ResourceIdentifier('apples', '1', new Meta(['foo' => 'bar']))
             )
         );
     }

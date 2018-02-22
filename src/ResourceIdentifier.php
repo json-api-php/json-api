@@ -9,12 +9,15 @@ class ResourceIdentifier
     extends AttachableValue
     implements PrimaryData
 {
-    public function __construct(string $type, string $id)
+    public function __construct(string $type, string $id, Meta $meta = null)
     {
-        $obj = (object)[
+        $identifier = (object)[
             'type' => $type,
             'id' => $id
         ];
-        parent::__construct('data', $obj);
+        if ($meta) {
+            $meta->attachTo($identifier);
+        }
+        parent::__construct('data', $identifier);
     }
 }
