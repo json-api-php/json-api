@@ -13,6 +13,7 @@ use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\MetaDocument;
 use JsonApiPhp\JsonApi\PrimaryData\NullData;
+use JsonApiPhp\JsonApi\ResourceIdentifier;
 
 class DocumentTest extends BaseTestCase
 {
@@ -56,36 +57,6 @@ class DocumentTest extends BaseTestCase
         );
     }
 
-    public function testDataDocument()
-    {
-        $this->assertEncodesTo('{"data": null}', new DataDocument(new NullData()));
-    }
-
-    public function testDataDocumentWithExtraMembers()
-    {
-        $this->assertEncodesTo(
-            '
-            {
-                "data": null,
-                "meta": {"foo": "bar"},
-                "jsonapi": {
-                    "version": "1.0"
-                },
-                "links": {
-                    "self": "http://self"
-                }
-            }
-            ',
-            new DataDocument(
-                new NullData(),
-                new Meta(['foo' => 'bar']),
-                new JsonApi('1.0'),
-                new SelfLink(
-                    new Url('http://self')
-                )
-            )
-        );
-    }
 
     public function testErrorDocumentMayContainJustErrors()
     {
@@ -136,4 +107,54 @@ class DocumentTest extends BaseTestCase
             )
         );
     }
+
+    public function testNullDocument()
+    {
+        $this->assertEncodesTo('{"data": null}', new DataDocument(new NullData()));
+    }
+
+    public function testNullDocumentWithExtraMembers()
+    {
+        $this->assertEncodesTo(
+            '
+            {
+                "data": null,
+                "meta": {"foo": "bar"},
+                "jsonapi": {
+                    "version": "1.0"
+                },
+                "links": {
+                    "self": "http://self"
+                }
+            }
+            ',
+            new DataDocument(
+                new NullData(),
+                new Meta(['foo' => 'bar']),
+                new JsonApi('1.0'),
+                new SelfLink(
+                    new Url('http://self')
+                )
+            )
+        );
+    }
+
+    public function testSingleResourceIdentifierDocument()
+    {
+        $this->assertEncodesTo(
+            '
+            {
+                "data": {
+                    "type": "apples",
+                    "id": "1",
+                }
+            }
+            '
+            ,
+            new DataDocument(
+                new ResourceIdentifier('apples', '1')
+            )
+        );
+    }
+
 }
