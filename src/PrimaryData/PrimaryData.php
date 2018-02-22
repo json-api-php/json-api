@@ -13,8 +13,8 @@ abstract class PrimaryData
 {
     abstract public function hasLinkTo(ResourceObject $resource): bool;
 
-    final public function name(): string
+    public function attachTo(object $o): void
     {
-        return 'data';
+        $o->data = $this;
     }
 }

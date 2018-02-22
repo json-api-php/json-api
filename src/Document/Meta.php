@@ -6,12 +6,13 @@ namespace JsonApiPhp\JsonApi\Document;
 use JsonApiPhp\JsonApi\DataDocumentMember;
 use JsonApiPhp\JsonApi\Document\JsonApi\JsonApiDocumentMember;
 use JsonApiPhp\JsonApi\Document\Link\LinkObjectDocumentMember;
+use JsonApiPhp\JsonApi\DocumentMember;
 use JsonApiPhp\JsonApi\Error\ErrorMember;
 use JsonApiPhp\JsonApi\TopLevelDocumentMember;
 
 final class Meta
     extends JsonSerializableValue
-    implements ErrorMember, LinkObjectDocumentMember, TopLevelDocumentMember, JsonApiDocumentMember, DataDocumentMember
+    implements ErrorMember, TopLevelDocumentMember, DataDocumentMember
 {
     /**
      * @param array|object $meta
@@ -21,11 +22,8 @@ final class Meta
         parent::__construct((object) $meta);
     }
 
-    /**
-     * @return string Key to use for merging
-     */
-    final public function name(): string
+    public function attachTo(object $o): void
     {
-        return 'meta';
+        $o->meta = $this;
     }
 }

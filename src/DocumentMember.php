@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
-interface DocumentMember extends \JsonSerializable
+use JsonApiPhp\JsonApi\Document\Attachable;
+
+interface DocumentMember
+    extends \JsonSerializable, Attachable
 {
-    public function name(): string;
 }

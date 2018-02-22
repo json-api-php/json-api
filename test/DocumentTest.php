@@ -5,16 +5,13 @@ namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\Document\JsonApi;
-use JsonApiPhp\JsonApi\Document\JsonApi\Version;
-use JsonApiPhp\JsonApi\Document\Link\SelfLink;
-use JsonApiPhp\JsonApi\Document\Link\Url;
-use JsonApiPhp\JsonApi\Document\Links;
+use JsonApiPhp\JsonApi\Link\SelfLink;
+use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Document\Meta;
 use JsonApiPhp\JsonApi\Error\Error;
 use JsonApiPhp\JsonApi\Error\Id;
 use JsonApiPhp\JsonApi\ErrorDocument;
 use JsonApiPhp\JsonApi\MetaDocument;
-use JsonApiPhp\JsonApi\NullDocument;
 use JsonApiPhp\JsonApi\PrimaryData\NullData;
 
 class DocumentTest extends BaseTestCase
@@ -83,10 +80,8 @@ class DocumentTest extends BaseTestCase
                 new NullData(),
                 new Meta(['foo' => 'bar']),
                 new JsonApi('1.0'),
-                new Links(
-                    new SelfLink(
-                        new Url('http://self')
-                    )
+                new SelfLink(
+                    new Url('http://self')
                 )
             )
         );

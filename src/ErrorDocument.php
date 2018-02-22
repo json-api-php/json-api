@@ -15,6 +15,6 @@ class ErrorDocument
      */
     public function __construct(array $errors, TopLevelDocumentMember ...$members)
     {
-        parent::__construct(indexedByName(new Errors(...$errors), ...$members));
+        parent::__construct(combine(new Errors(...$errors), ...$members));
     }
 }

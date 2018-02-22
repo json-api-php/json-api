@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
 
-use JsonApiPhp\JsonApi\Document\Link\Url;
-use JsonApiPhp\JsonApi\Error\About;
+use JsonApiPhp\JsonApi\Error\AboutLink;
 use JsonApiPhp\JsonApi\Error\Code;
 use JsonApiPhp\JsonApi\Error\Detail;
 use JsonApiPhp\JsonApi\Error\Error;
@@ -14,6 +13,7 @@ use JsonApiPhp\JsonApi\Error\Source\Parameter;
 use JsonApiPhp\JsonApi\Error\Source\Pointer;
 use JsonApiPhp\JsonApi\Error\Status;
 use JsonApiPhp\JsonApi\Error\Title;
+use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
 class ErrorTest extends BaseTestCase
@@ -47,7 +47,7 @@ class ErrorTest extends BaseTestCase
             ',
             new Error(
                 new Id('test_id'),
-                new About(
+                new AboutLink(
                     new Url('http://localhost')
                 ),
                 new Status('404'),
@@ -58,7 +58,7 @@ class ErrorTest extends BaseTestCase
                     new Pointer('/data'),
                     new Parameter('test_param')
                 ),
-                new Meta((object) ['foo' => 'bar'])
+                new Meta(['foo' => 'bar'])
             )
         );
     }

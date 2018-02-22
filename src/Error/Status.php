@@ -5,7 +5,7 @@ namespace JsonApiPhp\JsonApi\Error;
 
 use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
 
-class Status
+final class Status
     extends JsonSerializableValue
     implements ErrorMember
 {
@@ -17,8 +17,8 @@ class Status
         parent::__construct($status);
     }
 
-    final public function name(): string
+    public function attachTo(object $o): void
     {
-        return 'status';
+        $o->status = $this;
     }
 }

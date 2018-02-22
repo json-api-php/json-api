@@ -10,6 +10,6 @@ class DataDocument extends JsonSerializableValue
 {
     public function __construct(PrimaryData $data, DataDocumentMember ...$documentMembers)
     {
-        parent::__construct(indexedByName($data, ...$documentMembers));
+        parent::__construct(combine($data, ...$documentMembers));
     }
 }

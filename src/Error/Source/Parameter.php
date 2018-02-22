@@ -17,8 +17,8 @@ final class Parameter
         parent::__construct($parameter);
     }
 
-    public function name(): string
+    public function attachTo(object $o): void
     {
-        return 'parameter';
+        $o->parameter = $this;
     }
 }

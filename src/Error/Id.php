@@ -17,8 +17,8 @@ class Id
         parent::__construct($id);
     }
 
-    final public function name(): string
+    public function attachTo(object $o): void
     {
-        return 'id';
+        $o->id = $this;
     }
 }

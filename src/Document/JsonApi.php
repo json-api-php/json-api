@@ -4,9 +4,7 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Document;
 
 use JsonApiPhp\JsonApi\DataDocumentMember;
-use JsonApiPhp\JsonApi\Document\JsonApi\Version;
 use JsonApiPhp\JsonApi\TopLevelDocumentMember;
-use function JsonApiPhp\JsonApi\indexedByName;
 
 final class JsonApi
     extends JsonSerializableValue
@@ -14,14 +12,18 @@ final class JsonApi
 {
     public function __construct(string $version, Meta $meta = null)
     {
-        parent::__construct(indexedByName(new Version($version), ...($meta ? [$meta] : [])));
+        $jsonapi = (object)[
+            'version' => $version
+        ];
+        if ($meta) {
+            $meta->attachTo($jsonapi);
+        }
+
+        parent::__construct($jsonapi);
     }
 
-    /**
-     * @return string Key to use for merging
-     */
-    public function name(): string
+    public function attachTo(object $o): void
     {
-        return 'jsonapi';
+        $o->jsonapi = $this;
     }
 }

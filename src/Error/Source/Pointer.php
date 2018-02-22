@@ -17,8 +17,8 @@ final class Pointer
         parent::__construct($pointer);
     }
 
-    public function name(): string
+    public function attachTo(object $o): void
     {
-        return 'pointer';
+        $o->pointer = $this;
     }
 }

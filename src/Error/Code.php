@@ -17,8 +17,8 @@ class Code
         parent::__construct($code);
     }
 
-    final public function name(): string
+    public function attachTo(object $o): void
     {
-        return 'code';
+        $o->code = $this;
     }
 }

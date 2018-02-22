@@ -18,8 +18,8 @@ class Detail
         parent::__construct($detail);
     }
 
-    final public function name(): string
+    public function attachTo(object $o): void
     {
-        return 'detail';
+        $o->detail = $this;
     }
 }

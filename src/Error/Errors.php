@@ -15,8 +15,8 @@ final class Errors
         parent::__construct(func_get_args());
     }
 
-    public function name(): string
+    public function attachTo(object $o): void
     {
-        return 'errors';
+        $o->errors = $this;
     }
 }

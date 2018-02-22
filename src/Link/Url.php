@@ -1,11 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Document\Link;
+namespace JsonApiPhp\JsonApi\Link;
 
 use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
 
-class Url extends JsonSerializableValue implements Link
+class Url
+    extends JsonSerializableValue
+    implements Link
 {
     public function __construct(string $url)
     {
