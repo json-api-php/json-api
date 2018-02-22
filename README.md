@@ -1,3 +1,6 @@
+# !!! WORK IN PROGRESS !!!
+
+
 # Implementation of [JSON API](http://jsonapi.org) in PHP 7
 This library is an attempt to express business rules of JSON API specification in a set of PHP 7 classes.
 
