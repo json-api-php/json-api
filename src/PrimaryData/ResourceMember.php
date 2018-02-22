@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
-use JsonApiPhp\JsonApi\DataDocumentMember;
+use JsonApiPhp\JsonApi\DocumentMember;
 
 /**
  * @internal
  */
-interface PrimaryData extends DataDocumentMember
+interface ResourceMember extends DocumentMember
 {
 }

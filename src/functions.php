@@ -10,7 +10,7 @@ function isValidMemberName(string $name): bool
 
 function combine(Attachable ...$things): object
 {
-    $obj = (object)[];
+    $obj = (object) [];
     foreach ($things as $thing) {
         $thing->attachTo($obj);
     }

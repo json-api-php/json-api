@@ -5,9 +5,7 @@ namespace JsonApiPhp\JsonApi\Error;
 
 use JsonApiPhp\JsonApi\AttachableValue;
 
-final class Code
-    extends AttachableValue
-    implements ErrorMember
+final class Code extends AttachableValue implements ErrorMember
 {
     /**
      * @param string $code an application-specific error code, expressed as a string value

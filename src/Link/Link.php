@@ -8,5 +8,4 @@ namespace JsonApiPhp\JsonApi\Link;
  */
 interface Link
 {
-
 }

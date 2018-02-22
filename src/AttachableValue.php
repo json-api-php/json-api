@@ -6,9 +6,7 @@ namespace JsonApiPhp\JsonApi;
 /**
  * @internal
  */
-class AttachableValue
-    extends JsonSerializableValue
-    implements Attachable
+class AttachableValue extends JsonSerializableValue implements Attachable
 {
     private $key;
 
@@ -18,7 +16,7 @@ class AttachableValue
         $this->key = $key;
     }
 
-    function attachTo(object $o)
+    public function attachTo(object $o)
     {
         $o->{$this->key} = $this;
     }

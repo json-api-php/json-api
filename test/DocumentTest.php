@@ -12,8 +12,10 @@ use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\MetaDocument;
+use JsonApiPhp\JsonApi\PrimaryData\Attribute;
 use JsonApiPhp\JsonApi\PrimaryData\NullData;
-use JsonApiPhp\JsonApi\ResourceIdentifier;
+use JsonApiPhp\JsonApi\PrimaryData\Resource;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceId;
 
 class DocumentTest extends BaseTestCase
 {
@@ -56,7 +58,6 @@ class DocumentTest extends BaseTestCase
             )
         );
     }
-
 
     public function testErrorDocumentMayContainJustErrors()
     {
@@ -150,12 +151,36 @@ class DocumentTest extends BaseTestCase
                     "meta": {"foo": "bar"}
                 }
             }
-            '
-            ,
+            ',
             new DataDocument(
-                new ResourceIdentifier('apples', '1', new Meta(['foo' => 'bar']))
+                new ResourceId('apples', '1', new Meta(['foo' => 'bar']))
             )
         );
     }
 
+    public function testSingleResourceObjectDocument()
+    {
+        $this->assertEncodesTo(
+            '
+            {
+                "data": {
+                    "type": "apples",
+                    "id": "1",
+                    "attributes": {
+                        "title": "Rails is Omakase"
+                    },
+                    "meta": {"foo": "bar"}
+                }
+            }
+            ',
+            new DataDocument(
+                new Resource(
+                    'apples',
+                    '1',
+                    new Meta(['foo' => 'bar']),
+                    new Attribute('title', 'Rails is Omakase')
+                )
+            )
+        );
+    }
 }

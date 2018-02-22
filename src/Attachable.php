@@ -8,5 +8,5 @@ namespace JsonApiPhp\JsonApi;
  */
 interface Attachable
 {
-    function attachTo(object $o);
+    public function attachTo(object $o);
 }

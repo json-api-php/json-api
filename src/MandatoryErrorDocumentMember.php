@@ -8,5 +8,4 @@ namespace JsonApiPhp\JsonApi;
  */
 interface MandatoryErrorDocumentMember extends ErrorDocumentMember
 {
-
 }
