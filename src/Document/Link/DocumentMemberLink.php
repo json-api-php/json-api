@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Document\Link;
 
 use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
-use JsonApiPhp\JsonApi\Document\Member;
+use JsonApiPhp\JsonApi\DocumentMember;
 
-abstract class MemberLink extends JsonSerializableValue implements Member
+abstract class DocumentMemberLink extends JsonSerializableValue implements DocumentMember
 {
     public function __construct(Link $link)
     {

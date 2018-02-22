@@ -1,11 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Document\Error\Source;
+namespace JsonApiPhp\JsonApi\Error\Source;
 
 use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
 
-class Parameter extends JsonSerializableValue implements SourceMember
+final class Parameter
+    extends JsonSerializableValue
+    implements SourceMember
 {
     /**
      * @param string $parameter a string indicating which URI query parameter caused the error.
@@ -15,7 +17,7 @@ class Parameter extends JsonSerializableValue implements SourceMember
         parent::__construct($parameter);
     }
 
-    public function toName(): string
+    public function name(): string
     {
         return 'parameter';
     }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Document\Error;
+namespace JsonApiPhp\JsonApi\Error;
 
 use JsonApiPhp\JsonApi\Document\Link\AboutLink;
 use JsonApiPhp\JsonApi\Document\Link\Link;

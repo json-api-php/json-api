@@ -3,14 +3,13 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Document\DataDocumentMember;
-use JsonApiPhp\JsonApi\Document\MemberCollection;
-use JsonApiPhp\JsonApi\Document\PrimaryData\PrimaryData;
+use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
+use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 
-class DataDocument extends MemberCollection
+class DataDocument extends JsonSerializableValue
 {
     public function __construct(PrimaryData $data, DataDocumentMember ...$documentMembers)
     {
-        parent::__construct($data, ...$documentMembers);
+        parent::__construct(indexedByName($data, ...$documentMembers));
     }
 }

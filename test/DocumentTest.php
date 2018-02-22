@@ -3,21 +3,26 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
+use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\Document\JsonApi;
 use JsonApiPhp\JsonApi\Document\JsonApi\Version;
 use JsonApiPhp\JsonApi\Document\Link\SelfLink;
 use JsonApiPhp\JsonApi\Document\Link\Url;
 use JsonApiPhp\JsonApi\Document\Links;
 use JsonApiPhp\JsonApi\Document\Meta;
+use JsonApiPhp\JsonApi\Error\Error;
+use JsonApiPhp\JsonApi\Error\Id;
+use JsonApiPhp\JsonApi\ErrorDocument;
 use JsonApiPhp\JsonApi\MetaDocument;
 use JsonApiPhp\JsonApi\NullDocument;
+use JsonApiPhp\JsonApi\PrimaryData\NullData;
 
 class DocumentTest extends BaseTestCase
 {
     /**
-     * A valid document may contain just a meta object.
+     * A valid document may contain just a meta object
      */
-    public function testDocumentMayContainJustMeta()
+    public function testMetaDocument()
     {
         $this->assertEncodesTo(
             '
@@ -34,7 +39,7 @@ class DocumentTest extends BaseTestCase
     /**
      * A meta document may contain jsonapi member
      */
-    public function testMetaDocumentMayContainJsonApiMember()
+    public function testMetaDocumentWithExtraMembers()
     {
         $this->assertEncodesTo(
             '
@@ -49,17 +54,17 @@ class DocumentTest extends BaseTestCase
             ',
             new MetaDocument(
                 new Meta(['foo' => 'bar']),
-                new JsonApi(new Version('1.0'))
+                new JsonApi('1.0')
             )
         );
     }
 
-    public function testNullDocument()
+    public function testDataDocument()
     {
-        $this->assertEncodesTo('{"data": null}', new NullDocument());
+        $this->assertEncodesTo('{"data": null}', new DataDocument(new NullData()));
     }
 
-    public function testNullDocumentWithExtraMembers()
+    public function testDataDocumentWithExtraMembers()
     {
         $this->assertEncodesTo(
             '
@@ -74,9 +79,10 @@ class DocumentTest extends BaseTestCase
                 }
             }
             ',
-            new NullDocument(
-                new Meta((object)['foo' => 'bar']),
-                new JsonApi(new Version('1.0')),
+            new DataDocument(
+                new NullData(),
+                new Meta(['foo' => 'bar']),
+                new JsonApi('1.0'),
                 new Links(
                     new SelfLink(
                         new Url('http://self')
@@ -86,4 +92,57 @@ class DocumentTest extends BaseTestCase
         );
     }
 
+    public function testErrorDocumentMayContainJustErrors()
+    {
+        $this->assertEncodesTo(
+            '
+            {
+                "errors": [
+                    {
+                        "id": "first error"
+                    },
+                    {
+                        "id": "second error"
+                    }
+                ]
+            }
+            ',
+            new ErrorDocument(
+                [
+                    new Error(new Id('first error')),
+                    new Error(new Id('second error')),
+                ]
+            )
+        );
+    }
+
+    public function testErrorDocumentMayContainExtraMembers()
+    {
+        $this->assertEncodesTo(
+            '
+            {
+                "errors": [
+                    {
+                        "id": "first error"
+                    },
+                    {
+                        "id": "second error"
+                    }
+                ],
+                "meta": {"foo": "bar"},
+                "jsonapi": {
+                    "version": "1.0"
+                }
+            }
+            ',
+            new ErrorDocument(
+                [
+                    new Error(new Id('first error')),
+                    new Error(new Id('second error')),
+                ],
+                new Meta(['foo' => 'bar']),
+                new JsonApi('1.0')
+            )
+        );
+    }
 }

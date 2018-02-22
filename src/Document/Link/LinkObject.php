@@ -8,7 +8,7 @@ use function JsonApiPhp\JsonApi\mergeAll;
 
 class LinkObject extends JsonSerializableValue implements Link
 {
-    public function __construct(LinkObjectMember ...$linkObjectMembers)
+    public function __construct(LinkObjectDocumentMember ...$linkObjectMembers)
     {
         parent::__construct((object) mergeAll([], ...$linkObjectMembers));
     }

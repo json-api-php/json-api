@@ -5,12 +5,12 @@ namespace JsonApiPhp\JsonApi\Document\Link;
 
 use JsonApiPhp\JsonApi\Document\LinksMember;
 
-class RelatedLink extends MemberLink implements LinksMember
+class RelatedLink extends DocumentMemberLink implements LinksMember
 {
     /**
      * @return string Key to use for merging
      */
-    final protected function toName(): string
+    final protected function name(): string
     {
         return 'related';
     }

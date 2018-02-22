@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document\Link;
 
-use JsonApiPhp\JsonApi\Document\Member;
+use JsonApiPhp\JsonApi\DocumentMember;
 
-class Href extends Member implements LinkObjectMember
+class Href extends DocumentMember implements LinkObjectDocumentMember
 {
     public function __construct(string $url)
     {
@@ -15,7 +15,7 @@ class Href extends Member implements LinkObjectMember
     /**
      * @return string Key to use for merging
      */
-    final protected function toName(): string
+    final public function name(): string
     {
         return 'href';
     }

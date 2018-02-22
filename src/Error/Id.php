@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Document\Error;
+namespace JsonApiPhp\JsonApi\Error;
 
 use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
 
@@ -17,7 +17,7 @@ class Id
         parent::__construct($id);
     }
 
-    final public function toName(): string
+    final public function name(): string
     {
         return 'id';
     }

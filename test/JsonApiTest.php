@@ -9,7 +9,7 @@ use JsonApiPhp\JsonApi\Document\Meta;
 
 class JsonApiTest extends BaseTestCase
 {
-    public function testJsonApiMeyContainVersionAndMeta()
+    public function testJsonApiMayContainVersionAndMeta()
     {
         $this->assertEncodesTo(
             '
@@ -20,7 +20,7 @@ class JsonApiTest extends BaseTestCase
                 }
             }
             ',
-            new JsonApi(new Version('1.0'), new Meta(['foo' => 'bar']))
+            new JsonApi('1.0', new Meta(['foo' => 'bar']))
         );
     }
 }

@@ -1,25 +1,20 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Document\Link;
+namespace JsonApiPhp\JsonApi\PrimaryData;
 
 use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
+use JsonApiPhp\JsonApi\Document\Resource\ResourceObject;
 use JsonApiPhp\JsonApi\DocumentMember;
 
-class AboutLink
+abstract class PrimaryData
     extends JsonSerializableValue
     implements DocumentMember
 {
-    public function __construct(Link $link)
-    {
-        parent::__construct($link);
-    }
+    abstract public function hasLinkTo(ResourceObject $resource): bool;
 
-    /**
-     * @return string Key to use for merging
-     */
     final public function name(): string
     {
-        return 'about';
+        return 'data';
     }
 }

@@ -3,16 +3,18 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
 
-use JsonApiPhp\JsonApi\Document\Error\ErrorMember;
-use JsonApiPhp\JsonApi\Document\JsonApi\JsonApiMember;
-use JsonApiPhp\JsonApi\Document\Link\LinkObjectMember;
+use JsonApiPhp\JsonApi\DataDocumentMember;
+use JsonApiPhp\JsonApi\Document\JsonApi\JsonApiDocumentMember;
+use JsonApiPhp\JsonApi\Document\Link\LinkObjectDocumentMember;
+use JsonApiPhp\JsonApi\Error\ErrorMember;
+use JsonApiPhp\JsonApi\TopLevelDocumentMember;
 
-class Meta
+final class Meta
     extends JsonSerializableValue
-    implements ErrorMember, LinkObjectMember, DocumentMember, JsonApiMember
+    implements ErrorMember, LinkObjectDocumentMember, TopLevelDocumentMember, JsonApiDocumentMember, DataDocumentMember
 {
     /**
-     * @param mixed $meta Meta object
+     * @param array|object $meta
      */
     public function __construct($meta)
     {
@@ -22,7 +24,7 @@ class Meta
     /**
      * @return string Key to use for merging
      */
-    final public function toName(): string
+    final public function name(): string
     {
         return 'meta';
     }

@@ -2,7 +2,9 @@
 
 namespace JsonApiPhp\JsonApi\Document;
 
-interface LinksMember extends Member
+use JsonApiPhp\JsonApi\DocumentMember;
+
+interface LinksMember extends DocumentMember
 {
 
 }

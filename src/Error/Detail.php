@@ -1,11 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Document\Error;
+namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\Document\Error\Source\SourceMember;
 use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
-use JsonApiPhp\JsonApi\Document\Member;
 use function JsonApiPhp\JsonApi\mergeAll;
 
 class Detail
@@ -20,7 +18,7 @@ class Detail
         parent::__construct($detail);
     }
 
-    final public function toName(): string
+    final public function name(): string
     {
         return 'detail';
     }

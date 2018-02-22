@@ -10,7 +10,7 @@ class FirstLink extends PaginationLink implements LinksMember
     /**
      * @return string Key to use for merging
      */
-    final protected function toName(): string
+    final protected function name(): string
     {
         return 'first';
     }

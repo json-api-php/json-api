@@ -3,19 +3,24 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
 
-use JsonApiPhp\JsonApi\Document\JsonApi\JsonApiMember;
+use JsonApiPhp\JsonApi\DataDocumentMember;
+use JsonApiPhp\JsonApi\Document\JsonApi\Version;
+use JsonApiPhp\JsonApi\TopLevelDocumentMember;
+use function JsonApiPhp\JsonApi\indexedByName;
 
-class JsonApi extends MemberCollection implements DocumentMember
+final class JsonApi
+    extends JsonSerializableValue
+    implements TopLevelDocumentMember, DataDocumentMember
 {
-    public function __construct(JsonApiMember ...$members)
+    public function __construct(string $version, Meta $meta = null)
     {
-        parent::__construct(...$members);
+        parent::__construct(indexedByName(new Version($version), ...($meta ? [$meta] : [])));
     }
 
     /**
      * @return string Key to use for merging
      */
-    final public function toName(): string
+    public function name(): string
     {
         return 'jsonapi';
     }

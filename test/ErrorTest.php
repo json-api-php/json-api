@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
 
-use JsonApiPhp\JsonApi\Document\Error\AboutLink;
-use JsonApiPhp\JsonApi\Document\Error\Code;
-use JsonApiPhp\JsonApi\Document\Error\Detail;
-use JsonApiPhp\JsonApi\Document\Error\Id;
-use JsonApiPhp\JsonApi\Document\Error\About;
-use JsonApiPhp\JsonApi\Document\Error\Source;
-use JsonApiPhp\JsonApi\Document\Error\Status;
-use JsonApiPhp\JsonApi\Document\Error\Title;
-use JsonApiPhp\JsonApi\Document\Error\Source\Parameter;
-use JsonApiPhp\JsonApi\Document\Error\Source\Pointer;
 use JsonApiPhp\JsonApi\Document\Link\Url;
+use JsonApiPhp\JsonApi\Error\About;
+use JsonApiPhp\JsonApi\Error\Code;
+use JsonApiPhp\JsonApi\Error\Detail;
+use JsonApiPhp\JsonApi\Error\Error;
+use JsonApiPhp\JsonApi\Error\Id;
+use JsonApiPhp\JsonApi\Error\Source;
+use JsonApiPhp\JsonApi\Error\Source\Parameter;
+use JsonApiPhp\JsonApi\Error\Source\Pointer;
+use JsonApiPhp\JsonApi\Error\Status;
+use JsonApiPhp\JsonApi\Error\Title;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
 class ErrorTest extends BaseTestCase

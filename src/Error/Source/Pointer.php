@@ -1,11 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Document\Error\Source;
+namespace JsonApiPhp\JsonApi\Error\Source;
 
 use JsonApiPhp\JsonApi\Document\JsonSerializableValue;
 
-class Pointer extends JsonSerializableValue implements SourceMember
+final class Pointer
+    extends JsonSerializableValue
+    implements SourceMember
 {
     /**
      * @param string $pointer JSON Pointer [RFC6901] to the associated entity in the request document
@@ -15,7 +17,7 @@ class Pointer extends JsonSerializableValue implements SourceMember
         parent::__construct($pointer);
     }
 
-    final public function toName(): string
+    public function name(): string
     {
         return 'pointer';
     }
