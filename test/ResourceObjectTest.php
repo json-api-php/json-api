@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
+use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
@@ -27,7 +28,13 @@ class ResourceObjectTest extends BaseTestCase
                     "self": "http://self"
                 },
                 "relationships": {
-                    "meta": {"foo": "bar"}
+                    "author": {
+                        "meta": {"foo": "bar"},
+                        "links": {
+                            "self": "http://rel/author",
+                            "related": "http://author"
+                        }
+                    }
                 }
             }
             ',
@@ -38,7 +45,10 @@ class ResourceObjectTest extends BaseTestCase
                 new Attribute('title', 'Rails is Omakase'),
                 new SelfLink(new Url('http://self')),
                 new Relationship(
-                    new Meta(['foo' => 'bar'])
+                    'author',
+                    new Meta(['foo' => 'bar']),
+                    new SelfLink(new Url('http://rel/author')),
+                    new RelatedLink(new Url('http://author'))
                 )
             )
         );
