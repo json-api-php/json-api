@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\DataDocument;
+use JsonApiPhp\JsonApi\EmptySet;
 use JsonApiPhp\JsonApi\Error\Error;
 use JsonApiPhp\JsonApi\Error\Id;
 use JsonApiPhp\JsonApi\ErrorDocument;
@@ -14,8 +15,10 @@ use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\MetaDocument;
 use JsonApiPhp\JsonApi\PrimaryData\Attribute;
 use JsonApiPhp\JsonApi\PrimaryData\NullData;
-use JsonApiPhp\JsonApi\PrimaryData\Resource;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceId;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceIdSet;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceSet;
 
 class DocumentTest extends BaseTestCase
 {
@@ -174,11 +177,75 @@ class DocumentTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new Resource(
+                new ResourceObject(
                     'apples',
                     '1',
                     new Meta(['foo' => 'bar']),
                     new Attribute('title', 'Rails is Omakase')
+                )
+            )
+        );
+    }
+
+    public function testEmptySetDocument()
+    {
+        $this->assertEncodesTo(
+            '
+            {
+                "data": []
+            }
+            ',
+            new DataDocument(
+                new EmptySet()
+            )
+        );
+    }
+
+    public function testResourceSetDocument()
+    {
+        $this->assertEncodesTo(
+            '
+            {
+                "data": [
+                    {
+                        "type": "apples",
+                        "id": "1"
+                    },
+                    {
+                        "type": "pears",
+                        "id": "2"
+                    }
+                ]
+            }            ',
+            new DataDocument(
+                new ResourceSet(
+                    new ResourceObject('apples', '1'),
+                    new ResourceObject('pears', '2')
+                )
+            )
+        );
+    }
+
+    public function testResourceIdSetDocument()
+    {
+        $this->assertEncodesTo(
+            '
+            {
+                "data": [
+                    {
+                        "type": "apples",
+                        "id": "1"
+                    },
+                    {
+                        "type": "pears",
+                        "id": "2"
+                    }
+                ]
+            }            ',
+            new DataDocument(
+                new ResourceIdSet(
+                    new ResourceId('apples', '1'),
+                    new ResourceId('pears', '2')
                 )
             )
         );

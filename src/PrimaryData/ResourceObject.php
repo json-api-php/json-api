@@ -6,7 +6,7 @@ namespace JsonApiPhp\JsonApi\PrimaryData;
 use JsonApiPhp\JsonApi\AttachableValue;
 use function JsonApiPhp\JsonApi\combine;
 
-class Resource extends AttachableValue implements PrimaryData
+class ResourceObject extends AttachableValue implements PrimaryData
 {
     public function __construct(string $type, string $id, ResourceMember ...$members)
     {
