@@ -1,11 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Error;
+namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\JsonSerializableValue;
-use JsonApiPhp\JsonApi\MandatoryErrorDocumentMember;
-use function JsonApiPhp\JsonApi\combine;
+use JsonApiPhp\JsonApi\Error\ErrorMember;
 
 final class Error extends JsonSerializableValue implements MandatoryErrorDocumentMember
 {

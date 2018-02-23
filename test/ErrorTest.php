@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Document;
 
+use JsonApiPhp\JsonApi\Error;
 use JsonApiPhp\JsonApi\Error\AboutLink;
 use JsonApiPhp\JsonApi\Error\Code;
 use JsonApiPhp\JsonApi\Error\Detail;
-use JsonApiPhp\JsonApi\Error\Error;
 use JsonApiPhp\JsonApi\Error\Id;
 use JsonApiPhp\JsonApi\Error\Source;
 use JsonApiPhp\JsonApi\Error\Source\Parameter;

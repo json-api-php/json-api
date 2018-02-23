@@ -5,7 +5,7 @@ namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\EmptySet;
-use JsonApiPhp\JsonApi\Error\Error;
+use JsonApiPhp\JsonApi\Error;
 use JsonApiPhp\JsonApi\Error\Id;
 use JsonApiPhp\JsonApi\ErrorDocument;
 use JsonApiPhp\JsonApi\JsonApi;
