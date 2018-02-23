@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
+use JsonApiPhp\JsonApi\AttachableValue;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
@@ -116,5 +117,33 @@ class ResourceObjectTest extends BaseTestCase
                 new MultiLinkage()
             )
         );
+    }
+
+    public function testCanNotCreateIdAttribute()
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage("Can not use 'id' as a resource field");
+        new Attribute('id', 'foo');
+    }
+
+    public function testCanNotCreateTypeAttribute()
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage("Can not use 'type' as a resource field");
+        new Attribute('type', 'foo');
+    }
+
+    public function testCanNotCreateIdRelationship()
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage("Can not use 'id' as a resource field");
+        new Relationship('id', new Meta([]));
+    }
+
+    public function testCanNotCreateTypeRelationship()
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage("Can not use 'type' as a resource field");
+        new Relationship('type', new Meta([]));
     }
 }

@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
-use JsonApiPhp\JsonApi\AttachableValue;
-
-class Attribute extends AttachableValue implements ResourceMember
+class Attribute extends ResourceField
 {
     public function attachTo(object $o)
     {
