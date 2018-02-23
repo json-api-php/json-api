@@ -15,7 +15,7 @@ final class Relationship extends ResourceField
     public function attachTo(object $o)
     {
         if (empty($o->relationships)) {
-            $o->relationships = (object)[];
+            $o->relationships = (object) [];
         }
         parent::attachTo($o->relationships);
     }

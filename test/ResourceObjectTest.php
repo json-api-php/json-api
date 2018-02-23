@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
-use JsonApiPhp\JsonApi\AttachableValue;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
