@@ -6,6 +6,7 @@ namespace JsonApiPhp\JsonApi\Test;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
+use JsonApiPhp\JsonApi\Linkage\NullLinkage;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\PrimaryData\Attribute;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
@@ -33,7 +34,8 @@ class ResourceObjectTest extends BaseTestCase
                         "links": {
                             "self": "http://rel/author",
                             "related": "http://author"
-                        }
+                        },
+                        "data": null
                     }
                 }
             }
@@ -48,7 +50,8 @@ class ResourceObjectTest extends BaseTestCase
                     'author',
                     new Meta(['foo' => 'bar']),
                     new SelfLink(new Url('http://rel/author')),
-                    new RelatedLink(new Url('http://author'))
+                    new RelatedLink(new Url('http://author')),
+                    new NullLinkage()
                 )
             )
         );
