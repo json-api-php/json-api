@@ -117,5 +117,4 @@ class ResourceObjectTest extends BaseTestCase
             )
         );
     }
-
 }

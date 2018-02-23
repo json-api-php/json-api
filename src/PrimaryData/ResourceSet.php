@@ -5,9 +5,7 @@ namespace JsonApiPhp\JsonApi\PrimaryData;
 
 use JsonApiPhp\JsonApi\AttachableValue;
 
-final class ResourceSet
-    extends AttachableValue
-    implements PrimaryData
+final class ResourceSet extends AttachableValue implements PrimaryData
 {
     public function __construct(ResourceObject $resource, ResourceObject ...$resources)
     {

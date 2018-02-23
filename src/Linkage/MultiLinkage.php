@@ -7,9 +7,7 @@ use JsonApiPhp\JsonApi\AttachableValue;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceId;
 use JsonApiPhp\JsonApi\RelationshipMember;
 
-class MultiLinkage
-    extends AttachableValue
-    implements RelationshipMember
+class MultiLinkage extends AttachableValue implements RelationshipMember
 {
     public function __construct(ResourceId ...$resources)
     {
