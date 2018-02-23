@@ -145,4 +145,16 @@ class ResourceObjectTest extends BaseTestCase
         $this->expectExceptionMessage("Can not use 'type' as a resource field");
         new Relationship('type', new Meta([]));
     }
+
+    public function testResourceFields()
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage("Field 'foo' already exists");
+        new ResourceObject(
+            'apples',
+            '1',
+            new Attribute('foo', 'bar'),
+            new Relationship('foo', new Meta([]))
+        );
+    }
 }
