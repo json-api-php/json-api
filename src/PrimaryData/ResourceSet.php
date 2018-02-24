@@ -11,6 +11,7 @@ final class ResourceSet extends AttachableValue implements PrimaryData
      * @var ResourceObject[]
      */
     private $resources;
+
     public function __construct(ResourceObject $resource, ResourceObject ...$resources)
     {
         $this->resources = func_get_args();

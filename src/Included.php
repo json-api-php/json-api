@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
-use Traversable;
 
 final class Included extends AttachableValue implements DataDocumentMember
 {

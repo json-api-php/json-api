@@ -13,6 +13,7 @@ final class Relationship extends ResourceField implements Identifier
      * @var \JsonApiPhp\JsonApi\PrimaryData\Identifier[]
      */
     private $identifiers = [];
+
     public function __construct(string $key, RelationshipMember $member, RelationshipMember ...$members)
     {
         parent::__construct($key, combine($member, ...$members));

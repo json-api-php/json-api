@@ -10,6 +10,7 @@ class ResourceId extends AttachableValue implements PrimaryData
 {
     private $type;
     private $id;
+
     public function __construct(string $type, string $id, Meta $meta = null)
     {
         $identifier = (object) [

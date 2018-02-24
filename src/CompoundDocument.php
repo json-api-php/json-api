@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
-
 use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 
 final class CompoundDocument extends JsonSerializableValue
@@ -16,6 +15,5 @@ final class CompoundDocument extends JsonSerializableValue
 
     private function enforceFullLinkage(PrimaryData $data, Included $included)
     {
-
     }
 }
