@@ -23,7 +23,7 @@ use JsonApiPhp\JsonApi\PrimaryData\ResourceSet;
 class DocumentTest extends BaseTestCase
 {
     /**
-     * A valid document may contain just a meta object
+     * A valid document may contain just age meta object
      */
     public function testMetaDocument()
     {

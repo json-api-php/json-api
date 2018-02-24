@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
+use JsonApiPhp\JsonApi\CompoundDocument;
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\Included;
 use JsonApiPhp\JsonApi\Link\LastLink;
@@ -13,6 +14,7 @@ use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Linkage\MultiLinkage;
 use JsonApiPhp\JsonApi\Linkage\SingleLinkage;
 use JsonApiPhp\JsonApi\PrimaryData\Attribute;
+use JsonApiPhp\JsonApi\PrimaryData\NullData;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceId;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceSet;
@@ -47,7 +49,7 @@ class CompoundDocumentTest extends BaseTestCase
             new Relationship('author', new SingleLinkage($dan->toResourceId()))
         );
 
-        $document = new DataDocument(
+        $document = new CompoundDocument(
             new ResourceSet(
                 new ResourceObject(
                     'articles',
@@ -71,10 +73,10 @@ class CompoundDocumentTest extends BaseTestCase
                     )
                 )
             ),
+            new Included($dan, $comment05, $comment12),
             new SelfLink(new Url('http://example.com/articles')),
             new NextLink(new Url('http://example.com/articles?page[offset]=2')),
-            new LastLink(new Url('http://example.com/articles?page[offset]=10')),
-            new Included($dan, $comment05, $comment12)
+            new LastLink(new Url('http://example.com/articles?page[offset]=10'))
         );
         $this->assertEncodesTo(
             '
@@ -157,5 +159,17 @@ class CompoundDocumentTest extends BaseTestCase
             ',
             $document
         );
+    }
+
+    /**
+     * Compound documents require “full linkage”, meaning that every included resource MUST be identified
+     * by at least one resource identifier object in the same document.
+     * These resource identifier objects could either be primary data or represent resource linkage
+     * contained within primary or included resources.
+     */
+    public function _testFullLinkage()
+    {
+        $this->expectException(\DomainException::class);
+        new CompoundDocument(new NullData(), new Included(new ResourceObject('apples', '1')));
     }
 }

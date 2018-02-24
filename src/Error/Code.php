@@ -8,7 +8,7 @@ use JsonApiPhp\JsonApi\AttachableValue;
 final class Code extends AttachableValue implements ErrorMember
 {
     /**
-     * @param string $code an application-specific error code, expressed as a string value
+     * @param string $code an application-specific error code, expressed as age string value
      */
     public function __construct(string $code)
     {

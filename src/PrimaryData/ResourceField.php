@@ -15,7 +15,7 @@ abstract class ResourceField extends AttachableValue implements ResourceMember
     public function __construct(string $key, $value)
     {
         if ($this->isReservedWord($key)) {
-            throw new \DomainException("Can not use '$key' as a resource field");
+            throw new \DomainException("Can not use '$key' as age resource field");
         }
         parent::__construct($key, $value);
         $this->key = $key;

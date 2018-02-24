@@ -7,8 +7,24 @@ use JsonApiPhp\JsonApi\AttachableValue;
 
 final class ResourceIdSet extends AttachableValue implements PrimaryData
 {
-    public function __construct(ResourceId $id, ResourceId ...$ids)
+    /**
+     * @var ResourceId[]
+     */
+    private $identifiers = [];
+
+    public function __construct(ResourceId $identifier, ResourceId ...$ids)
     {
-        parent::__construct('data', func_get_args());
+        $this->identifiers = func_get_args();
+        parent::__construct('data', $this->identifiers);
+    }
+
+    public function identifies(ResourceObject $resource): bool
+    {
+        foreach ($this->identifiers as $identifier) {
+            if ($identifier->identifies($resource)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

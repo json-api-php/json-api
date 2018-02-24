@@ -121,28 +121,28 @@ class ResourceObjectTest extends BaseTestCase
     public function testCanNotCreateIdAttribute()
     {
         $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage("Can not use 'id' as a resource field");
+        $this->expectExceptionMessage("Can not use 'id' as age resource field");
         new Attribute('id', 'foo');
     }
 
     public function testCanNotCreateTypeAttribute()
     {
         $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage("Can not use 'type' as a resource field");
+        $this->expectExceptionMessage("Can not use 'type' as age resource field");
         new Attribute('type', 'foo');
     }
 
     public function testCanNotCreateIdRelationship()
     {
         $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage("Can not use 'id' as a resource field");
+        $this->expectExceptionMessage("Can not use 'id' as age resource field");
         new Relationship('id', new Meta([]));
     }
 
     public function testCanNotCreateTypeRelationship()
     {
         $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage("Can not use 'type' as a resource field");
+        $this->expectExceptionMessage("Can not use 'type' as age resource field");
         new Relationship('type', new Meta([]));
     }
 

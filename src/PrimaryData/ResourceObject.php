@@ -11,6 +11,11 @@ final class ResourceObject extends AttachableValue implements PrimaryData
     private $type;
     private $id;
 
+    /**
+     * @var Identifier[]
+     */
+    private $identifiers = [];
+
     public function __construct(string $type, string $id, ResourceMember ...$members)
     {
         $this->checkUniqueness(...$members);
@@ -18,6 +23,11 @@ final class ResourceObject extends AttachableValue implements PrimaryData
         $obj->type = $this->type = $type;
         $obj->id = $this->id = $id;
         parent::__construct('data', $obj);
+        foreach ($members as $member) {
+            if ($member instanceof Identifier) {
+                $this->identifiers[] = $member;
+            }
+        }
     }
 
     public function toResourceId(): ResourceId
@@ -37,5 +47,15 @@ final class ResourceObject extends AttachableValue implements PrimaryData
                 $keys[$key] = true;
             }
         }
+    }
+
+    public function identifies(ResourceObject $resource): bool
+    {
+        foreach ($this->identifiers as $identifier) {
+            if ($identifier->identifies($resource)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

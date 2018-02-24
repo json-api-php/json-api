@@ -8,6 +8,6 @@ use JsonApiPhp\JsonApi\DataDocumentMember;
 /**
  * @internal
  */
-interface PrimaryData extends DataDocumentMember
+interface PrimaryData extends DataDocumentMember, Identifier
 {
 }
