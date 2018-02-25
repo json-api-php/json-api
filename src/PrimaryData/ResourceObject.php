@@ -58,4 +58,9 @@ final class ResourceObject extends AttachableValue implements PrimaryData
         }
         return false;
     }
+
+    public function __toString(): string
+    {
+        return "$this->type:$this->id";
+    }
 }

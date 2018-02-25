@@ -166,9 +166,51 @@ class CompoundDocumentTest extends BaseTestCase
      * These resource identifier objects could either be primary data or represent resource linkage
      * contained within primary or included resources.
      */
-    public function _testFullLinkage()
+    public function testFullLinkage()
     {
         $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Full linkage required for apples:1');
         new CompoundDocument(new NullData(), new Included(new ResourceObject('apples', '1')));
+    }
+
+    public function testIncludedResourceMayBeIdentifiedByLinkageInPrimaryData()
+    {
+        $author = new ResourceObject('people', '9');
+        $article = new ResourceObject(
+            'articles',
+            '1',
+            new Relationship('author', new SingleLinkage($author->toResourceId()))
+        );
+        $doc = new CompoundDocument($article, new Included($author));
+        $this->assertNotEmpty($doc);
+    }
+
+    public function testIncludedResourceMayBeIdentifiedByAnotherLinkedResource()
+    {
+        $writer = new ResourceObject('writers', '3', new Attribute('name', 'Eric Evans'));
+        $book = new ResourceObject(
+            'books',
+            '2',
+            new Attribute('name', 'Domain Driven Design'),
+            new Relationship('author', new SingleLinkage($writer->toResourceId()))
+        );
+        $cart = new ResourceObject(
+            'shopping-carts',
+            '1',
+            new Relationship('contents', new MultiLinkage($book->toResourceId()))
+        );
+        $doc = new CompoundDocument($cart, new Included($book, $writer));
+        $this->assertNotEmpty($doc);
+    }
+
+    /**
+     * A compound document MUST NOT include more than one resource object for each type and id pair.
+     * @expectedException \DomainException
+     * @expectedExceptionMessage Resource apples:1 is already included
+     */
+    public function testCanNotBeManyIncludedResourcesWithEqualIdentifiers()
+    {
+        $apple = new ResourceObject('apples', '1');
+        new CompoundDocument($apple->toResourceId(), new Included($apple, $apple));
     }
 }

@@ -9,11 +9,17 @@ final class CompoundDocument extends JsonSerializableValue
 {
     public function __construct(PrimaryData $data, Included $included, DataDocumentMember ...$members)
     {
-        $this->enforceFullLinkage($data, $included);
+        foreach ($included as $resource) {
+            if ($data->identifies($resource)) {
+                continue;
+            }
+            foreach ($included as $anotherResource) {
+                if ($anotherResource->identifies($resource)) {
+                    continue 2;
+                }
+            }
+            throw new \DomainException("Full linkage required for $resource");
+        }
         parent::__construct(combine($data, $included, ...$members));
-    }
-
-    private function enforceFullLinkage(PrimaryData $data, Included $included)
-    {
     }
 }
