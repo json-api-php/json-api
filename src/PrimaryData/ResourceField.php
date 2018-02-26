@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
 use JsonApiPhp\JsonApi\AttachableValue;
-use function JsonApiPhp\JsonApi\isValidMemberName;
 
 /**
  * @internal
