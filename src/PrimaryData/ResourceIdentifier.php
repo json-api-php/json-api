@@ -25,13 +25,13 @@ class ResourceIdentifier extends AttachableValue implements PrimaryData
         $this->id = $id;
     }
 
-    public function equals(ResourceIdentifier $that): bool
-    {
-        return $this->type === $that->type && $this->id === $that->id;
-    }
-
     public function identifies(ResourceObject $resource): bool
     {
         return $resource->toIdentifier()->equals($this);
+    }
+
+    public function equals(ResourceIdentifier $that): bool
+    {
+        return $this->type === $that->type && $this->id === $that->id;
     }
 }

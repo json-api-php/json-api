@@ -12,9 +12,9 @@ final class ResourceObjectSet extends AttachableValue implements PrimaryData
      */
     private $resources;
 
-    public function __construct(ResourceObject $resource, ResourceObject ...$resources)
+    public function __construct(ResourceObject ...$resources)
     {
-        $this->resources = func_get_args();
+        $this->resources = $resources;
         parent::__construct('data', $this->resources);
     }
 

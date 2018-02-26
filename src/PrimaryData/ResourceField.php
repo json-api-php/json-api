@@ -24,13 +24,13 @@ abstract class ResourceField extends AttachableValue implements ResourceMember
         $this->key = $key;
     }
 
-    public function toKey(): string
-    {
-        return $this->key;
-    }
-
     private function isReservedWord(string $key): bool
     {
         return in_array($key, ['id', 'type']);
+    }
+
+    public function toKey(): string
+    {
+        return $this->key;
     }
 }

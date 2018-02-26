@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\CompoundDocument;
-use JsonApiPhp\JsonApi\EmptySet;
 use JsonApiPhp\JsonApi\Included;
 use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
@@ -189,7 +188,7 @@ class CompoundDocumentTest extends BaseTestCase
             ],
             [
                 function () use ($included) {
-                    return new CompoundDocument(new EmptySet(), $included);
+                    return new CompoundDocument(new ResourceObjectSet(), $included);
                 },
             ],
             [

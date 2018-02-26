@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Error;
 
 use JsonApiPhp\JsonApi\AttachableValue;
+use function JsonApiPhp\JsonApi\child;
 
 final class Pointer extends AttachableValue implements Member
 {
@@ -17,9 +18,6 @@ final class Pointer extends AttachableValue implements Member
 
     public function attachTo(object $o)
     {
-        if (empty($o->source)) {
-            $o->source = (object) [];
-        }
-        parent::attachTo($o->source);
+        parent::attachTo(child($o, 'source'));
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Link;
 
 use JsonApiPhp\JsonApi\AttachableValue;
+use function JsonApiPhp\JsonApi\child;
 
 /**
  * @internal
@@ -17,9 +18,6 @@ class AttachableLink extends AttachableValue
 
     public function attachTo(object $o)
     {
-        if (!isset($o->links)) {
-            $o->links = (object) [];
-        }
-        parent::attachTo($o->links);
+        parent::attachTo(child($o, 'links'));
     }
 }

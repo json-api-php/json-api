@@ -13,7 +13,6 @@ final class JsonApi extends AttachableValue implements TopLevelDocumentMember, D
         if ($meta) {
             $meta->attachTo($jsonapi);
         }
-
         parent::__construct('jsonapi', $jsonapi);
     }
 }

@@ -11,3 +11,11 @@ function combine(Attachable ...$things): object
     }
     return $obj;
 }
+
+function child(object $o, string $name): object
+{
+    if (empty($o->{$name})) {
+        $o->{$name} = (object) [];
+    }
+    return $o->{$name};
+}

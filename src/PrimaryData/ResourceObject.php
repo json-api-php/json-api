@@ -30,6 +30,20 @@ final class ResourceObject extends AttachableValue implements PrimaryData
         }
     }
 
+    private function checkUniqueness(ResourceMember ...$members): void
+    {
+        $keys = [];
+        foreach ($members as $member) {
+            if ($member instanceof ResourceField) {
+                $key = $member->toKey();
+                if (isset($keys[$key])) {
+                    throw new \DomainException("Field '$key' already exists'");
+                }
+                $keys[$key] = true;
+            }
+        }
+    }
+
     public function toIdentifier(): ResourceIdentifier
     {
         return new ResourceIdentifier($this->type, $this->id);
@@ -48,19 +62,5 @@ final class ResourceObject extends AttachableValue implements PrimaryData
     public function __toString(): string
     {
         return "$this->type:$this->id";
-    }
-
-    private function checkUniqueness(ResourceMember ...$members): void
-    {
-        $keys = [];
-        foreach ($members as $member) {
-            if ($member instanceof ResourceField) {
-                $key = $member->toKey();
-                if (isset($keys[$key])) {
-                    throw new \DomainException("Field '$key' already exists'");
-                }
-                $keys[$key] = true;
-            }
-        }
     }
 }

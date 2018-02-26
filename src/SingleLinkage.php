@@ -19,6 +19,6 @@ final class SingleLinkage extends AttachableValue implements RelationshipMember,
 
     public function identifies(ResourceObject $resource): bool
     {
-        return $this->identifier->identifies($resource);
+        return $this->identifier && $this->identifier->identifies($resource);
     }
 }

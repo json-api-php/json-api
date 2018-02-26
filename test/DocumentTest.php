@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\DataDocument;
-use JsonApiPhp\JsonApi\EmptySet;
 use JsonApiPhp\JsonApi\Error;
 use JsonApiPhp\JsonApi\Error\Id;
 use JsonApiPhp\JsonApi\ErrorDocument;
@@ -200,7 +199,7 @@ class DocumentTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new EmptySet()
+                new ResourceObjectSet()
             )
         );
     }

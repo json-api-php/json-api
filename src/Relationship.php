@@ -26,10 +26,7 @@ final class Relationship extends ResourceField implements Identifier
 
     public function attachTo(object $o)
     {
-        if (empty($o->relationships)) {
-            $o->relationships = (object) [];
-        }
-        parent::attachTo($o->relationships);
+        parent::attachTo(child($o, 'relationships'));
     }
 
     public function identifies(ResourceObject $resource): bool

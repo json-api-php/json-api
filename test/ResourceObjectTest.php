@@ -208,4 +208,9 @@ class ResourceObjectTest extends BaseTestCase
             new ResourceObject('apples', null, new Attribute('color', 'red'))
         );
     }
+
+    public function testEmptySingleLinkageIdentifiesNothing()
+    {
+        $this->assertFalse((new SingleLinkage())->identifies(new ResourceObject('something', '1')));
+    }
 }

@@ -12,9 +12,9 @@ final class ResourceIdentifierSet extends AttachableValue implements PrimaryData
      */
     private $identifiers = [];
 
-    public function __construct(ResourceIdentifier $identifier, ResourceIdentifier ...$ids)
+    public function __construct(ResourceIdentifier ...$identifiers)
     {
-        $this->identifiers = func_get_args();
+        $this->identifiers = $identifiers;
         parent::__construct('data', $this->identifiers);
     }
 
