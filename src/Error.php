@@ -5,7 +5,7 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Error\ErrorMember;
 
-final class Error extends JsonSerializableValue implements MandatoryErrorDocumentMember
+final class Error extends JsonSerializableValue implements ErrorDocumentMember
 {
     public function __construct(ErrorMember ...$members)
     {
