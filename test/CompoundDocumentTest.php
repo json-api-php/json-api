@@ -15,8 +15,8 @@ use JsonApiPhp\JsonApi\Linkage\MultiLinkage;
 use JsonApiPhp\JsonApi\Linkage\SingleLinkage;
 use JsonApiPhp\JsonApi\PrimaryData\Attribute;
 use JsonApiPhp\JsonApi\PrimaryData\NullData;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceId;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceIdSet;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifier;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifierSet;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObjectSet;
 use JsonApiPhp\JsonApi\Relationship;
@@ -39,7 +39,7 @@ class CompoundDocumentTest extends BaseTestCase
             '5',
             new Attribute('body', 'First!'),
             new SelfLink(new Url('http://example.com/comments/5')),
-            new Relationship('author', new SingleLinkage(new ResourceId('people', '2')))
+            new Relationship('author', new SingleLinkage(new ResourceIdentifier('people', '2')))
 
         );
         $comment12 = new ResourceObject(
@@ -194,13 +194,13 @@ class CompoundDocumentTest extends BaseTestCase
             ],
             [
                 function () use ($included) {
-                    return new CompoundDocument(new ResourceId('oranges', '1'), $included);
+                    return new CompoundDocument(new ResourceIdentifier('oranges', '1'), $included);
                 },
             ],
             [
                 function () use ($included) {
                     return new CompoundDocument(
-                        new ResourceIdSet(new ResourceId('oranges', '1'), new ResourceId('oranges', '1')),
+                        new ResourceIdentifierSet(new ResourceIdentifier('oranges', '1'), new ResourceIdentifier('oranges', '1')),
                         $included
                     );
                 },

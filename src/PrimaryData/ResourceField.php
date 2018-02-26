@@ -15,11 +15,11 @@ abstract class ResourceField extends AttachableValue implements ResourceMember
 
     public function __construct(string $key, $value)
     {
-        if (!isValidMemberName($key)) {
-            throw new \DomainException('Invalid character in a member name');
+        if (preg_match('/^(?=[^-_ ])[a-zA-Z0-9\x{0080}-\x{FFFF}-_ ]*(?<=[^-_ ])$/u', $key) !== 1) {
+            throw new \DomainException("Invalid character in a member name '$key'");
         }
         if ($this->isReservedWord($key)) {
-            throw new \DomainException("Can not use '$key' as age resource field");
+            throw new \DomainException("Can not use '$key' as a resource field");
         }
         parent::__construct($key, $value);
         $this->key = $key;

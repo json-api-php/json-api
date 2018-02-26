@@ -5,14 +5,14 @@ namespace JsonApiPhp\JsonApi\PrimaryData;
 
 use JsonApiPhp\JsonApi\AttachableValue;
 
-final class ResourceIdSet extends AttachableValue implements PrimaryData
+final class ResourceIdentifierSet extends AttachableValue implements PrimaryData
 {
     /**
-     * @var ResourceId[]
+     * @var ResourceIdentifier[]
      */
     private $identifiers = [];
 
-    public function __construct(ResourceId $identifier, ResourceId ...$ids)
+    public function __construct(ResourceIdentifier $identifier, ResourceIdentifier ...$ids)
     {
         $this->identifiers = func_get_args();
         parent::__construct('data', $this->identifiers);

@@ -5,7 +5,7 @@ namespace JsonApiPhp\JsonApi\Linkage;
 
 use JsonApiPhp\JsonApi\AttachableValue;
 use JsonApiPhp\JsonApi\PrimaryData\Identifier;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceId;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifier;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
 use JsonApiPhp\JsonApi\RelationshipMember;
 
@@ -13,7 +13,7 @@ final class SingleLinkage extends AttachableValue implements RelationshipMember,
 {
     private $identifier;
 
-    public function __construct(ResourceId $identifier = null)
+    public function __construct(ResourceIdentifier $identifier = null)
     {
         parent::__construct('data', $identifier);
         $this->identifier = $identifier;

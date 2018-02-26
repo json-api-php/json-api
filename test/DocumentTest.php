@@ -19,15 +19,15 @@ use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\MetaDocument;
 use JsonApiPhp\JsonApi\PrimaryData\Attribute;
 use JsonApiPhp\JsonApi\PrimaryData\NullData;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceId;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceIdSet;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifier;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifierSet;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObjectSet;
 
 class DocumentTest extends BaseTestCase
 {
     /**
-     * A valid document may contain just age meta object
+     * A valid document may contain just a meta object
      */
     public function testMetaDocument()
     {
@@ -160,7 +160,7 @@ class DocumentTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new ResourceId('apples', '1', new Meta(['foo' => 'bar']))
+                new ResourceIdentifier('apples', '1', new Meta(['foo' => 'bar']))
             )
         );
     }
@@ -247,9 +247,9 @@ class DocumentTest extends BaseTestCase
                 ]
             }            ',
             new DataDocument(
-                new ResourceIdSet(
-                    new ResourceId('apples', '1'),
-                    new ResourceId('pears', '2')
+                new ResourceIdentifierSet(
+                    new ResourceIdentifier('apples', '1'),
+                    new ResourceIdentifier('pears', '2')
                 )
             )
         );
@@ -265,10 +265,10 @@ class DocumentTest extends BaseTestCase
                     {"type": "oranges", "id": "1"}
                 ],
                 "links": {
-                    "first": "http://example.com/fruits/page/first",
-                    "last": "http://example.com/fruits/page/last",
-                    "prev": "http://example.com/fruits/page/3",
-                    "next": "http://example.com/fruits/page/5"
+                    "first": "http://example.com/fruits?page=first",
+                    "last": "http://example.com/fruits?page=last",
+                    "prev": "http://example.com/fruits?page=3",
+                    "next": "http://example.com/fruits?page=5"
                 }
             }
             ',
@@ -277,10 +277,10 @@ class DocumentTest extends BaseTestCase
                     new ResourceObject('apples', '1'),
                     new ResourceObject('oranges', '1')
                 ),
-                new FirstLink(new Url('http://example.com/fruits/page/first')),
-                new LastLink(new Url('http://example.com/fruits/page/last')),
-                new PrevLink(new Url('http://example.com/fruits/page/3')),
-                new NextLink(new Url('http://example.com/fruits/page/5'))
+                new FirstLink(new Url('http://example.com/fruits?page=first')),
+                new LastLink(new Url('http://example.com/fruits?page=last')),
+                new PrevLink(new Url('http://example.com/fruits?page=3')),
+                new NextLink(new Url('http://example.com/fruits?page=5'))
             )
         );
     }

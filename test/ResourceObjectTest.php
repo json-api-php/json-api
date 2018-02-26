@@ -10,7 +10,7 @@ use JsonApiPhp\JsonApi\Linkage\MultiLinkage;
 use JsonApiPhp\JsonApi\Linkage\SingleLinkage;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\PrimaryData\Attribute;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceId;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifier;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
 use JsonApiPhp\JsonApi\Relationship;
 
@@ -73,7 +73,7 @@ class ResourceObjectTest extends BaseTestCase
             new Relationship(
                 'fruits',
                 new SingleLinkage(
-                    new ResourceId('apples', '1')
+                    new ResourceIdentifier('apples', '1')
                 )
             )
         );
@@ -96,8 +96,8 @@ class ResourceObjectTest extends BaseTestCase
             new Relationship(
                 'fruits',
                 new MultiLinkage(
-                    new ResourceId('apples', '1'),
-                    new ResourceId('pears', '2')
+                    new ResourceIdentifier('apples', '1'),
+                    new ResourceIdentifier('pears', '2')
                 )
             )
         );
@@ -121,28 +121,28 @@ class ResourceObjectTest extends BaseTestCase
     public function testCanNotCreateIdAttribute()
     {
         $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage("Can not use 'id' as age resource field");
+        $this->expectExceptionMessage("Can not use 'id' as a resource field");
         new Attribute('id', 'foo');
     }
 
     public function testCanNotCreateTypeAttribute()
     {
         $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage("Can not use 'type' as age resource field");
+        $this->expectExceptionMessage("Can not use 'type' as a resource field");
         new Attribute('type', 'foo');
     }
 
     public function testCanNotCreateIdRelationship()
     {
         $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage("Can not use 'id' as age resource field");
+        $this->expectExceptionMessage("Can not use 'id' as a resource field");
         new Relationship('id', new Meta([]));
     }
 
     public function testCanNotCreateTypeRelationship()
     {
         $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage("Can not use 'type' as age resource field");
+        $this->expectExceptionMessage("Can not use 'type' as a resource field");
         new Relationship('type', new Meta([]));
     }
 

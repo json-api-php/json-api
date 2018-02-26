@@ -30,9 +30,9 @@ final class ResourceObject extends AttachableValue implements PrimaryData
         }
     }
 
-    public function toResourceId(): ResourceId
+    public function toResourceId(): ResourceIdentifier
     {
-        return new ResourceId($this->type, $this->id);
+        return new ResourceIdentifier($this->type, $this->id);
     }
 
     public function identifies(ResourceObject $resource): bool

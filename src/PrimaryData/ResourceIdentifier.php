@@ -6,7 +6,7 @@ namespace JsonApiPhp\JsonApi\PrimaryData;
 use JsonApiPhp\JsonApi\AttachableValue;
 use JsonApiPhp\JsonApi\Meta;
 
-class ResourceId extends AttachableValue implements PrimaryData
+class ResourceIdentifier extends AttachableValue implements PrimaryData
 {
     private $type;
     private $id;
@@ -25,7 +25,7 @@ class ResourceId extends AttachableValue implements PrimaryData
         $this->id = $id;
     }
 
-    public function equals(ResourceId $that): bool
+    public function equals(ResourceIdentifier $that): bool
     {
         return $this->type === $that->type && $this->id === $that->id;
     }
