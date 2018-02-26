@@ -165,12 +165,37 @@ class CompoundDocumentTest extends BaseTestCase
      * by at least one resource identifier object in the same document.
      * These resource identifier objects could either be primary data or represent resource linkage
      * contained within primary or included resources.
+     *
+     * @dataProvider documentsWithoutFullLinkage
+     * @param callable $create_doc
      */
-    public function testFullLinkage()
+    public function testFullLinkage(callable $create_doc)
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Full linkage required for apples:1');
-        new CompoundDocument(new NullData(), new Included(new ResourceObject('apples', '1')));
+        $create_doc();
+    }
+
+    public function documentsWithoutFullLinkage(): array
+    {
+        $included = new Included(new ResourceObject('apples', '1'));
+        return [
+            [
+                function () use ($included) {
+                    return new CompoundDocument(new NullData(), $included);
+                },
+            ],
+            [
+                function () use ($included) {
+                    return new CompoundDocument(new ResourceId('oranges', '1'), $included);
+                },
+            ],
+            [
+                function () use ($included) {
+                    return new CompoundDocument(new ResourceId('oranges', '1'), $included);
+                },
+            ],
+        ];
     }
 
     public function testIncludedResourceMayBeIdentifiedByLinkageInPrimaryData()

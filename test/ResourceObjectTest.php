@@ -146,7 +146,7 @@ class ResourceObjectTest extends BaseTestCase
         new Relationship('type', new Meta([]));
     }
 
-    public function testResourceFields()
+    public function testResourceFieldsMustBeUnique()
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage("Field 'foo' already exists");
@@ -155,6 +155,24 @@ class ResourceObjectTest extends BaseTestCase
             '1',
             new Attribute('foo', 'bar'),
             new Relationship('foo', new Meta([]))
+        );
+    }
+
+    /**
+     * The id member is not required when the resource object originates at the client and represents
+     * a new resource to be created on the server.
+     */
+    public function testResourceIdCanBeOmitted()
+    {
+        $this->assertEncodesTo(
+            '{
+                "type": "apples",
+                "id": null,
+                "attributes": {
+                    "color": "red"
+                }
+            }',
+            new ResourceObject('apples', null, new Attribute('color', 'red'))
         );
     }
 }
