@@ -7,6 +7,6 @@ use JsonApiPhp\JsonApi\DocumentMember;
 /**
  * @internal
  */
-interface ErrorMember extends DocumentMember
+interface Member extends DocumentMember
 {
 }

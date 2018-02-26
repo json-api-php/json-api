@@ -4,15 +4,14 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Document;
 
 use JsonApiPhp\JsonApi\Error;
-use JsonApiPhp\JsonApi\Error\AboutLink;
 use JsonApiPhp\JsonApi\Error\Code;
 use JsonApiPhp\JsonApi\Error\Detail;
 use JsonApiPhp\JsonApi\Error\Id;
-use JsonApiPhp\JsonApi\Error\Source;
-use JsonApiPhp\JsonApi\Error\Source\Parameter;
-use JsonApiPhp\JsonApi\Error\Source\Pointer;
+use JsonApiPhp\JsonApi\Error\Parameter;
+use JsonApiPhp\JsonApi\Error\Pointer;
 use JsonApiPhp\JsonApi\Error\Status;
 use JsonApiPhp\JsonApi\Error\Title;
+use JsonApiPhp\JsonApi\Link\AboutLink;
 use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
@@ -55,10 +54,8 @@ class ErrorTest extends BaseTestCase
                 new Code('OMG'),
                 new Title('Error'),
                 new Detail('Nothing is found'),
-                new Source(
-                    new Pointer('/data'),
-                    new Parameter('test_param')
-                ),
+                new Pointer('/data'),
+                new Parameter('test_param'),
                 new Meta(['foo' => 'bar'])
             )
         );

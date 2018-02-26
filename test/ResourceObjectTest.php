@@ -6,13 +6,13 @@ namespace JsonApiPhp\JsonApi\Test;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
-use JsonApiPhp\JsonApi\Linkage\MultiLinkage;
-use JsonApiPhp\JsonApi\Linkage\SingleLinkage;
 use JsonApiPhp\JsonApi\Meta;
+use JsonApiPhp\JsonApi\MultiLinkage;
 use JsonApiPhp\JsonApi\PrimaryData\Attribute;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifier;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
 use JsonApiPhp\JsonApi\Relationship;
+use JsonApiPhp\JsonApi\SingleLinkage;
 
 class ResourceObjectTest extends BaseTestCase
 {

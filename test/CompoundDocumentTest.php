@@ -11,8 +11,7 @@ use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
-use JsonApiPhp\JsonApi\Linkage\MultiLinkage;
-use JsonApiPhp\JsonApi\Linkage\SingleLinkage;
+use JsonApiPhp\JsonApi\MultiLinkage;
 use JsonApiPhp\JsonApi\PrimaryData\Attribute;
 use JsonApiPhp\JsonApi\PrimaryData\NullData;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifier;
@@ -20,6 +19,7 @@ use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifierSet;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObjectSet;
 use JsonApiPhp\JsonApi\Relationship;
+use JsonApiPhp\JsonApi\SingleLinkage;
 
 class CompoundDocumentTest extends BaseTestCase
 {
@@ -47,7 +47,7 @@ class CompoundDocumentTest extends BaseTestCase
             '12',
             new Attribute('body', 'I like XML better'),
             new SelfLink(new Url('http://example.com/comments/12')),
-            new Relationship('author', new SingleLinkage($dan->toResourceId()))
+            new Relationship('author', new SingleLinkage($dan->toIdentifier()))
         );
 
         $document = new CompoundDocument(
@@ -59,15 +59,15 @@ class CompoundDocumentTest extends BaseTestCase
                     new SelfLink(new Url('http://example.com/articles/1')),
                     new Relationship(
                         'author',
-                        new SingleLinkage($dan->toResourceId()),
+                        new SingleLinkage($dan->toIdentifier()),
                         new SelfLink(new Url('http://example.com/articles/1/relationships/author')),
                         new RelatedLink(new Url('http://example.com/articles/1/author'))
                     ),
                     new Relationship(
                         'comments',
                         new MultiLinkage(
-                            $comment05->toResourceId(),
-                            $comment12->toResourceId()
+                            $comment05->toIdentifier(),
+                            $comment12->toIdentifier()
                         ),
                         new SelfLink(new Url('http://example.com/articles/1/relationships/comments')),
                         new RelatedLink(new Url('http://example.com/articles/1/comments'))
@@ -222,7 +222,7 @@ class CompoundDocumentTest extends BaseTestCase
         $article = new ResourceObject(
             'articles',
             '1',
-            new Relationship('author', new SingleLinkage($author->toResourceId()))
+            new Relationship('author', new SingleLinkage($author->toIdentifier()))
         );
         $doc = new CompoundDocument($article, new Included($author));
         $this->assertNotEmpty($doc);
@@ -235,12 +235,12 @@ class CompoundDocumentTest extends BaseTestCase
             'books',
             '2',
             new Attribute('name', 'Domain Driven Design'),
-            new Relationship('author', new SingleLinkage($writer->toResourceId()))
+            new Relationship('author', new SingleLinkage($writer->toIdentifier()))
         );
         $cart = new ResourceObject(
             'shopping-carts',
             '1',
-            new Relationship('contents', new MultiLinkage($book->toResourceId()))
+            new Relationship('contents', new MultiLinkage($book->toIdentifier()))
         );
         $doc = new CompoundDocument($cart, new Included($book, $writer));
         $this->assertNotEmpty($doc);
@@ -254,6 +254,6 @@ class CompoundDocumentTest extends BaseTestCase
     public function testCanNotBeManyIncludedResourcesWithEqualIdentifiers()
     {
         $apple = new ResourceObject('apples', '1');
-        new CompoundDocument($apple->toResourceId(), new Included($apple, $apple));
+        new CompoundDocument($apple->toIdentifier(), new Included($apple, $apple));
     }
 }

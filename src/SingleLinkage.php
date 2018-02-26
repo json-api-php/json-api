@@ -1,13 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Linkage;
+namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\AttachableValue;
 use JsonApiPhp\JsonApi\PrimaryData\Identifier;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifier;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
-use JsonApiPhp\JsonApi\RelationshipMember;
 
 final class SingleLinkage extends AttachableValue implements RelationshipMember, Identifier
 {

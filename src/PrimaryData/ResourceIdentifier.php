@@ -32,6 +32,6 @@ class ResourceIdentifier extends AttachableValue implements PrimaryData
 
     public function identifies(ResourceObject $resource): bool
     {
-        return $resource->toResourceId()->equals($this);
+        return $resource->toIdentifier()->equals($this);
     }
 }

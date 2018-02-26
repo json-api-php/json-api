@@ -184,8 +184,8 @@ class DocumentTest extends BaseTestCase
                 new ResourceObject(
                     'apples',
                     '1',
-                    new Meta(['foo' => 'bar']),
-                    new Attribute('title', 'Rails is Omakase')
+                    new Attribute('title', 'Rails is Omakase'),
+                    new Meta(['foo' => 'bar'])
                 )
             )
         );
