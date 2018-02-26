@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
@@ -20,9 +19,11 @@ final class ResourceObject extends AttachableValue implements PrimaryData
     {
         $this->checkUniqueness(...$members);
         $obj = combine(...$members);
-        $obj->type = $this->type = $type;
-        $obj->id = $this->id = $id;
+        $obj->type = $type;
+        $obj->id = $id;
         parent::__construct('data', $obj);
+        $this->type = $type;
+        $this->id = $id;
         foreach ($members as $member) {
             if ($member instanceof Identifier) {
                 $this->identifiers[] = $member;
@@ -30,21 +31,7 @@ final class ResourceObject extends AttachableValue implements PrimaryData
         }
     }
 
-    private function checkUniqueness(ResourceMember ...$members): void
-    {
-        $keys = [];
-        foreach ($members as $member) {
-            if ($member instanceof ResourceField) {
-                $key = $member->toKey();
-                if (isset($keys[$key])) {
-                    throw new \DomainException("Field '$key' already exists'");
-                }
-                $keys[$key] = true;
-            }
-        }
-    }
-
-    public function toIdentifier(): ResourceIdentifier
+    public function identifier(): ResourceIdentifier
     {
         return new ResourceIdentifier($this->type, $this->id);
     }
@@ -59,8 +46,17 @@ final class ResourceObject extends AttachableValue implements PrimaryData
         return false;
     }
 
-    public function __toString(): string
+    private function checkUniqueness(ResourceMember ...$members): void
     {
-        return "$this->type:$this->id";
+        $keys = [];
+        foreach ($members as $member) {
+            if ($member instanceof ResourceField) {
+                $key = $member->key();
+                if (isset($keys[$key])) {
+                    throw new \LogicException("Field '$key' already exists'");
+                }
+                $keys[$key] = true;
+            }
+        }
     }
 }

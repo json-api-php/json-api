@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
@@ -46,7 +45,7 @@ class CompoundDocumentTest extends BaseTestCase
             '12',
             new Attribute('body', 'I like XML better'),
             new SelfLink(new Url('http://example.com/comments/12')),
-            new Relationship('author', new SingleLinkage($dan->toIdentifier()))
+            new Relationship('author', new SingleLinkage($dan->identifier()))
         );
 
         $document = new CompoundDocument(
@@ -58,15 +57,15 @@ class CompoundDocumentTest extends BaseTestCase
                     new SelfLink(new Url('http://example.com/articles/1')),
                     new Relationship(
                         'author',
-                        new SingleLinkage($dan->toIdentifier()),
+                        new SingleLinkage($dan->identifier()),
                         new SelfLink(new Url('http://example.com/articles/1/relationships/author')),
                         new RelatedLink(new Url('http://example.com/articles/1/author'))
                     ),
                     new Relationship(
                         'comments',
                         new MultiLinkage(
-                            $comment05->toIdentifier(),
-                            $comment12->toIdentifier()
+                            $comment05->identifier(),
+                            $comment12->identifier()
                         ),
                         new SelfLink(new Url('http://example.com/articles/1/relationships/comments')),
                         new RelatedLink(new Url('http://example.com/articles/1/comments'))
@@ -173,7 +172,7 @@ class CompoundDocumentTest extends BaseTestCase
     public function testFullLinkage(callable $create_doc)
     {
         $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage('Full linkage required for apples:1');
+        $this->expectExceptionMessage('Full linkage required for {"type":"apples","id":"1"}');
         $create_doc();
     }
 
@@ -221,7 +220,7 @@ class CompoundDocumentTest extends BaseTestCase
         $article = new ResourceObject(
             'articles',
             '1',
-            new Relationship('author', new SingleLinkage($author->toIdentifier()))
+            new Relationship('author', new SingleLinkage($author->identifier()))
         );
         $doc = new CompoundDocument($article, new Included($author));
         $this->assertNotEmpty($doc);
@@ -234,12 +233,12 @@ class CompoundDocumentTest extends BaseTestCase
             'books',
             '2',
             new Attribute('name', 'Domain Driven Design'),
-            new Relationship('author', new SingleLinkage($writer->toIdentifier()))
+            new Relationship('author', new SingleLinkage($writer->identifier()))
         );
         $cart = new ResourceObject(
             'shopping-carts',
             '1',
-            new Relationship('contents', new MultiLinkage($book->toIdentifier()))
+            new Relationship('contents', new MultiLinkage($book->identifier()))
         );
         $doc = new CompoundDocument($cart, new Included($book, $writer));
         $this->assertNotEmpty($doc);
@@ -247,12 +246,12 @@ class CompoundDocumentTest extends BaseTestCase
 
     /**
      * A compound document MUST NOT include more than one resource object for each type and id pair.
-     * @expectedException \DomainException
-     * @expectedExceptionMessage Resource apples:1 is already included
+     * @expectedException \LogicException
+     * @expectedExceptionMessage Resource {"type":"apples","id":"1"} is already included
      */
     public function testCanNotBeManyIncludedResourcesWithEqualIdentifiers()
     {
         $apple = new ResourceObject('apples', '1');
-        new CompoundDocument($apple->toIdentifier(), new Included($apple, $apple));
+        new CompoundDocument($apple->identifier(), new Included($apple, $apple));
     }
 }

@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
@@ -27,7 +26,7 @@ class ResourceIdentifier extends AttachableValue implements PrimaryData
 
     public function identifies(ResourceObject $resource): bool
     {
-        return $resource->toIdentifier()->equals($this);
+        return $resource->identifier()->equals($this);
     }
 
     public function equals(ResourceIdentifier $that): bool

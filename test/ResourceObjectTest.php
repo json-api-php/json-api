@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
@@ -181,7 +180,7 @@ class ResourceObjectTest extends BaseTestCase
 
     public function testResourceFieldsMustBeUnique()
     {
-        $this->expectException(\DomainException::class);
+        $this->expectException(\LogicException::class);
         $this->expectExceptionMessage("Field 'foo' already exists");
         new ResourceObject(
             'apples',

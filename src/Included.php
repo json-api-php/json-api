@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
@@ -12,9 +11,9 @@ final class Included extends AttachableValue implements DataDocumentMember, \Ite
     public function __construct(ResourceObject ...$resources)
     {
         foreach ($resources as $resource) {
-            $string_id = (string) $resource;
+            $string_id = json_encode($resource->identifier());
             if (isset($this->resources[$string_id])) {
-                throw new \DomainException("Resource $resource is already included");
+                throw new \LogicException("Resource $string_id is already included");
             }
             $this->resources[$string_id] = $resource;
         }

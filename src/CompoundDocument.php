@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
@@ -18,7 +17,7 @@ final class CompoundDocument extends JsonSerializableValue
                     continue 2;
                 }
             }
-            throw new \DomainException("Full linkage required for $resource");
+            throw new \DomainException("Full linkage required for ".json_encode($resource->identifier()));
         }
         parent::__construct(combine($data, $included, ...$members));
     }

@@ -1,15 +1,13 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
+
+use function JsonApiPhp\JsonApi\child;
 
 class Attribute extends ResourceField
 {
     public function attachTo(object $o)
     {
-        if (empty($o->attributes)) {
-            $o->attributes = (object) [];
-        }
-        parent::attachTo($o->attributes);
+        parent::attachTo(child($o, 'attributes'));
     }
 }
