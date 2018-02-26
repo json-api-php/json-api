@@ -9,7 +9,7 @@ use JsonApiPhp\JsonApi\PrimaryData\ResourceId;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
 use JsonApiPhp\JsonApi\RelationshipMember;
 
-class SingleLinkage extends AttachableValue implements RelationshipMember, Identifier
+final class SingleLinkage extends AttachableValue implements RelationshipMember, Identifier
 {
     private $identifier;
 

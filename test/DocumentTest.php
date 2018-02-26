@@ -9,6 +9,10 @@ use JsonApiPhp\JsonApi\Error;
 use JsonApiPhp\JsonApi\Error\Id;
 use JsonApiPhp\JsonApi\ErrorDocument;
 use JsonApiPhp\JsonApi\JsonApi;
+use JsonApiPhp\JsonApi\Link\FirstLink;
+use JsonApiPhp\JsonApi\Link\LastLink;
+use JsonApiPhp\JsonApi\Link\NextLink;
+use JsonApiPhp\JsonApi\Link\PrevLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
@@ -18,7 +22,7 @@ use JsonApiPhp\JsonApi\PrimaryData\NullData;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceId;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceIdSet;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceSet;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceObjectSet;
 
 class DocumentTest extends BaseTestCase
 {
@@ -218,7 +222,7 @@ class DocumentTest extends BaseTestCase
                 ]
             }            ',
             new DataDocument(
-                new ResourceSet(
+                new ResourceObjectSet(
                     new ResourceObject('apples', '1'),
                     new ResourceObject('pears', '2')
                 )
@@ -247,6 +251,36 @@ class DocumentTest extends BaseTestCase
                     new ResourceId('apples', '1'),
                     new ResourceId('pears', '2')
                 )
+            )
+        );
+    }
+
+    public function testPagination()
+    {
+        $this->assertEncodesTo(
+            '
+            {
+                "data": [
+                    {"type": "apples", "id": "1"},
+                    {"type": "oranges", "id": "1"}
+                ],
+                "links": {
+                    "first": "http://example.com/fruits/page/first",
+                    "last": "http://example.com/fruits/page/last",
+                    "prev": "http://example.com/fruits/page/3",
+                    "next": "http://example.com/fruits/page/5"
+                }
+            }
+            ',
+            new DataDocument(
+                new ResourceObjectSet(
+                    new ResourceObject('apples', '1'),
+                    new ResourceObject('oranges', '1')
+                ),
+                new FirstLink(new Url('http://example.com/fruits/page/first')),
+                new LastLink(new Url('http://example.com/fruits/page/last')),
+                new PrevLink(new Url('http://example.com/fruits/page/3')),
+                new NextLink(new Url('http://example.com/fruits/page/5'))
             )
         );
     }

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\Identifier;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
 
 final class Included extends AttachableValue implements DataDocumentMember, \IteratorAggregate
@@ -20,18 +19,6 @@ final class Included extends AttachableValue implements DataDocumentMember, \Ite
             $this->resources[$string_id] = $resource;
         }
         parent::__construct('included', $resources);
-    }
-
-    public function isIdentifiedBy(Identifier ...$identifiers): bool
-    {
-        foreach ($this->resources as $resource) {
-            foreach ($identifiers as $identifier) {
-                if ($identifier->identifies($resource)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     public function getIterator()

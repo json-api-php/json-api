@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\CompoundDocument;
+use JsonApiPhp\JsonApi\EmptySet;
 use JsonApiPhp\JsonApi\Included;
 use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
@@ -15,8 +16,9 @@ use JsonApiPhp\JsonApi\Linkage\SingleLinkage;
 use JsonApiPhp\JsonApi\PrimaryData\Attribute;
 use JsonApiPhp\JsonApi\PrimaryData\NullData;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceId;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceIdSet;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceSet;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceObjectSet;
 use JsonApiPhp\JsonApi\Relationship;
 
 class CompoundDocumentTest extends BaseTestCase
@@ -49,7 +51,7 @@ class CompoundDocumentTest extends BaseTestCase
         );
 
         $document = new CompoundDocument(
-            new ResourceSet(
+            new ResourceObjectSet(
                 new ResourceObject(
                     'articles',
                     '1',
@@ -187,12 +189,28 @@ class CompoundDocumentTest extends BaseTestCase
             ],
             [
                 function () use ($included) {
-                    return new CompoundDocument(new ResourceId('oranges', '1'), $included);
+                    return new CompoundDocument(new EmptySet(), $included);
                 },
             ],
             [
                 function () use ($included) {
                     return new CompoundDocument(new ResourceId('oranges', '1'), $included);
+                },
+            ],
+            [
+                function () use ($included) {
+                    return new CompoundDocument(
+                        new ResourceIdSet(new ResourceId('oranges', '1'), new ResourceId('oranges', '1')),
+                        $included
+                    );
+                },
+            ],
+            [
+                function () use ($included) {
+                    return new CompoundDocument(
+                        new ResourceObjectSet(new ResourceObject('oranges', '1'), new ResourceObject('oranges', '1')),
+                        $included
+                    );
                 },
             ],
         ];

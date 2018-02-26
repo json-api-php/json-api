@@ -146,6 +146,39 @@ class ResourceObjectTest extends BaseTestCase
         new Relationship('type', new Meta([]));
     }
 
+    /**
+     * @dataProvider invalidCharacters
+     * @param string $invalid_char
+     */
+    public function testAttributeMustOnlyHaveAllowedCharacters(string $invalid_char)
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage("Invalid character in a member name");
+        new Attribute("foo{$invalid_char}bar", 'plus can not be used');
+    }
+
+    /**
+     * @dataProvider invalidCharacters
+     * @param string $invalid_char
+     */
+    public function testRelationshipMustOnlyHaveAllowedCharacters(string $invalid_char)
+    {
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage("Invalid character in a member name");
+        new Relationship("foo{$invalid_char}bar", new SingleLinkage());
+    }
+
+    public function invalidCharacters()
+    {
+        return [
+            ['+'],
+            ['!'],
+            ['@'],
+            ['/'],
+            ['}'],
+        ];
+    }
+
     public function testResourceFieldsMustBeUnique()
     {
         $this->expectException(\DomainException::class);

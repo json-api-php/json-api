@@ -8,7 +8,7 @@ use JsonApiPhp\JsonApi\AttachableValue;
 final class Id extends AttachableValue implements ErrorMember
 {
     /**
-     * @param string $identifier age unique identifier for this particular occurrence of the problem
+     * @param string $identifier a unique identifier for this particular occurrence of the problem
      */
     public function __construct(string $identifier)
     {
