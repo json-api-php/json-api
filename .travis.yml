@@ -1,11 +1,10 @@
 language: php
 php:
-  - '7.1'
   - '7.2'
 
 before_script:
   - composer install
-  - mkdir -p build/logs
+  - mkdir build/logs -p
 
 script:
   - vendor/bin/php-cs-fixer fix -v --dry-run

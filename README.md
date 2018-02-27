@@ -1,9 +1,10 @@
-# Implementation of [JSON API](http://jsonapi.org) in PHP 7
-This library is an attempt to express business rules of JSON API specification in a set of PHP 7 classes.
+# [JSON API](http://jsonapi.org) spec implemented in PHP 7. Immutable
 
-A simple example to illustrate the general idea. This JSON representation from
-[the documentation](http://jsonapi.org/format/#document-resource-objects)
-<!-- name=my_json -->
+**This is v2 of the implementation. For v1 click [here](/json-api-php/json-api/tree/v2).**
+
+The goal of this library is to ensure strict validity of JSON API documents being produced.
+
+JSON:
 ```json
 {
     "data": {
@@ -27,32 +28,56 @@ A simple example to illustrate the general idea. This JSON representation from
     }
 }
 ```
-can be built with the following php code:
-<!-- assert=output expect=my_json -->
+PHP:
 ```php
 <?php
-use \JsonApiPhp\JsonApi\Document;
-use \JsonApiPhp\JsonApi\Document\Resource\{
-    Linkage\SingleLinkage, Relationship, ResourceIdentifier, ResourceObject
-};
+use JsonApiPhp\JsonApi\Attribute;
+use JsonApiPhp\JsonApi\DataDocument;
+use JsonApiPhp\JsonApi\Link\RelatedLink;
+use JsonApiPhp\JsonApi\Link\SelfLink;
+use JsonApiPhp\JsonApi\Link\Url;
+use JsonApiPhp\JsonApi\Relationship;
+use JsonApiPhp\JsonApi\ResourceIdentifier;
+use JsonApiPhp\JsonApi\ResourceObject;
+use JsonApiPhp\JsonApi\SingleLinkage;
 
-$author = Relationship::fromLinkage(new SingleLinkage(new ResourceIdentifier('people', '9')));
-$author->setLink('self', '/articles/1/relationships/author');
-$author->setLink('related', '/articles/1/author');
-$articles = new ResourceObject('articles', '1');
-$articles->setRelationship('author', $author);
-$articles->setAttribute('title', 'Rails is Omakase');
-echo json_encode(Document::fromResource($articles), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+echo json_encode(
+    new DataDocument(
+        new ResourceObject(
+            'articles',
+            '1',
+            new Attribute('title', 'Rails is Omakase'),
+            new Relationship(
+                'author',
+                new SingleLinkage(new ResourceIdentifier('author', '9')),
+                new SelfLink(new Url('/articles/1/relationships/author')),
+                new RelatedLink(new Url('/articles/1/author'))
+            )
+        )
+    ),
+    JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+);
 ```
-
-Please refer to [the tests](./test) for the full API documentation:
-* [Documents](./test/Document/DocumentTest.php). Creating documents with primary data, errors, and meta. 
-Adding links and API version to a document.
-    * [Compound Documents](./test/Document/CompoundDocumentTest.php). Resource linkage.
-* [Errors](./test/Document/ErrorTest.php)
-* [Resources](./test/Document/Resource/ResourceTest.php)
-* [Relationships](./test/Document/Resource/Relationship/RelationshipTest.php)
-* [Linkage](./test/Document/Resource/Relationship/LinkageTest.php)
-
 ## Installation
-With [composer](https://getcomposer.org/): `json-api-php/json-api`.
+`composer require json-api-php/json-api`
+
+## Documentation
+
+First, take a look at the examples. All of them are runnable.
+- [Simple Document](./examples/simple_doc.php) (the same as above)
+- [Extensive Compound Document](./examples/compound_doc.php)
+
+The library API and use-cases are expressed in comprehensive suite of tests.
+- Data Documents (containing primary data)
+    -  [with a single Resource Object](./test/DataDocument/SingleResourceObjectTest.php)
+    -  [with a single Resource Identifier](./test/DataDocument/SingleResourceIdentifierTest.php)
+    -  [with null data](./test/DataDocument/NullDataTest.php)
+    -  [with multiple Resource Objects](./test/DataDocument/ManyResourceObjectsTest.php)
+    -  [with multiple Resource Identifiers](./test/DataDocument/ManyResourceIdentifiersTest.php)
+- [Compound Documents](./test/CompoundDocumentTest.php)
+- [Error Documents](./test/ErrorDocumentTest.php)
+- [Meta Documents (containing neither data nor errors)](./test/MetaDocumentTest.php)
+- [Pagination links](./test/PaginationLinksTest.php)
+- [Link Objects](./test/LinkObjectTest.php)
+- [JSON API Object](./test/JsonApiTest.php)
+- [Meta Objects](./test/MetaTest.php)
