@@ -9,23 +9,14 @@ use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 
 final class ResourceObject implements Attachable, \JsonSerializable, PrimaryData
 {
-    private $type;
-    private $id;
-
-    /**
-     * @var Identifier[]
-     */
-    private $identifiers = [];
-
     private $res;
+
+    private $members = [];
 
     public function __construct(string $type, string $id = null, ResourceMember ...$members)
     {
         $keys = [];
         foreach ($members as $member) {
-            if ($member instanceof Identifier) {
-                $this->identifiers[] = $member;
-            }
             if ($member instanceof ResourceField) {
                 $key = $member->key();
                 if (isset($keys[$key])) {
@@ -35,22 +26,21 @@ final class ResourceObject implements Attachable, \JsonSerializable, PrimaryData
             }
         }
 
+        $this->members = $members;
         $this->res = combine(...$members);
         $this->res->type = $type;
         $this->res->id = $id;
-        $this->type = $type;
-        $this->id = $id;
     }
 
     public function identifier(): ResourceIdentifier
     {
-        return new ResourceIdentifier($this->type, $this->id);
+        return new ResourceIdentifier($this->res->type, $this->res->id);
     }
 
     public function identifies(ResourceObject $resource): bool
     {
-        foreach ($this->identifiers as $identifier) {
-            if ($identifier->identifies($resource)) {
+        foreach ($this->members as $member) {
+            if ($member instanceof Identifier && $member->identifies($resource)) {
                 return true;
             }
         }

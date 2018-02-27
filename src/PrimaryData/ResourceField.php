@@ -2,15 +2,16 @@
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
-use JsonApiPhp\JsonApi\AttachableValue;
+use JsonApiPhp\JsonApi\Attachable;
 use function JsonApiPhp\JsonApi\isValidName;
 
 /**
  * @internal
  */
-abstract class ResourceField extends AttachableValue implements ResourceMember
+abstract class ResourceField implements Attachable, ResourceMember
 {
     private $key;
+    private $value;
 
     public function __construct(string $key, $value)
     {
@@ -20,12 +21,22 @@ abstract class ResourceField extends AttachableValue implements ResourceMember
         if ($key === 'id' || $key === 'type') {
             throw new \DomainException("Can not use '$key' as a resource field");
         }
-        parent::__construct($key, $value);
         $this->key = $key;
+        $this->value = $value;
     }
 
     public function key(): string
     {
         return $this->key;
+    }
+
+    public function attachTo(object $o)
+    {
+        $o->{$this->key} = $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->value;
     }
 }
