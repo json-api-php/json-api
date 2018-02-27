@@ -32,7 +32,7 @@ abstract class ResourceField implements Attachable, ResourceMember
 
     public function attachTo(object $o)
     {
-        $o->{$this->key} = $this;
+        $o->{$this->key} = $this->value;
     }
 
     public function jsonSerialize()

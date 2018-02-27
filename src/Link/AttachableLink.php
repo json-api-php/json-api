@@ -8,7 +8,7 @@ use function JsonApiPhp\JsonApi\child;
 /**
  * @internal
  */
-class AttachableLink implements Attachable, \JsonSerializable
+class AttachableLink implements Attachable
 {
     /**
      * @var string
@@ -27,7 +27,7 @@ class AttachableLink implements Attachable, \JsonSerializable
 
     public function attachTo(object $o)
     {
-        child($o, 'links')->{$this->key} = $this;
+        child($o, 'links')->{$this->key} = $this->link;
     }
 
     public function jsonSerialize()

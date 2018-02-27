@@ -4,18 +4,27 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\Identifier;
 
-final class SingleLinkage extends AttachableValue implements RelationshipMember, Identifier
+final class SingleLinkage implements RelationshipMember, Identifier
 {
     private $identifier;
 
     public function __construct(ResourceIdentifier $identifier = null)
     {
-        parent::__construct('data', $identifier);
         $this->identifier = $identifier;
     }
 
     public function identifies(ResourceObject $resource): bool
     {
         return $this->identifier && $this->identifier->identifies($resource);
+    }
+
+    public function attachTo(object $o)
+    {
+        $o->data = $this->identifier;
+    }
+
+    public function jsonSerialize()
+    {
+        // TODO: Implement jsonSerialize() method.
     }
 }

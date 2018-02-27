@@ -49,7 +49,7 @@ final class ResourceObject implements Attachable, \JsonSerializable, PrimaryData
 
     public function attachTo(object $o)
     {
-        $o->data = $this;
+        $o->data = $this->res;
     }
 
     public function jsonSerialize()

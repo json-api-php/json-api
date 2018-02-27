@@ -2,7 +2,7 @@
 
 namespace JsonApiPhp\JsonApi;
 
-final class Included extends AttachableValue implements DataDocumentMember, \IteratorAggregate
+final class Included implements DataDocumentMember, \IteratorAggregate
 {
     private $resources = [];
 
@@ -15,11 +15,20 @@ final class Included extends AttachableValue implements DataDocumentMember, \Ite
             }
             $this->resources[$string_id] = $resource;
         }
-        parent::__construct('included', $resources);
     }
 
     public function getIterator()
     {
         return new \ArrayIterator($this->resources);
+    }
+
+    public function attachTo(object $o)
+    {
+        $o->included = array_values($this->resources);
+    }
+
+    public function jsonSerialize()
+    {
+        return array_values($this->resources);
     }
 }

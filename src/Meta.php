@@ -24,7 +24,7 @@ final class Meta implements Attachable, ErrorMember, TopLevelDocumentMember, Dat
 
     public function attachTo(object $o)
     {
-        child($o, 'meta')->{$this->key} = $this;
+        child($o, 'meta')->{$this->key} = $this->value;
     }
 
     public function jsonSerialize()
