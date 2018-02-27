@@ -4,7 +4,7 @@ namespace JsonApiPhp\JsonApi\Error;
 
 use JsonApiPhp\JsonApi\AttachableValue;
 
-final class Status extends AttachableValue implements Member
+final class Status extends AttachableValue implements ErrorMember
 {
     /**
      * @param string $status the HTTP status code applicable to this problem, expressed as a string value

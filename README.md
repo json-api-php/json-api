@@ -1,5 +1,7 @@
 # [JSON API](http://jsonapi.org) spec implemented in PHP 7. Immutable
 
+The goal of this library is to ensure strict validity of JSON API documents being produced.
+
 JSON:
 ```json
 {
@@ -27,15 +29,10 @@ JSON:
 PHP:
 ```php
 <?php
-use JsonApiPhp\JsonApi\DataDocument;
-use JsonApiPhp\JsonApi\Link\RelatedLink;
-use JsonApiPhp\JsonApi\Link\SelfLink;
-use JsonApiPhp\JsonApi\Link\Url;
-use JsonApiPhp\JsonApi\SingleLinkage;
-use JsonApiPhp\JsonApi\PrimaryData\Attribute;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifier;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
-use JsonApiPhp\JsonApi\Relationship;
+use JsonApiPhp\JsonApi\{
+    DataDocument, SingleLinkage, Attribute, ResourceIdentifier, ResourceObject, Relationship,
+    Link\RelatedLink, Link\SelfLink, Link\Url
+};
 
 echo json_encode(
     new DataDocument(
@@ -57,6 +54,15 @@ echo json_encode(
 ## Documentation
 
 The library API and use-cases are expressed in comprehensive suite of tests.
-- Data Documents
+- Data Documents (containing primary data)
     -  [With a single Resource Object](./test/DataDocument/SingleResourceObjectTest.php)
-- dfd
+    -  [With a single Resource Identifier](./test/DataDocument/SingleResourceIdentifierTest.php)
+    -  [With null data](./test/DataDocument/NullDataTest.php)
+    -  [With multiple Resource Objects](./test/DataDocument/ManyResourceObjectsTest.php)
+    -  [With multiple Resource Identifiers](./test/DataDocument/ManyResourceIdentifiersTest.php)
+- [Compound Documents](./test/CompoundDocumentTest.php)
+- [Error Documents](./test/ErrorDocumentTest.php)
+- [Meta Documents (containing neither data nor errors)](./test/MetaDocumentTest.php)
+- [Pagination links](./test/PaginationLinksTest.php)
+- [JSON API Object](./test/JsonApiTest.php)
+- [Meta Object](./test/MetaTest.php)

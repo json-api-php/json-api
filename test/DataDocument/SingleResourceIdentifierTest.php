@@ -2,16 +2,15 @@
 
 namespace JsonApiPhp\JsonApi\Test\DataDocument;
 
-use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
-use JsonApiPhp\JsonApi\ResourceObject;
+use JsonApiPhp\JsonApi\ResourceIdentifier;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
-class SingleResourceObjectTest extends BaseTestCase
+class SingleResourceIdentifierTest extends BaseTestCase
 {
     public function testMinimalDocument()
     {
@@ -25,7 +24,7 @@ class SingleResourceObjectTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new ResourceObject('apples', '1')
+                new ResourceIdentifier('apples', '1')
             )
         );
     }
@@ -38,10 +37,6 @@ class SingleResourceObjectTest extends BaseTestCase
                 "data": {
                     "type": "apples",
                     "id": "1",
-                    "attributes": {
-                        "color": "red",
-                        "sort": "Fuji"
-                    },
                     "meta": {"apple_meta": "foo"}
                 },
                 "links": {
@@ -54,11 +49,9 @@ class SingleResourceObjectTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new ResourceObject(
+                new ResourceIdentifier(
                     'apples',
                     '1',
-                    new Attribute('color', 'red'),
-                    new Attribute('sort', 'Fuji'),
                     new Meta('apple_meta', 'foo')
                 ),
                 new SelfLink(new Url('/apples/1')),

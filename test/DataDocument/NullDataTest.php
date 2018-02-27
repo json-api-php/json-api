@@ -1,31 +1,28 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\DataDocument;
 
-use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
-use JsonApiPhp\JsonApi\ResourceObject;
+use JsonApiPhp\JsonApi\NullData;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
-class SingleResourceObjectTest extends BaseTestCase
+class NullDataTest extends BaseTestCase
 {
     public function testMinimalDocument()
     {
         $this->assertEncodesTo(
             '
             {
-                "data": {
-                    "type": "apples",
-                    "id": "1"
-                }
+                "data": null
             }
             ',
             new DataDocument(
-                new ResourceObject('apples', '1')
+                new NullData()
             )
         );
     }
@@ -35,15 +32,7 @@ class SingleResourceObjectTest extends BaseTestCase
         $this->assertEncodesTo(
             '
             {
-                "data": {
-                    "type": "apples",
-                    "id": "1",
-                    "attributes": {
-                        "color": "red",
-                        "sort": "Fuji"
-                    },
-                    "meta": {"apple_meta": "foo"}
-                },
+                "data": null,
                 "links": {
                     "self": "/apples/1"
                 },
@@ -54,13 +43,7 @@ class SingleResourceObjectTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new ResourceObject(
-                    'apples',
-                    '1',
-                    new Attribute('color', 'red'),
-                    new Attribute('sort', 'Fuji'),
-                    new Meta('apple_meta', 'foo')
-                ),
+                new NullData(),
                 new SelfLink(new Url('/apples/1')),
                 new JsonApi(),
                 new Meta('document_meta', 'bar')

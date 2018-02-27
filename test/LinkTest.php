@@ -18,7 +18,7 @@ class LinkTest extends BaseTestCase
                 }
             }
             ',
-            new LinkObject('http://example.com', new Meta(['foo' => 'bar']))
+            new LinkObject('http://example.com', new Meta('foo', 'bar'))
         );
     }
 }

@@ -3,18 +3,18 @@
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
 use JsonApiPhp\JsonApi\AttachableValue;
+use function JsonApiPhp\JsonApi\isValidName;
 
 /**
  * @internal
  */
 abstract class ResourceField extends AttachableValue implements ResourceMember
 {
-    private const KEY_REGEX = '/^(?=[^-_ ])[a-zA-Z0-9\x{0080}-\x{FFFF}-_ ]*(?<=[^-_ ])$/u';
     private $key;
 
     public function __construct(string $key, $value)
     {
-        if (preg_match(self::KEY_REGEX, $key) !== 1) {
+        if (isValidName($key) === false) {
             throw new \DomainException("Invalid character in a member name '$key'");
         }
         if (in_array($key, ['id', 'type'])) {

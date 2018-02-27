@@ -11,7 +11,6 @@ use JsonApiPhp\JsonApi\ResourceIdentifier;
 use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\SingleLinkage;
 
-
 echo json_encode(
     new DataDocument(
         new ResourceObject('articles', '1',

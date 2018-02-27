@@ -19,7 +19,7 @@ class JsonApiTest extends BaseTestCase
                 }
             }
             ',
-            new JsonApi('1.0', new Meta(['foo' => 'bar']))
+            new JsonApi('1.0', new Meta('foo', 'bar'))
         );
     }
 }

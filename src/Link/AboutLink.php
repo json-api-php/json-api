@@ -2,9 +2,9 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\Error\Member;
+use JsonApiPhp\JsonApi\Error\ErrorMember;
 
-final class AboutLink extends AttachableLink implements Member
+final class AboutLink extends AttachableLink implements ErrorMember
 {
     public function __construct(Link $link)
     {

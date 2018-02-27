@@ -5,7 +5,7 @@ namespace JsonApiPhp\JsonApi\Error;
 use JsonApiPhp\JsonApi\AttachableValue;
 use function JsonApiPhp\JsonApi\child;
 
-final class Pointer extends AttachableValue implements Member
+final class Pointer extends AttachableValue implements ErrorMember
 {
     /**
      * @param string $pointer JSON Pointer [RFC6901] to the associated entity in the request document

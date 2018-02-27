@@ -9,23 +9,21 @@ use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\ResourceObject;
+use JsonApiPhp\JsonApi\ResourceObjectSet;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
-class SingleResourceObjectTest extends BaseTestCase
+class ManyResourceObjectsTest extends BaseTestCase
 {
     public function testMinimalDocument()
     {
         $this->assertEncodesTo(
             '
             {
-                "data": {
-                    "type": "apples",
-                    "id": "1"
-                }
+                "data": []
             }
             ',
             new DataDocument(
-                new ResourceObject('apples', '1')
+                new ResourceObjectSet()
             )
         );
     }
@@ -35,7 +33,7 @@ class SingleResourceObjectTest extends BaseTestCase
         $this->assertEncodesTo(
             '
             {
-                "data": {
+                "data": [{
                     "type": "apples",
                     "id": "1",
                     "attributes": {
@@ -43,9 +41,17 @@ class SingleResourceObjectTest extends BaseTestCase
                         "sort": "Fuji"
                     },
                     "meta": {"apple_meta": "foo"}
-                },
+                },{
+                    "type": "apples",
+                    "id": "2",
+                    "attributes": {
+                        "color": "yellow",
+                        "sort": "Gala"
+                    },
+                    "meta": {"apple_meta": "foo"}
+                }],
                 "links": {
-                    "self": "/apples/1"
+                    "self": "/apples"
                 },
                 "jsonapi": {
                     "version": "1.0"
@@ -54,14 +60,23 @@ class SingleResourceObjectTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new ResourceObject(
-                    'apples',
-                    '1',
-                    new Attribute('color', 'red'),
-                    new Attribute('sort', 'Fuji'),
-                    new Meta('apple_meta', 'foo')
+                new ResourceObjectSet(
+                    new ResourceObject(
+                        'apples',
+                        '1',
+                        new Attribute('color', 'red'),
+                        new Attribute('sort', 'Fuji'),
+                        new Meta('apple_meta', 'foo')
+                    ),
+                    new ResourceObject(
+                        'apples',
+                        '2',
+                        new Attribute('color', 'yellow'),
+                        new Attribute('sort', 'Gala'),
+                        new Meta('apple_meta', 'foo')
+                    )
                 ),
-                new SelfLink(new Url('/apples/1')),
+                new SelfLink(new Url('/apples')),
                 new JsonApi(),
                 new Meta('document_meta', 'bar')
             )

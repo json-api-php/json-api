@@ -44,12 +44,12 @@ class ResourceObjectTest extends BaseTestCase
             new ResourceObject(
                 'apples',
                 '1',
-                new Meta(['foo' => 'bar']),
+                new Meta('foo', 'bar'),
                 new Attribute('title', 'Rails is Omakase'),
                 new SelfLink(new Url('http://self')),
                 new Relationship(
                     'author',
-                    new Meta(['foo' => 'bar']),
+                    new Meta('foo', 'bar'),
                     new SelfLink(new Url('http://rel/author')),
                     new RelatedLink(new Url('http://author')),
                     new SingleLinkage()
@@ -135,14 +135,14 @@ class ResourceObjectTest extends BaseTestCase
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage("Can not use 'id' as a resource field");
-        new Relationship('id', new Meta([]));
+        new Relationship('id', new SingleLinkage(new ResourceIdentifier('apples', '1')));
     }
 
     public function testCanNotCreateTypeRelationship()
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage("Can not use 'type' as a resource field");
-        new Relationship('type', new Meta([]));
+        new Relationship('type', new SingleLinkage(new ResourceIdentifier('apples', '1')));
     }
 
     /**
@@ -186,7 +186,7 @@ class ResourceObjectTest extends BaseTestCase
             'apples',
             '1',
             new Attribute('foo', 'bar'),
-            new Relationship('foo', new Meta([]))
+            new Relationship('foo', new SingleLinkage(new ResourceIdentifier('apples', '1')))
         );
     }
 

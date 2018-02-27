@@ -2,11 +2,11 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Error\Member;
+use JsonApiPhp\JsonApi\Error\ErrorMember;
 
 final class Error extends JsonSerializableValue implements ErrorDocumentMember
 {
-    public function __construct(Member ...$members)
+    public function __construct(ErrorMember ...$members)
     {
         parent::__construct(combine(...$members));
     }

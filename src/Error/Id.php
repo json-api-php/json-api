@@ -4,7 +4,7 @@ namespace JsonApiPhp\JsonApi\Error;
 
 use JsonApiPhp\JsonApi\AttachableValue;
 
-final class Id extends AttachableValue implements Member
+final class Id extends AttachableValue implements ErrorMember
 {
     /**
      * @param string $identifier a unique identifier for this particular occurrence of the problem

@@ -4,7 +4,7 @@ namespace JsonApiPhp\JsonApi\Error;
 
 use JsonApiPhp\JsonApi\AttachableValue;
 
-class Title extends AttachableValue implements Member
+class Title extends AttachableValue implements ErrorMember
 {
     /**
      * @param string $title a short, human-readable summary of the problem that SHOULD NOT change from occurrence

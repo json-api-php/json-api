@@ -5,7 +5,7 @@ namespace JsonApiPhp\JsonApi\Error;
 use JsonApiPhp\JsonApi\AttachableValue;
 use function JsonApiPhp\JsonApi\child;
 
-final class Parameter extends AttachableValue implements Member
+final class Parameter extends AttachableValue implements ErrorMember
 {
     /**
      * @param string $parameter a string indicating which URI query parameter caused the error.
