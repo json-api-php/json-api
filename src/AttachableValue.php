@@ -12,7 +12,6 @@ class AttachableValue implements Attachable, \JsonSerializable
 
     public function __construct(string $key, $value)
     {
-        //parent::__construct($value);
         $this->key = $key;
         $this->value = $value;
     }

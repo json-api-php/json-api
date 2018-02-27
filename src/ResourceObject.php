@@ -7,7 +7,7 @@ use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 
-final class ResourceObject extends AttachableValue implements PrimaryData
+final class ResourceObject implements Attachable, \JsonSerializable, PrimaryData
 {
     private $type;
     private $id;
@@ -16,6 +16,8 @@ final class ResourceObject extends AttachableValue implements PrimaryData
      * @var Identifier[]
      */
     private $identifiers = [];
+
+    private $res;
 
     public function __construct(string $type, string $id = null, ResourceMember ...$members)
     {
@@ -33,10 +35,9 @@ final class ResourceObject extends AttachableValue implements PrimaryData
             }
         }
 
-        $obj = combine(...$members);
-        $obj->type = $type;
-        $obj->id = $id;
-        parent::__construct('data', $obj);
+        $this->res = combine(...$members);
+        $this->res->type = $type;
+        $this->res->id = $id;
         $this->type = $type;
         $this->id = $id;
     }
@@ -54,5 +55,15 @@ final class ResourceObject extends AttachableValue implements PrimaryData
             }
         }
         return false;
+    }
+
+    public function attachTo(object $o)
+    {
+        $o->data = $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->res;
     }
 }
