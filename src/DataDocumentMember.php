@@ -5,6 +5,6 @@ namespace JsonApiPhp\JsonApi;
 /**
  * @internal
  */
-interface DataDocumentMember extends DocumentMember
+interface DataDocumentMember extends Attachable
 {
 }

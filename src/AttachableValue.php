@@ -18,7 +18,7 @@ class AttachableValue implements Attachable, \JsonSerializable
 
     public function attachTo(object $o)
     {
-        $o->{$this->key} = $this;
+        $o->{$this->key} = $this->value;
     }
 
     public function jsonSerialize()

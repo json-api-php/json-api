@@ -2,7 +2,7 @@
 
 namespace JsonApiPhp\JsonApi\Error;
 
-class Title implements ErrorMember
+final class Title implements ErrorMember
 {
     /**
      * @var string

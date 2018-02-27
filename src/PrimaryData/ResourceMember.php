@@ -2,11 +2,11 @@
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
-use JsonApiPhp\JsonApi\DocumentMember;
+use JsonApiPhp\JsonApi\Attachable;
 
 /**
  * @internal
  */
-interface ResourceMember extends DocumentMember
+interface ResourceMember extends Attachable
 {
 }

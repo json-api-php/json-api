@@ -2,11 +2,11 @@
 
 namespace JsonApiPhp\JsonApi;
 
-function combine(Attachable ...$things): object
+function combine(Attachable ...$members): object
 {
     $obj = (object) [];
-    foreach ($things as $thing) {
-        $thing->attachTo($obj);
+    foreach ($members as $member) {
+        $member->attachTo($obj);
     }
     return $obj;
 }

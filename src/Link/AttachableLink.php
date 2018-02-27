@@ -13,25 +13,20 @@ class AttachableLink implements Attachable
     /**
      * @var string
      */
-    private $key;
+    protected $key;
+
     /**
      * @var Link
      */
     private $link;
 
-    public function __construct(string $key, Link $link)
+    public function __construct(Link $link)
     {
-        $this->key = $key;
         $this->link = $link;
     }
 
     public function attachTo(object $o)
     {
         child($o, 'links')->{$this->key} = $this->link;
-    }
-
-    public function jsonSerialize()
-    {
-        return $this->link;
     }
 }

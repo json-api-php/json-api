@@ -5,6 +5,6 @@ namespace JsonApiPhp\JsonApi;
 /**
  * @internal
  */
-interface ErrorDocumentMember extends DocumentMember
+interface ErrorDocumentMember extends Attachable
 {
 }

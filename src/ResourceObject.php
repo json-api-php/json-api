@@ -7,7 +7,7 @@ use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 
-final class ResourceObject implements Attachable, \JsonSerializable, PrimaryData
+final class ResourceObject implements \JsonSerializable, PrimaryData
 {
     private $res;
 

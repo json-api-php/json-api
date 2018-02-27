@@ -3,6 +3,7 @@
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\Attribute;
+use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
@@ -20,39 +21,43 @@ class ResourceObjectTest extends BaseTestCase
         $this->assertEncodesTo(
             '
             {
-                "type": "apples",
-                "id": "1",
-                "attributes": {
-                    "title": "Rails is Omakase"
-                },
-                "meta": {"foo": "bar"},
-                "links": {
-                    "self": "http://self"
-                },
-                "relationships": {
-                    "author": {
-                        "meta": {"foo": "bar"},
-                        "links": {
-                            "self": "http://rel/author",
-                            "related": "http://author"
-                        },
-                        "data": null
+                "data": {
+                    "type": "apples",
+                    "id": "1",
+                    "attributes": {
+                        "title": "Rails is Omakase"
+                    },
+                    "meta": {"foo": "bar"},
+                    "links": {
+                        "self": "http://self"
+                    },
+                    "relationships": {
+                        "author": {
+                            "meta": {"foo": "bar"},
+                            "links": {
+                                "self": "http://rel/author",
+                                "related": "http://author"
+                            },
+                            "data": null
+                        }
                     }
                 }
             }
             ',
-            new ResourceObject(
-                'apples',
-                '1',
-                new Meta('foo', 'bar'),
-                new Attribute('title', 'Rails is Omakase'),
-                new SelfLink(new Url('http://self')),
-                new Relationship(
-                    'author',
+            new DataDocument(
+                new ResourceObject(
+                    'apples',
+                    '1',
                     new Meta('foo', 'bar'),
-                    new SelfLink(new Url('http://rel/author')),
-                    new RelatedLink(new Url('http://author')),
-                    new SingleLinkage()
+                    new Attribute('title', 'Rails is Omakase'),
+                    new SelfLink(new Url('http://self')),
+                    new Relationship(
+                        'author',
+                        new Meta('foo', 'bar'),
+                        new SelfLink(new Url('http://rel/author')),
+                        new RelatedLink(new Url('http://author')),
+                        new SingleLinkage()
+                    )
                 )
             )
         );
@@ -64,15 +69,26 @@ class ResourceObjectTest extends BaseTestCase
             '
             {
                 "data": {
-                    "type": "apples",
-                    "id": "1"
+                    "type": "basket",
+                    "id": "1",
+                    "relationships": {
+                        "content": {
+                            "data": {"type": "apples", "id": "1"}
+                        }
+                    }
                 }
             }
             ',
-            new Relationship(
-                'fruits',
-                new SingleLinkage(
-                    new ResourceIdentifier('apples', '1')
+            new DataDocument(
+                new ResourceObject(
+                    'basket',
+                    '1',
+                    new Relationship(
+                        'content',
+                        new SingleLinkage(
+                            new ResourceIdentifier('apples', '1')
+                        )
+                    )
                 )
             )
         );
@@ -83,20 +99,34 @@ class ResourceObjectTest extends BaseTestCase
         $this->assertEncodesTo(
             '
             {
-                "data": [{
-                    "type": "apples",
-                    "id": "1"
-                },{
-                    "type": "pears",
-                    "id": "2"
-                }]
+                "data": {
+                    "type": "basket",
+                    "id": "1",
+                    "relationships": {
+                        "content": {
+                            "data": [{
+                                "type": "apples",
+                                "id": "1"
+                            },{
+                                "type": "pears",
+                                "id": "2"
+                            }]
+                        }
+                    }
+                }
             }
             ',
-            new Relationship(
-                'fruits',
-                new MultiLinkage(
-                    new ResourceIdentifier('apples', '1'),
-                    new ResourceIdentifier('pears', '2')
+            new DataDocument(
+                new ResourceObject(
+                    'basket',
+                    '1',
+                    new Relationship(
+                        'content',
+                        new MultiLinkage(
+                            new ResourceIdentifier('apples', '1'),
+                            new ResourceIdentifier('pears', '2')
+                        )
+                    )
                 )
             )
         );
@@ -107,12 +137,26 @@ class ResourceObjectTest extends BaseTestCase
         $this->assertEncodesTo(
             '
             {
-                "data": []
+                "data": {
+                    "type": "basket",
+                    "id": "1",
+                    "relationships": {
+                        "content": {
+                            "data": []
+                        }
+                    }
+                }
             }
             ',
-            new Relationship(
-                'fruits',
-                new MultiLinkage()
+            new DataDocument(
+                new ResourceObject(
+                    'basket',
+                    '1',
+                    new Relationship(
+                        'content',
+                        new MultiLinkage()
+                    )
+                )
             )
         );
     }

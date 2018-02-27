@@ -2,13 +2,12 @@
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
-use JsonApiPhp\JsonApi\Attachable;
 use function JsonApiPhp\JsonApi\isValidName;
 
 /**
  * @internal
  */
-abstract class ResourceField implements Attachable, ResourceMember
+abstract class ResourceField implements ResourceMember
 {
     private $key;
     private $value;

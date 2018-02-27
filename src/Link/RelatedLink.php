@@ -6,8 +6,5 @@ use JsonApiPhp\JsonApi\RelationshipMember;
 
 final class RelatedLink extends AttachableLink implements RelationshipMember
 {
-    public function __construct(Link $link)
-    {
-        parent::__construct('related', $link);
-    }
+    protected $key = 'related';
 }

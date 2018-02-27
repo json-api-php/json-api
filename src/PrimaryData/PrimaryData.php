@@ -2,9 +2,11 @@
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
+use JsonApiPhp\JsonApi\Attachable;
+
 /**
  * @internal
  */
-interface PrimaryData extends Identifier
+interface PrimaryData extends Attachable, Identifier
 {
 }

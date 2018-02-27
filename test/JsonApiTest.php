@@ -2,9 +2,9 @@
 
 namespace JsonApiPhp\JsonApi\Test;
 
-use JsonApiPhp\JsonApi\Document\JsonApi\Version;
 use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Meta;
+use JsonApiPhp\JsonApi\MetaDocument;
 
 class JsonApiTest extends BaseTestCase
 {
@@ -13,13 +13,21 @@ class JsonApiTest extends BaseTestCase
         $this->assertEncodesTo(
             '
             {
-                "version": "1.0",
                 "meta": {
-                    "foo": "bar"
+                    "test": "test"
+                },
+                "jsonapi": {
+                    "version": "1.0",
+                    "meta": {
+                        "foo": "bar"
+                    }
                 }
             }
             ',
-            new JsonApi('1.0', new Meta('foo', 'bar'))
+            new MetaDocument(
+                new Meta('test', 'test'),
+                new JsonApi('1.0', new Meta('foo', 'bar'))
+            )
         );
     }
 }

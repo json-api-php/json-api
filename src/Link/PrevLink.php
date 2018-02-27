@@ -8,8 +8,5 @@ use JsonApiPhp\JsonApi\RelationshipMember;
 
 final class PrevLink extends AttachableLink implements DataDocumentMember, ResourceMember, RelationshipMember
 {
-    public function __construct(Link $link)
-    {
-        parent::__construct('prev', $link);
-    }
+    protected $key = 'prev';
 }
