@@ -1,5 +1,5 @@
-<?php
-require_once __DIR__ . '/../vendor/autoload.php';
+<?php declare(strict_types=1);
+require_once __DIR__.'/../vendor/autoload.php';
 
 use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\DataDocument;
@@ -13,9 +13,12 @@ use JsonApiPhp\JsonApi\SingleLinkage;
 
 echo json_encode(
     new DataDocument(
-        new ResourceObject('articles', '1',
+        new ResourceObject(
+            'articles',
+            '1',
             new Attribute('title', 'Rails is Omakase'),
-            new Relationship('author',
+            new Relationship(
+                'author',
                 new SingleLinkage(new ResourceIdentifier('author', '9')),
                 new SelfLink(new Url('/articles/1/relationships/author')),
                 new RelatedLink(new Url('/articles/1/author'))

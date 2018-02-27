@@ -29,16 +29,24 @@ JSON:
 PHP:
 ```php
 <?php
-use JsonApiPhp\JsonApi\{
-    DataDocument, SingleLinkage, Attribute, ResourceIdentifier, ResourceObject, Relationship,
-    Link\RelatedLink, Link\SelfLink, Link\Url
-};
+use JsonApiPhp\JsonApi\Attribute;
+use JsonApiPhp\JsonApi\DataDocument;
+use JsonApiPhp\JsonApi\Link\RelatedLink;
+use JsonApiPhp\JsonApi\Link\SelfLink;
+use JsonApiPhp\JsonApi\Link\Url;
+use JsonApiPhp\JsonApi\Relationship;
+use JsonApiPhp\JsonApi\ResourceIdentifier;
+use JsonApiPhp\JsonApi\ResourceObject;
+use JsonApiPhp\JsonApi\SingleLinkage;
 
 echo json_encode(
     new DataDocument(
-        new ResourceObject('articles', '1',
+        new ResourceObject(
+            'articles',
+            '1',
             new Attribute('title', 'Rails is Omakase'),
-            new Relationship('author',
+            new Relationship(
+                'author',
                 new SingleLinkage(new ResourceIdentifier('author', '9')),
                 new SelfLink(new Url('/articles/1/relationships/author')),
                 new RelatedLink(new Url('/articles/1/author'))
@@ -53,16 +61,21 @@ echo json_encode(
 
 ## Documentation
 
+First, take a look at the examples. All of them are runnable.
+- [Simple Document](./examples/simple_doc.php) (the same as above)
+- [Extensive Compound Document](./examples/compound_doc.php)
+
 The library API and use-cases are expressed in comprehensive suite of tests.
 - Data Documents (containing primary data)
-    -  [With a single Resource Object](./test/DataDocument/SingleResourceObjectTest.php)
-    -  [With a single Resource Identifier](./test/DataDocument/SingleResourceIdentifierTest.php)
-    -  [With null data](./test/DataDocument/NullDataTest.php)
-    -  [With multiple Resource Objects](./test/DataDocument/ManyResourceObjectsTest.php)
-    -  [With multiple Resource Identifiers](./test/DataDocument/ManyResourceIdentifiersTest.php)
+    -  [with a single Resource Object](./test/DataDocument/SingleResourceObjectTest.php)
+    -  [with a single Resource Identifier](./test/DataDocument/SingleResourceIdentifierTest.php)
+    -  [with null data](./test/DataDocument/NullDataTest.php)
+    -  [with multiple Resource Objects](./test/DataDocument/ManyResourceObjectsTest.php)
+    -  [with multiple Resource Identifiers](./test/DataDocument/ManyResourceIdentifiersTest.php)
 - [Compound Documents](./test/CompoundDocumentTest.php)
 - [Error Documents](./test/ErrorDocumentTest.php)
 - [Meta Documents (containing neither data nor errors)](./test/MetaDocumentTest.php)
 - [Pagination links](./test/PaginationLinksTest.php)
+- [Link Objects](./test/LinkObjectTest.php)
 - [JSON API Object](./test/JsonApiTest.php)
-- [Meta Object](./test/MetaTest.php)
+- [Meta Objects](./test/MetaTest.php)
