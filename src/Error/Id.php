@@ -2,15 +2,23 @@
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\AttachableValue;
-
-final class Id extends AttachableValue implements ErrorMember
+final class Id implements ErrorMember
 {
     /**
-     * @param string $identifier a unique identifier for this particular occurrence of the problem
+     * @var string
      */
-    public function __construct(string $identifier)
+    private $id;
+
+    /**
+     * @param string $id a unique identifier for this particular occurrence of the problem
+     */
+    public function __construct(string $id)
     {
-        parent::__construct('id', $identifier);
+        $this->id = $id;
+    }
+
+    public function attachTo(object $o)
+    {
+        $o->id = $this->id;
     }
 }

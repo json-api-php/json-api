@@ -2,11 +2,11 @@
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\DocumentMember;
+use JsonApiPhp\JsonApi\Attachable;
 
 /**
  * @internal
  */
-interface ErrorMember extends DocumentMember
+interface ErrorMember extends Attachable
 {
 }

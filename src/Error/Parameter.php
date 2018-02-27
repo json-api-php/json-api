@@ -21,11 +21,6 @@ final class Parameter implements ErrorMember
 
     public function attachTo(object $o)
     {
-        child($o, 'source')->parameter = $this;
-    }
-
-    public function jsonSerialize()
-    {
-        return $this->parameter;
+        child($o, 'source')->parameter = $this->parameter;
     }
 }

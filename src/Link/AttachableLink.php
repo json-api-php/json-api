@@ -2,21 +2,36 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\AttachableValue;
+use JsonApiPhp\JsonApi\Attachable;
 use function JsonApiPhp\JsonApi\child;
 
 /**
  * @internal
  */
-class AttachableLink extends AttachableValue
+class AttachableLink implements Attachable, \JsonSerializable
 {
+    /**
+     * @var string
+     */
+    private $key;
+    /**
+     * @var Link
+     */
+    private $link;
+
     public function __construct(string $key, Link $link)
     {
-        parent::__construct($key, $link);
+        $this->key = $key;
+        $this->link = $link;
     }
 
     public function attachTo(object $o)
     {
-        parent::attachTo(child($o, 'links'));
+        child($o, 'links')->{$this->key} = $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->link;
     }
 }

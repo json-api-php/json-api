@@ -5,19 +5,30 @@ namespace JsonApiPhp\JsonApi;
 use JsonApiPhp\JsonApi\Error\ErrorMember;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 
-final class Meta extends AttachableValue implements ErrorMember, TopLevelDocumentMember, DataDocumentMember, ResourceMember, RelationshipMember
+final class Meta implements Attachable, ErrorMember, TopLevelDocumentMember, DataDocumentMember, ResourceMember, RelationshipMember
 {
+    /**
+     * @var string
+     */
+    private $key;
+    private $value;
+
     public function __construct(string $key, $value)
     {
         if (isValidName($key) === false) {
             throw new \DomainException("Invalid character in a member name '$key'");
         }
-
-        parent::__construct($key, $value);
+        $this->key = $key;
+        $this->value = $value;
     }
 
     public function attachTo(object $o)
     {
-        parent::attachTo(child($o, 'meta'));
+        child($o, 'meta')->{$this->key} = $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->value;
     }
 }

@@ -2,10 +2,9 @@
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\Attachable;
 use function JsonApiPhp\JsonApi\child;
 
-final class Pointer implements Attachable, ErrorMember
+final class Pointer implements ErrorMember
 {
     private $pointer;
 
@@ -19,11 +18,6 @@ final class Pointer implements Attachable, ErrorMember
 
     public function attachTo(object $o)
     {
-        child($o, 'source')->pointer = $this;
-    }
-
-    public function jsonSerialize()
-    {
-        return $this->pointer;
+        child($o, 'source')->pointer = $this->pointer;
     }
 }
