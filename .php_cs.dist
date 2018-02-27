@@ -42,6 +42,7 @@ return PhpCsFixer\Config::create()
         'psr0' => true,
         'short_scalar_cast' => true,
         'single_blank_line_before_namespace' => true,
+        'single_quote' => true,
         'standardize_not_equals' => true,
         'strict_comparison' => true,
         'ternary_operator_spaces' => true,

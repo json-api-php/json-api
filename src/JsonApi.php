@@ -4,7 +4,7 @@ namespace JsonApiPhp\JsonApi;
 
 final class JsonApi extends AttachableValue implements TopLevelDocumentMember, DataDocumentMember
 {
-    public function __construct(string $version, Meta $meta = null)
+    public function __construct(string $version = '1.0', Meta $meta = null)
     {
         $jsonapi = (object) [
             'version' => $version,

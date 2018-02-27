@@ -3,8 +3,6 @@
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\Identifier;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifier;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
 
 final class SingleLinkage extends AttachableValue implements RelationshipMember, Identifier
 {

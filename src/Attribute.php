@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\PrimaryData;
+namespace JsonApiPhp\JsonApi;
 
-use function JsonApiPhp\JsonApi\child;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
 
-class Attribute extends ResourceField
+final class Attribute extends ResourceField
 {
     public function attachTo(object $o)
     {

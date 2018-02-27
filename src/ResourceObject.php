@@ -1,9 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\PrimaryData;
+namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\AttachableValue;
-use function JsonApiPhp\JsonApi\combine;
+use JsonApiPhp\JsonApi\PrimaryData\Identifier;
+use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 
 final class ResourceObject extends AttachableValue implements PrimaryData
 {

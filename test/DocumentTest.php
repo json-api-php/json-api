@@ -15,12 +15,11 @@ use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\MetaDocument;
-use JsonApiPhp\JsonApi\PrimaryData\Attribute;
-use JsonApiPhp\JsonApi\PrimaryData\NullData;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifier;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifierSet;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceObjectSet;
+use JsonApiPhp\JsonApi\NullData;
+use JsonApiPhp\JsonApi\ResourceIdentifier;
+use JsonApiPhp\JsonApi\ResourceIdentifierSet;
+use JsonApiPhp\JsonApi\ResourceObject;
+use JsonApiPhp\JsonApi\ResourceObjectSet;
 
 class DocumentTest extends BaseTestCase
 {
@@ -159,32 +158,6 @@ class DocumentTest extends BaseTestCase
             ',
             new DataDocument(
                 new ResourceIdentifier('apples', '1', new Meta(['foo' => 'bar']))
-            )
-        );
-    }
-
-    public function testSingleResourceObjectDocument()
-    {
-        $this->assertEncodesTo(
-            '
-            {
-                "data": {
-                    "type": "apples",
-                    "id": "1",
-                    "attributes": {
-                        "title": "Rails is Omakase"
-                    },
-                    "meta": {"foo": "bar"}
-                }
-            }
-            ',
-            new DataDocument(
-                new ResourceObject(
-                    'apples',
-                    '1',
-                    new Attribute('title', 'Rails is Omakase'),
-                    new Meta(['foo' => 'bar'])
-                )
             )
         );
     }

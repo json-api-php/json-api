@@ -4,7 +4,6 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\Identifier;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
 
 final class Relationship extends ResourceField implements Identifier
 {

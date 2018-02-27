@@ -2,8 +2,6 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
-
 final class Included extends AttachableValue implements DataDocumentMember, \IteratorAggregate
 {
     private $resources = [];

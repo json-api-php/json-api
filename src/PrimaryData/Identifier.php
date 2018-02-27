@@ -2,6 +2,8 @@
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
+use JsonApiPhp\JsonApi\ResourceObject;
+
 /**
  * @internal
  */

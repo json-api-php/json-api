@@ -53,3 +53,10 @@ echo json_encode(
 ```
 ## Installation
 `composer require json-api-php/json-api`
+
+## Documentation
+
+The library API and use-cases are expressed in comprehensive suite of tests.
+- Data Documents
+    -  [With a single Resource Object](./test/DataDocument/SingleResourceObjectTest.php)
+- dfd

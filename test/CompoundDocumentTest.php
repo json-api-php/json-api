@@ -2,6 +2,7 @@
 
 namespace JsonApiPhp\JsonApi\Test;
 
+use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\CompoundDocument;
 use JsonApiPhp\JsonApi\Included;
 use JsonApiPhp\JsonApi\Link\LastLink;
@@ -10,13 +11,12 @@ use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\MultiLinkage;
-use JsonApiPhp\JsonApi\PrimaryData\Attribute;
-use JsonApiPhp\JsonApi\PrimaryData\NullData;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifier;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceIdentifierSet;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceObject;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceObjectSet;
+use JsonApiPhp\JsonApi\NullData;
 use JsonApiPhp\JsonApi\Relationship;
+use JsonApiPhp\JsonApi\ResourceIdentifier;
+use JsonApiPhp\JsonApi\ResourceIdentifierSet;
+use JsonApiPhp\JsonApi\ResourceObject;
+use JsonApiPhp\JsonApi\ResourceObjectSet;
 use JsonApiPhp\JsonApi\SingleLinkage;
 
 class CompoundDocumentTest extends BaseTestCase

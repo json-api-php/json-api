@@ -1,11 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\PrimaryData;
+namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\AttachableValue;
-use JsonApiPhp\JsonApi\Meta;
+use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 
-class ResourceIdentifier extends AttachableValue implements PrimaryData
+final class ResourceIdentifier extends AttachableValue implements PrimaryData
 {
     private $type;
     private $id;

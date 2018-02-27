@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\PrimaryData;
+namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\AttachableValue;
+use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 
 final class ResourceIdentifierSet extends AttachableValue implements PrimaryData
 {

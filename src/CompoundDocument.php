@@ -17,7 +17,7 @@ final class CompoundDocument extends JsonSerializableValue
                     continue 2;
                 }
             }
-            throw new \DomainException("Full linkage required for ".json_encode($resource->identifier()));
+            throw new \DomainException('Full linkage required for '.json_encode($resource->identifier()));
         }
         parent::__construct(combine($data, $included, ...$members));
     }
