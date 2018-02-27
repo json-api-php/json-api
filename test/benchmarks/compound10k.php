@@ -1,12 +1,25 @@
 <?php declare(strict_types=1);
+
 use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\CompoundDocument;
+use JsonApiPhp\JsonApi\Error;
+use JsonApiPhp\JsonApi\Error\Code;
+use JsonApiPhp\JsonApi\Error\Detail;
+use JsonApiPhp\JsonApi\Error\Id;
+use JsonApiPhp\JsonApi\Error\Parameter;
+use JsonApiPhp\JsonApi\Error\Pointer;
+use JsonApiPhp\JsonApi\Error\Status;
+use JsonApiPhp\JsonApi\Error\Title;
+use JsonApiPhp\JsonApi\ErrorDocument;
 use JsonApiPhp\JsonApi\Included;
+use JsonApiPhp\JsonApi\JsonApi;
+use JsonApiPhp\JsonApi\Link\AboutLink;
 use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Link\Url;
+use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\MultiLinkage;
 use JsonApiPhp\JsonApi\Relationship;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
@@ -18,8 +31,7 @@ require_once __DIR__.'/../../vendor/autoload.php';
 
 // Generate the compound document from the spec 10k times
 
-for($count = 0; $count < 10000; $count++) {
-
+for ($count = 0; $count < 10000; $count++) {
     $dan = new ResourceObject(
         'people',
         '9',
@@ -45,7 +57,7 @@ for($count = 0; $count < 10000; $count++) {
         new Relationship('author', new SingleLinkage($dan->identifier()))
     );
 
-    $document = new CompoundDocument(
+    $data_document = new CompoundDocument(
         new ResourceObjectSet(
             new ResourceObject(
                 'articles',
@@ -75,5 +87,31 @@ for($count = 0; $count < 10000; $count++) {
         new LastLink(new Url('http://example.com/articles?page[offset]=10'))
     );
 
-    $json = json_encode($document);
+    $data_doc_json = json_encode($data_document);
 }
+
+for ($count = 0; $count < 1000; $count++) {
+    $error_doc = new ErrorDocument(
+        new Error(
+            new Id('1'),
+            new AboutLink(
+                new Url('/errors/not_found')
+            ),
+            new Status('404'),
+            new Code('not_found'),
+            new Title('Resource not found'),
+            new Detail('We tried hard but could not find anything'),
+            new Pointer('/data'),
+            new Parameter('query_string'),
+            new Meta('purpose', 'test')
+        ),
+        new Meta('purpose', 'test'),
+        new JsonApi()
+    );
+
+    $error_doc_json = json_encode($error_doc);
+}
+
+echo $data_doc_json;
+echo "\n\n";
+echo $error_doc_json;

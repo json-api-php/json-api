@@ -2,12 +2,17 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\JsonSerializableValue;
-
-final class Url extends JsonSerializableValue implements Link
+final class Url implements \JsonSerializable, Link
 {
+    private $url;
+
     public function __construct(string $url)
     {
-        parent::__construct($url);
+        $this->url = $url;
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->url;
     }
 }

@@ -17,7 +17,7 @@ abstract class ResourceField extends AttachableValue implements ResourceMember
         if (isValidName($key) === false) {
             throw new \DomainException("Invalid character in a member name '$key'");
         }
-        if (in_array($key, ['id', 'type'])) {
+        if ($key === 'id' || $key === 'type') {
             throw new \DomainException("Can not use '$key' as a resource field");
         }
         parent::__construct($key, $value);

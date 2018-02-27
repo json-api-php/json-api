@@ -19,18 +19,26 @@ final class ResourceObject extends AttachableValue implements PrimaryData
 
     public function __construct(string $type, string $id = null, ResourceMember ...$members)
     {
-        $this->checkUniqueness(...$members);
+        $keys = [];
+        foreach ($members as $member) {
+            if ($member instanceof Identifier) {
+                $this->identifiers[] = $member;
+            }
+            if ($member instanceof ResourceField) {
+                $key = $member->key();
+                if (isset($keys[$key])) {
+                    throw new \LogicException("Field '$key' already exists'");
+                }
+                $keys[$key] = true;
+            }
+        }
+
         $obj = combine(...$members);
         $obj->type = $type;
         $obj->id = $id;
         parent::__construct('data', $obj);
         $this->type = $type;
         $this->id = $id;
-        foreach ($members as $member) {
-            if ($member instanceof Identifier) {
-                $this->identifiers[] = $member;
-            }
-        }
     }
 
     public function identifier(): ResourceIdentifier
@@ -46,19 +54,5 @@ final class ResourceObject extends AttachableValue implements PrimaryData
             }
         }
         return false;
-    }
-
-    private function checkUniqueness(ResourceMember ...$members): void
-    {
-        $keys = [];
-        foreach ($members as $member) {
-            if ($member instanceof ResourceField) {
-                $key = $member->key();
-                if (isset($keys[$key])) {
-                    throw new \LogicException("Field '$key' already exists'");
-                }
-                $keys[$key] = true;
-            }
-        }
     }
 }

@@ -4,10 +4,17 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 
-final class DataDocument extends JsonSerializableValue
+final class DataDocument implements \JsonSerializable
 {
+    private $value;
+
     public function __construct(PrimaryData $data, DataDocumentMember ...$members)
     {
-        parent::__construct(combine($data, ...$members));
+        $this->value = combine($data, ...$members);
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->value;
     }
 }

@@ -4,8 +4,10 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 
-final class CompoundDocument extends JsonSerializableValue
+final class CompoundDocument implements \JsonSerializable
 {
+    private $doc;
+
     public function __construct(PrimaryData $data, Included $included, DataDocumentMember ...$members)
     {
         foreach ($included as $resource) {
@@ -19,6 +21,11 @@ final class CompoundDocument extends JsonSerializableValue
             }
             throw new \DomainException('Full linkage required for '.json_encode($resource->identifier()));
         }
-        parent::__construct(combine($data, $included, ...$members));
+        $this->doc = combine($data, $included, ...$members);
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->doc;
     }
 }

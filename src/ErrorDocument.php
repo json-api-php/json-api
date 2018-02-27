@@ -2,10 +2,17 @@
 
 namespace JsonApiPhp\JsonApi;
 
-final class ErrorDocument extends JsonSerializableValue
+final class ErrorDocument implements \JsonSerializable
 {
+    private $doc;
+
     public function __construct(Error $error, ErrorDocumentMember ...$members)
     {
-        parent::__construct(combine($error, ...$members));
+        $this->doc = combine($error, ...$members);
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->doc;
     }
 }

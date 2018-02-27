@@ -4,15 +4,22 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Error\ErrorMember;
 
-final class Error extends JsonSerializableValue implements ErrorDocumentMember
+final class Error implements \JsonSerializable, ErrorDocumentMember
 {
+    private $error;
+
     public function __construct(ErrorMember ...$members)
     {
-        parent::__construct(combine(...$members));
+        $this->error = combine(...$members);
     }
 
     public function attachTo(object $o)
     {
         $o->errors[] = $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->error;
     }
 }

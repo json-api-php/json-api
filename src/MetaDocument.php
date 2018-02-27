@@ -2,10 +2,17 @@
 
 namespace JsonApiPhp\JsonApi;
 
-final class MetaDocument extends JsonSerializableValue
+final class MetaDocument implements \JsonSerializable
 {
+    private $doc;
+
     public function __construct(Meta $meta, TopLevelDocumentMember ...$members)
     {
-        parent::__construct(combine($meta, ...$members));
+        $this->doc = combine($meta, ...$members);
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->doc;
     }
 }

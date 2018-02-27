@@ -2,19 +2,24 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\JsonSerializableValue;
 use JsonApiPhp\JsonApi\Meta;
 
-final class LinkObject extends JsonSerializableValue implements Link
+final class LinkObject implements \JsonSerializable, Link
 {
+    private $link;
+
     public function __construct(string $href, Meta $meta = null)
     {
-        $link = (object) [
+        $this->link = (object) [
             'href' => $href,
         ];
         if ($meta) {
-            $meta->attachTo($link);
+            $meta->attachTo($this->link);
         }
-        parent::__construct($link);
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->link;
     }
 }
