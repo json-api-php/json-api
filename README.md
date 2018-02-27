@@ -1,5 +1,7 @@
 # [JSON API](http://jsonapi.org) spec implemented in PHP 7. Immutable
 
+**This is v2 of the implementation. For v1 click [here](/json-api-php/json-api/tree/v2).**
+
 The goal of this library is to ensure strict validity of JSON API documents being produced.
 
 JSON:
