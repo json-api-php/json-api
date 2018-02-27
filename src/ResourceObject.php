@@ -55,7 +55,7 @@ final class ResourceObject extends AttachableValue implements PrimaryData
             if ($member instanceof ResourceField) {
                 $key = $member->key();
                 if (isset($keys[$key])) {
-                    throw new \LogicException("Field '$key' already exists'");
+                    throw new \LogicException("Field '$key' already exists");
                 }
                 $keys[$key] = true;
             }
