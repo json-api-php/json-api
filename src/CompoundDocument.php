@@ -10,17 +10,7 @@ final class CompoundDocument implements \JsonSerializable
 
     public function __construct(PrimaryData $data, Included $included, DataDocumentMember ...$members)
     {
-        foreach ($included as $resource) {
-            if ($data->identifies($resource)) {
-                continue;
-            }
-            foreach ($included as $anotherResource) {
-                if ($anotherResource->identifies($resource)) {
-                    continue 2;
-                }
-            }
-            throw new \DomainException('Full linkage required for '.$resource->uniqueId());
-        }
+        $included->validateLinkage($data);
         $this->doc = combine($data, $included, ...$members);
     }
 

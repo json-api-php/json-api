@@ -4,7 +4,7 @@ namespace JsonApiPhp\JsonApi\Error;
 
 use function JsonApiPhp\JsonApi\child;
 
-final class Pointer implements ErrorMember
+final class SourcePointer implements ErrorMember
 {
     private $pointer;
 
@@ -16,7 +16,7 @@ final class Pointer implements ErrorMember
         $this->pointer = $pointer;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         child($o, 'source')->pointer = $this->pointer;
     }

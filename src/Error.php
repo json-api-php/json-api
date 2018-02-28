@@ -10,7 +10,10 @@ final class Error implements ErrorDocumentMember
 
     public function __construct(ErrorMember ...$members)
     {
-        $this->error = combine(...$members);
+        $this->error = (object) [];
+        foreach ($members as $member) {
+            $member->attachTo($this->error);
+        }
     }
 
     public function attachTo(object $o)

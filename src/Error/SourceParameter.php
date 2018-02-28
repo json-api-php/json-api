@@ -4,7 +4,7 @@ namespace JsonApiPhp\JsonApi\Error;
 
 use function JsonApiPhp\JsonApi\child;
 
-final class Parameter implements ErrorMember
+final class SourceParameter implements ErrorMember
 {
     /**
      * @var string
@@ -19,7 +19,7 @@ final class Parameter implements ErrorMember
         $this->parameter = $parameter;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         child($o, 'source')->parameter = $this->parameter;
     }

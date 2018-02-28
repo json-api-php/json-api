@@ -17,7 +17,7 @@ final class Status implements ErrorMember
         $this->status = $status;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $o->status = $this->status;
     }

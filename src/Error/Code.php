@@ -17,7 +17,7 @@ final class Code implements ErrorMember
         $this->code = $code;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $o->code = $this->code;
     }

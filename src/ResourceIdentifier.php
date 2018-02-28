@@ -42,9 +42,4 @@ final class ResourceIdentifier implements PrimaryData, ToManyMember
     {
         $o->data[] = $this->identifier;
     }
-
-    public function jsonSerialize()
-    {
-        return $this->identifier;
-    }
 }

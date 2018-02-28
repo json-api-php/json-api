@@ -2,7 +2,9 @@
 
 namespace JsonApiPhp\JsonApi;
 
-final class Included implements DataDocumentMember, \IteratorAggregate
+use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
+
+final class Included implements Attachable
 {
     /**
      * @var ResourceObject[]
@@ -20,9 +22,19 @@ final class Included implements DataDocumentMember, \IteratorAggregate
         }
     }
 
-    public function getIterator()
+    public function validateLinkage(PrimaryData $data): void
     {
-        return new \ArrayIterator($this->resources);
+        foreach ($this->resources as $resource) {
+            if ($data->identifies($resource)) {
+                continue;
+            }
+            foreach ($this->resources as $anotherResource) {
+                if ($resource !== $anotherResource && $anotherResource->identifies($resource)) {
+                    continue 2;
+                }
+            }
+            throw new \DomainException('Full linkage required for '.$resource->uniqueId());
+        }
     }
 
     public function attachTo(object $o)

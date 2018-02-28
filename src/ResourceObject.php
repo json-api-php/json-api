@@ -9,7 +9,6 @@ use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 
 final class ResourceObject implements PrimaryData
 {
-    private $res;
     private $type;
     private $id;
 
@@ -31,14 +30,11 @@ final class ResourceObject implements PrimaryData
         $this->members = $members;
         $this->type = $type;
         $this->id = $id;
-        $this->res = combine(...$members);
-        $this->res->type = $type;
-        $this->res->id = $id;
     }
 
     public function identifier(): ResourceIdentifier
     {
-        return new ResourceIdentifier($this->res->type, $this->res->id);
+        return new ResourceIdentifier($this->type, $this->id);
     }
 
     public function identifies(ResourceObject $resource): bool
@@ -53,21 +49,29 @@ final class ResourceObject implements PrimaryData
 
     public function attachTo(object $o)
     {
-        $o->data = $this->res;
+        $o->data = $this->buildObject();
     }
 
     public function attachAsIncludedTo(object $o): void
     {
-        $o->included[] = $this->res;
+        $o->included[] = $this->buildObject();
     }
 
     public function attachToCollection(object $o): void
     {
-        $o->data[] = $this->res;
+        $o->data[] = $this->buildObject();
     }
 
     public function uniqueId(): string
     {
         return "{$this->type}:{$this->id}";
+    }
+
+    private function buildObject(): object
+    {
+        $obj = combine(...$this->members);
+        $obj->type = $this->type;
+        $obj->id = $this->id;
+        return $obj;
     }
 }
