@@ -22,9 +22,4 @@ final class SingleLinkage implements RelationshipMember, Identifier
     {
         $o->data = $this->identifier;
     }
-
-    public function jsonSerialize()
-    {
-        // TODO: Implement jsonSerialize() method.
-    }
 }

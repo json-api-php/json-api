@@ -247,7 +247,7 @@ class CompoundDocumentTest extends BaseTestCase
     /**
      * A compound document MUST NOT include more than one resource object for each type and id pair.
      * @expectedException \LogicException
-     * @expectedExceptionMessage Resource {"type":"apples","id":"1"} is already included
+     * @expectedExceptionMessage Resource apples:1 is already included
      */
     public function testCanNotBeManyIncludedResourcesWithEqualIdentifiers()
     {

@@ -9,7 +9,7 @@ final class Included implements DataDocumentMember, \IteratorAggregate
     public function __construct(ResourceObject ...$resources)
     {
         foreach ($resources as $resource) {
-            $string_id = json_encode($resource->identifier());
+            $string_id = $resource->uniqueId();
             if (isset($this->resources[$string_id])) {
                 throw new \LogicException("Resource $string_id is already included");
             }
@@ -25,10 +25,5 @@ final class Included implements DataDocumentMember, \IteratorAggregate
     public function attachTo(object $o)
     {
         $o->included = array_values($this->resources);
-    }
-
-    public function jsonSerialize()
-    {
-        return array_values($this->resources);
     }
 }

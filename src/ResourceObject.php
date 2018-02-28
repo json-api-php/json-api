@@ -10,6 +10,8 @@ use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 final class ResourceObject implements \JsonSerializable, PrimaryData
 {
     private $res;
+    private $type;
+    private $id;
 
     private $members = [];
 
@@ -27,6 +29,8 @@ final class ResourceObject implements \JsonSerializable, PrimaryData
         }
 
         $this->members = $members;
+        $this->type = $type;
+        $this->id = $id;
         $this->res = combine(...$members);
         $this->res->type = $type;
         $this->res->id = $id;
@@ -55,5 +59,10 @@ final class ResourceObject implements \JsonSerializable, PrimaryData
     public function jsonSerialize()
     {
         return $this->res;
+    }
+
+    public function uniqueId(): string
+    {
+        return "{$this->type}:{$this->id}";
     }
 }

@@ -33,9 +33,4 @@ abstract class ResourceField implements ResourceMember
     {
         $o->{$this->key} = $this->value;
     }
-
-    public function jsonSerialize()
-    {
-        return $this->value;
-    }
 }
