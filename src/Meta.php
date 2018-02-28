@@ -26,9 +26,4 @@ final class Meta implements ErrorMember, TopLevelDocumentMember, DataDocumentMem
     {
         child($o, 'meta')->{$this->key} = $this->value;
     }
-
-    public function jsonSerialize()
-    {
-        return $this->value;
-    }
 }

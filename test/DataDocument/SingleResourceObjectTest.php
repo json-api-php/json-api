@@ -6,7 +6,6 @@ use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Link\SelfLink;
-use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
@@ -61,7 +60,7 @@ class SingleResourceObjectTest extends BaseTestCase
                     new Attribute('sort', 'Fuji'),
                     new Meta('apple_meta', 'foo')
                 ),
-                new SelfLink(new Url('/apples/1')),
+                new SelfLink('/apples/1'),
                 new JsonApi(),
                 new Meta('document_meta', 'bar')
             )

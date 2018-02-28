@@ -5,7 +5,6 @@ namespace JsonApiPhp\JsonApi\Test\DataDocument;
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Link\SelfLink;
-use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
 use JsonApiPhp\JsonApi\ResourceIdentifierSet;
@@ -63,7 +62,7 @@ class ManyResourceIdentifiersTest extends BaseTestCase
                         new Meta('apple_meta', 'foo')
                     )
                 ),
-                new SelfLink(new Url('/apples')),
+                new SelfLink('/apples'),
                 new JsonApi(),
                 new Meta('document_meta', 'bar')
             )

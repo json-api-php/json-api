@@ -14,7 +14,6 @@ use JsonApiPhp\JsonApi\Error\Title;
 use JsonApiPhp\JsonApi\ErrorDocument;
 use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Link\AboutLink;
-use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
 
 class ErrorDocumentTest extends BaseTestCase
@@ -68,9 +67,7 @@ class ErrorDocumentTest extends BaseTestCase
             new ErrorDocument(
                 new Error(
                     new Id('1'),
-                    new AboutLink(
-                        new Url('/errors/not_found')
-                    ),
+                    new AboutLink('/errors/not_found'),
                     new Status('404'),
                     new Code('not_found'),
                     new Title('Resource not found'),

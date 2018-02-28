@@ -7,7 +7,6 @@ use JsonApiPhp\JsonApi\Link\FirstLink;
 use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\PrevLink;
-use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\ResourceObjectSet;
 
@@ -35,10 +34,10 @@ class PaginationLinksTest extends BaseTestCase
                     new ResourceObject('apples', '1'),
                     new ResourceObject('apples', '2')
                 ),
-                new FirstLink(new Url('http://example.com/fruits?page=first')),
-                new LastLink(new Url('http://example.com/fruits?page=last')),
-                new PrevLink(new Url('http://example.com/fruits?page=3')),
-                new NextLink(new Url('http://example.com/fruits?page=5'))
+                new FirstLink('http://example.com/fruits?page=first'),
+                new LastLink('http://example.com/fruits?page=last'),
+                new PrevLink('http://example.com/fruits?page=3'),
+                new NextLink('http://example.com/fruits?page=5')
             )
         );
     }

@@ -18,7 +18,6 @@ use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
-use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\MultiLinkage;
 use JsonApiPhp\JsonApi\Relationship;
@@ -38,14 +37,14 @@ for ($count = 0; $count < 10000; $count++) {
         new Attribute('first-name', 'Dan'),
         new Attribute('last-name', 'Gebhardt'),
         new Attribute('twitter', 'dgeb'),
-        new SelfLink(new Url('http://example.com/people/9'))
+        new SelfLink('http://example.com/people/9')
     );
 
     $comment05 = new ResourceObject(
         'comments',
         '5',
         new Attribute('body', 'First!'),
-        new SelfLink(new Url('http://example.com/comments/5')),
+        new SelfLink('http://example.com/comments/5'),
         new Relationship('author', new SingleLinkage(new ResourceIdentifier('people', '2')))
 
     );
@@ -53,7 +52,7 @@ for ($count = 0; $count < 10000; $count++) {
         'comments',
         '12',
         new Attribute('body', 'I like XML better'),
-        new SelfLink(new Url('http://example.com/comments/12')),
+        new SelfLink('http://example.com/comments/12'),
         new Relationship('author', new SingleLinkage($dan->identifier()))
     );
 
@@ -63,12 +62,12 @@ for ($count = 0; $count < 10000; $count++) {
                 'articles',
                 '1',
                 new Attribute('title', 'JSON API paints my bikeshed!'),
-                new SelfLink(new Url('http://example.com/articles/1')),
+                new SelfLink('http://example.com/articles/1'),
                 new Relationship(
                     'author',
                     new SingleLinkage($dan->identifier()),
-                    new SelfLink(new Url('http://example.com/articles/1/relationships/author')),
-                    new RelatedLink(new Url('http://example.com/articles/1/author'))
+                    new SelfLink('http://example.com/articles/1/relationships/author'),
+                    new RelatedLink('http://example.com/articles/1/author')
                 ),
                 new Relationship(
                     'comments',
@@ -76,15 +75,15 @@ for ($count = 0; $count < 10000; $count++) {
                         $comment05->identifier(),
                         $comment12->identifier()
                     ),
-                    new SelfLink(new Url('http://example.com/articles/1/relationships/comments')),
-                    new RelatedLink(new Url('http://example.com/articles/1/comments'))
+                    new SelfLink('http://example.com/articles/1/relationships/comments'),
+                    new RelatedLink('http://example.com/articles/1/comments')
                 )
             )
         ),
         new Included($dan, $comment05, $comment12),
-        new SelfLink(new Url('http://example.com/articles')),
-        new NextLink(new Url('http://example.com/articles?page[offset]=2')),
-        new LastLink(new Url('http://example.com/articles?page[offset]=10'))
+        new SelfLink('http://example.com/articles'),
+        new NextLink('http://example.com/articles?page[offset]=2'),
+        new LastLink('http://example.com/articles?page[offset]=10')
     );
 
     $data_doc_json = json_encode($data_document);
@@ -94,9 +93,7 @@ for ($count = 0; $count < 1000; $count++) {
     $error_doc = new ErrorDocument(
         new Error(
             new Id('1'),
-            new AboutLink(
-                new Url('/errors/not_found')
-            ),
+            new AboutLink('/errors/not_found'),
             new Status('404'),
             new Code('not_found'),
             new Title('Resource not found'),

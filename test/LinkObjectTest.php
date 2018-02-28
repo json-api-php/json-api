@@ -3,7 +3,6 @@
 namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\DataDocument;
-use JsonApiPhp\JsonApi\Link\LinkObject;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
@@ -19,7 +18,8 @@ class LinkObjectTest extends BaseTestCase
                     "self": {
                         "href": "http://example.com",
                         "meta": {
-                            "foo": "bar"
+                            "foo": "bar",
+                            "test": true
                         }
                     }
                 }
@@ -27,7 +27,7 @@ class LinkObjectTest extends BaseTestCase
             ',
             new DataDocument(
                 new ResourceIdentifier('apples', '1'),
-                new SelfLink(new LinkObject('http://example.com', new Meta('foo', 'bar')))
+                new SelfLink('http://example.com', new Meta('foo', 'bar'), new Meta('test', true))
             )
         );
     }

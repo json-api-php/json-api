@@ -4,7 +4,7 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 
-final class ResourceObjectSet extends AttachableValue implements PrimaryData
+final class ResourceObjectSet implements PrimaryData
 {
     /**
      * @var ResourceObject[]
@@ -14,7 +14,6 @@ final class ResourceObjectSet extends AttachableValue implements PrimaryData
     public function __construct(ResourceObject ...$resources)
     {
         $this->resources = $resources;
-        parent::__construct('data', $this->resources);
     }
 
     public function identifies(ResourceObject $resource): bool
@@ -25,5 +24,10 @@ final class ResourceObjectSet extends AttachableValue implements PrimaryData
             }
         }
         return false;
+    }
+
+    public function attachTo(object $o)
+    {
+        $o->data = $this->resources;
     }
 }

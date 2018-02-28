@@ -5,7 +5,6 @@ use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
-use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Relationship;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
 use JsonApiPhp\JsonApi\ResourceObject;
@@ -20,8 +19,8 @@ echo json_encode(
             new Relationship(
                 'author',
                 new SingleLinkage(new ResourceIdentifier('author', '9')),
-                new SelfLink(new Url('/articles/1/relationships/author')),
-                new RelatedLink(new Url('/articles/1/author'))
+                new SelfLink('/articles/1/relationships/author'),
+                new RelatedLink('/articles/1/author')
             )
         )
     ),

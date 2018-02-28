@@ -6,7 +6,6 @@ use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
-use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\MultiLinkage;
 use JsonApiPhp\JsonApi\Relationship;
@@ -50,12 +49,12 @@ class ResourceObjectTest extends BaseTestCase
                     '1',
                     new Meta('foo', 'bar'),
                     new Attribute('title', 'Rails is Omakase'),
-                    new SelfLink(new Url('http://self')),
+                    new SelfLink('http://self'),
                     new Relationship(
                         'author',
                         new Meta('foo', 'bar'),
-                        new SelfLink(new Url('http://rel/author')),
-                        new RelatedLink(new Url('http://author')),
+                        new SelfLink('http://rel/author'),
+                        new RelatedLink('http://author'),
                         new SingleLinkage()
                     )
                 )

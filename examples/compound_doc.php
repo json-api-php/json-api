@@ -6,7 +6,6 @@ use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
-use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\MultiLinkage;
 use JsonApiPhp\JsonApi\Relationship;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
@@ -22,14 +21,14 @@ $dan = new ResourceObject(
     new Attribute('first-name', 'Dan'),
     new Attribute('last-name', 'Gebhardt'),
     new Attribute('twitter', 'dgeb'),
-    new SelfLink(new Url('http://example.com/people/9'))
+    new SelfLink('http://example.com/people/9')
 );
 
 $comment05 = new ResourceObject(
     'comments',
     '5',
     new Attribute('body', 'First!'),
-    new SelfLink(new Url('http://example.com/comments/5')),
+    new SelfLink('http://example.com/comments/5'),
     new Relationship('author', new SingleLinkage(new ResourceIdentifier('people', '2')))
 
 );
@@ -37,7 +36,7 @@ $comment12 = new ResourceObject(
     'comments',
     '12',
     new Attribute('body', 'I like XML better'),
-    new SelfLink(new Url('http://example.com/comments/12')),
+    new SelfLink('http://example.com/comments/12'),
     new Relationship('author', new SingleLinkage($dan->identifier()))
 );
 
@@ -47,12 +46,12 @@ $document = new CompoundDocument(
             'articles',
             '1',
             new Attribute('title', 'JSON API paints my bikeshed!'),
-            new SelfLink(new Url('http://example.com/articles/1')),
+            new SelfLink('http://example.com/articles/1'),
             new Relationship(
                 'author',
                 new SingleLinkage($dan->identifier()),
-                new SelfLink(new Url('http://example.com/articles/1/relationships/author')),
-                new RelatedLink(new Url('http://example.com/articles/1/author'))
+                new SelfLink('http://example.com/articles/1/relationships/author'),
+                new RelatedLink('http://example.com/articles/1/author')
             ),
             new Relationship(
                 'comments',
@@ -60,15 +59,15 @@ $document = new CompoundDocument(
                     $comment05->identifier(),
                     $comment12->identifier()
                 ),
-                new SelfLink(new Url('http://example.com/articles/1/relationships/comments')),
-                new RelatedLink(new Url('http://example.com/articles/1/comments'))
+                new SelfLink('http://example.com/articles/1/relationships/comments'),
+                new RelatedLink('http://example.com/articles/1/comments')
             )
         )
     ),
     new Included($dan, $comment05, $comment12),
-    new SelfLink(new Url('http://example.com/articles')),
-    new NextLink(new Url('http://example.com/articles?page[offset]=2')),
-    new LastLink(new Url('http://example.com/articles?page[offset]=10'))
+    new SelfLink('http://example.com/articles'),
+    new NextLink('http://example.com/articles?page[offset]=2'),
+    new LastLink('http://example.com/articles?page[offset]=10')
 );
 
 echo json_encode($document, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
