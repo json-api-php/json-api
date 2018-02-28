@@ -4,7 +4,7 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 
-final class ResourceObjectSet implements PrimaryData
+final class ResourceCollection implements PrimaryData
 {
     /**
      * @var ResourceObject[]
@@ -28,6 +28,9 @@ final class ResourceObjectSet implements PrimaryData
 
     public function attachTo(object $o)
     {
-        $o->data = $this->resources;
+        $o->data = [];
+        foreach ($this->resources as $resource) {
+            $resource->attachToCollection($o);
+        }
     }
 }

@@ -2,9 +2,10 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\RelationshipMember;
+use JsonApiPhp\JsonApi\ToManyMember;
+use JsonApiPhp\JsonApi\ToOneMember;
 
-final class RelatedLink extends Link implements RelationshipMember
+final class RelatedLink extends Link implements ToOneMember, ToManyMember
 {
     protected $name = 'related';
 }

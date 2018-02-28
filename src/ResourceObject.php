@@ -7,7 +7,7 @@ use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 
-final class ResourceObject implements \JsonSerializable, PrimaryData
+final class ResourceObject implements PrimaryData
 {
     private $res;
     private $type;
@@ -20,7 +20,7 @@ final class ResourceObject implements \JsonSerializable, PrimaryData
         $keys = [];
         foreach ($members as $member) {
             if ($member instanceof ResourceField) {
-                $key = $member->key();
+                $key = $member->name();
                 if (isset($keys[$key])) {
                     throw new \LogicException("Field '$key' already exists'");
                 }
@@ -56,9 +56,14 @@ final class ResourceObject implements \JsonSerializable, PrimaryData
         $o->data = $this->res;
     }
 
-    public function jsonSerialize()
+    public function attachAsIncludedTo(object $o): void
     {
-        return $this->res;
+        $o->included[] = $this->res;
+    }
+
+    public function attachToCollection(object $o): void
+    {
+        $o->data[] = $this->res;
     }
 
     public function uniqueId(): string

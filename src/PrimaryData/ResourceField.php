@@ -9,28 +9,21 @@ use function JsonApiPhp\JsonApi\isValidName;
  */
 abstract class ResourceField implements ResourceMember
 {
-    private $key;
-    private $value;
+    private $name;
 
-    public function __construct(string $key, $value)
+    public function __construct(string $name)
     {
-        if (isValidName($key) === false) {
-            throw new \DomainException("Invalid character in a member name '$key'");
+        if (isValidName($name) === false) {
+            throw new \DomainException("Invalid character in a member name '$name'");
         }
-        if ($key === 'id' || $key === 'type') {
-            throw new \DomainException("Can not use '$key' as a resource field");
+        if ($name === 'id' || $name === 'type') {
+            throw new \DomainException("Can not use '$name' as a resource field");
         }
-        $this->key = $key;
-        $this->value = $value;
+        $this->name = $name;
     }
 
-    public function key(): string
+    public function name(): string
     {
-        return $this->key;
-    }
-
-    public function attachTo(object $o)
-    {
-        $o->{$this->key} = $this->value;
+        return $this->name;
     }
 }

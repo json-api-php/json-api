@@ -3,11 +3,11 @@
 namespace JsonApiPhp\JsonApi\Test\DataDocument;
 
 use JsonApiPhp\JsonApi\DataDocument;
+use JsonApiPhp\JsonApi\IdentifierCollection;
 use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
-use JsonApiPhp\JsonApi\ResourceIdentifierSet;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
 class ManyResourceIdentifiersTest extends BaseTestCase
@@ -21,7 +21,7 @@ class ManyResourceIdentifiersTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new ResourceIdentifierSet()
+                new IdentifierCollection()
             )
         );
     }
@@ -50,7 +50,7 @@ class ManyResourceIdentifiersTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new ResourceIdentifierSet(
+                new IdentifierCollection(
                     new ResourceIdentifier(
                         'apples',
                         '1',

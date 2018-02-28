@@ -4,7 +4,7 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 
-final class NullData implements PrimaryData
+final class NullData implements PrimaryData, ToOneMember
 {
     public function identifies(ResourceObject $resource): bool
     {

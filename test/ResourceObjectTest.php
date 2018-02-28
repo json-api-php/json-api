@@ -7,11 +7,11 @@ use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Meta;
-use JsonApiPhp\JsonApi\MultiLinkage;
-use JsonApiPhp\JsonApi\Relationship;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
 use JsonApiPhp\JsonApi\ResourceObject;
-use JsonApiPhp\JsonApi\SingleLinkage;
+use JsonApiPhp\JsonApi\ToMany;
+use JsonApiPhp\JsonApi\ToNull;
+use JsonApiPhp\JsonApi\ToOne;
 
 class ResourceObjectTest extends BaseTestCase
 {
@@ -50,12 +50,11 @@ class ResourceObjectTest extends BaseTestCase
                     new Meta('foo', 'bar'),
                     new Attribute('title', 'Rails is Omakase'),
                     new SelfLink('http://self'),
-                    new Relationship(
+                    new ToNull(
                         'author',
                         new Meta('foo', 'bar'),
                         new SelfLink('http://rel/author'),
-                        new RelatedLink('http://author'),
-                        new SingleLinkage()
+                        new RelatedLink('http://author')
                     )
                 )
             )
@@ -82,12 +81,7 @@ class ResourceObjectTest extends BaseTestCase
                 new ResourceObject(
                     'basket',
                     '1',
-                    new Relationship(
-                        'content',
-                        new SingleLinkage(
-                            new ResourceIdentifier('apples', '1')
-                        )
-                    )
+                    new ToOne('content', new ResourceIdentifier('apples', '1'))
                 )
             )
         );
@@ -119,12 +113,10 @@ class ResourceObjectTest extends BaseTestCase
                 new ResourceObject(
                     'basket',
                     '1',
-                    new Relationship(
+                    new ToMany(
                         'content',
-                        new MultiLinkage(
-                            new ResourceIdentifier('apples', '1'),
-                            new ResourceIdentifier('pears', '2')
-                        )
+                        new ResourceIdentifier('apples', '1'),
+                        new ResourceIdentifier('pears', '2')
                     )
                 )
             )
@@ -151,10 +143,7 @@ class ResourceObjectTest extends BaseTestCase
                 new ResourceObject(
                     'basket',
                     '1',
-                    new Relationship(
-                        'content',
-                        new MultiLinkage()
-                    )
+                    new ToMany('content')
                 )
             )
         );
@@ -178,14 +167,14 @@ class ResourceObjectTest extends BaseTestCase
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage("Can not use 'id' as a resource field");
-        new Relationship('id', new SingleLinkage(new ResourceIdentifier('apples', '1')));
+        new ToOne('id', new ResourceIdentifier('apples', '1'));
     }
 
     public function testCanNotCreateTypeRelationship()
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage("Can not use 'type' as a resource field");
-        new Relationship('type', new SingleLinkage(new ResourceIdentifier('apples', '1')));
+        new ToOne('type', new ResourceIdentifier('apples', '1'));
     }
 
     /**
@@ -207,7 +196,7 @@ class ResourceObjectTest extends BaseTestCase
     {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Invalid character in a member name');
-        new Relationship("foo{$invalid_char}bar", new SingleLinkage());
+        new ToNull("foo{$invalid_char}bar");
     }
 
     public function invalidCharacters()
@@ -229,7 +218,7 @@ class ResourceObjectTest extends BaseTestCase
             'apples',
             '1',
             new Attribute('foo', 'bar'),
-            new Relationship('foo', new SingleLinkage(new ResourceIdentifier('apples', '1')))
+            new ToOne('foo', new ResourceIdentifier('apples', '1'))
         );
     }
 
@@ -240,19 +229,18 @@ class ResourceObjectTest extends BaseTestCase
     public function testResourceIdCanBeOmitted()
     {
         $this->assertEncodesTo(
-            '{
-                "type": "apples",
-                "id": null,
-                "attributes": {
-                    "color": "red"
+            '
+            {
+                "data": {
+                    "type": "apples",
+                    "id": null,
+                    "attributes": {
+                        "color": "red"
+                    }
                 }
-            }',
-            new ResourceObject('apples', null, new Attribute('color', 'red'))
+            }
+            ',
+            new DataDocument(new ResourceObject('apples', null, new Attribute('color', 'red')))
         );
-    }
-
-    public function testEmptySingleLinkageIdentifiesNothing()
-    {
-        $this->assertFalse((new SingleLinkage())->identifies(new ResourceObject('something', '1')));
     }
 }

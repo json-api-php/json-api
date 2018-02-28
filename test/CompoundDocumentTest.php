@@ -4,19 +4,18 @@ namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\CompoundDocument;
+use JsonApiPhp\JsonApi\IdentifierCollection;
 use JsonApiPhp\JsonApi\Included;
 use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
-use JsonApiPhp\JsonApi\MultiLinkage;
 use JsonApiPhp\JsonApi\NullData;
-use JsonApiPhp\JsonApi\Relationship;
+use JsonApiPhp\JsonApi\ResourceCollection;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
-use JsonApiPhp\JsonApi\ResourceIdentifierSet;
 use JsonApiPhp\JsonApi\ResourceObject;
-use JsonApiPhp\JsonApi\ResourceObjectSet;
-use JsonApiPhp\JsonApi\SingleLinkage;
+use JsonApiPhp\JsonApi\ToMany;
+use JsonApiPhp\JsonApi\ToOne;
 
 class CompoundDocumentTest extends BaseTestCase
 {
@@ -36,7 +35,7 @@ class CompoundDocumentTest extends BaseTestCase
             '5',
             new Attribute('body', 'First!'),
             new SelfLink('http://example.com/comments/5'),
-            new Relationship('author', new SingleLinkage(new ResourceIdentifier('people', '2')))
+            new ToOne('author', new ResourceIdentifier('people', '2'))
 
         );
         $comment12 = new ResourceObject(
@@ -44,28 +43,26 @@ class CompoundDocumentTest extends BaseTestCase
             '12',
             new Attribute('body', 'I like XML better'),
             new SelfLink('http://example.com/comments/12'),
-            new Relationship('author', new SingleLinkage($dan->identifier()))
+            new ToOne('author', $dan->identifier())
         );
 
         $document = new CompoundDocument(
-            new ResourceObjectSet(
+            new ResourceCollection(
                 new ResourceObject(
                     'articles',
                     '1',
                     new Attribute('title', 'JSON API paints my bikeshed!'),
                     new SelfLink('http://example.com/articles/1'),
-                    new Relationship(
+                    new ToOne(
                         'author',
-                        new SingleLinkage($dan->identifier()),
+                        $dan->identifier(),
                         new SelfLink('http://example.com/articles/1/relationships/author'),
                         new RelatedLink('http://example.com/articles/1/author')
                     ),
-                    new Relationship(
+                    new ToMany(
                         'comments',
-                        new MultiLinkage(
-                            $comment05->identifier(),
-                            $comment12->identifier()
-                        ),
+                        $comment05->identifier(),
+                        $comment12->identifier(),
                         new SelfLink('http://example.com/articles/1/relationships/comments'),
                         new RelatedLink('http://example.com/articles/1/comments')
                     )
@@ -171,7 +168,7 @@ class CompoundDocumentTest extends BaseTestCase
     public function testFullLinkage(callable $create_doc)
     {
         $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage('Full linkage required for {"type":"apples","id":"1"}');
+        $this->expectExceptionMessage('Full linkage required for apples:1');
         $create_doc();
     }
 
@@ -186,7 +183,7 @@ class CompoundDocumentTest extends BaseTestCase
             ],
             [
                 function () use ($included) {
-                    return new CompoundDocument(new ResourceObjectSet(), $included);
+                    return new CompoundDocument(new ResourceCollection(), $included);
                 },
             ],
             [
@@ -197,7 +194,10 @@ class CompoundDocumentTest extends BaseTestCase
             [
                 function () use ($included) {
                     return new CompoundDocument(
-                        new ResourceIdentifierSet(new ResourceIdentifier('oranges', '1'), new ResourceIdentifier('oranges', '1')),
+                        new IdentifierCollection(
+                            new ResourceIdentifier('oranges', '1'),
+                            new ResourceIdentifier('oranges', '1')
+                        ),
                         $included
                     );
                 },
@@ -205,7 +205,7 @@ class CompoundDocumentTest extends BaseTestCase
             [
                 function () use ($included) {
                     return new CompoundDocument(
-                        new ResourceObjectSet(new ResourceObject('oranges', '1'), new ResourceObject('oranges', '1')),
+                        new ResourceCollection(new ResourceObject('oranges', '1'), new ResourceObject('oranges', '1')),
                         $included
                     );
                 },
@@ -219,7 +219,7 @@ class CompoundDocumentTest extends BaseTestCase
         $article = new ResourceObject(
             'articles',
             '1',
-            new Relationship('author', new SingleLinkage($author->identifier()))
+            new ToOne('author', $author->identifier())
         );
         $doc = new CompoundDocument($article, new Included($author));
         $this->assertNotEmpty($doc);
@@ -232,12 +232,12 @@ class CompoundDocumentTest extends BaseTestCase
             'books',
             '2',
             new Attribute('name', 'Domain Driven Design'),
-            new Relationship('author', new SingleLinkage($writer->identifier()))
+            new ToOne('author', $writer->identifier())
         );
         $cart = new ResourceObject(
             'shopping-carts',
             '1',
-            new Relationship('contents', new MultiLinkage($book->identifier()))
+            new ToMany('contents', $book->identifier())
         );
         $doc = new CompoundDocument($cart, new Included($book, $writer));
         $this->assertNotEmpty($doc);

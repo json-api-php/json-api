@@ -4,9 +4,9 @@ namespace JsonApiPhp\JsonApi\Link;
 
 use JsonApiPhp\JsonApi\DataDocumentMember;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
-use JsonApiPhp\JsonApi\RelationshipMember;
+use JsonApiPhp\JsonApi\ToOneMember;
 
-final class LastLink extends Link implements DataDocumentMember, ResourceMember, RelationshipMember
+final class LastLink extends Link implements DataDocumentMember, ResourceMember, ToOneMember
 {
     protected $name = 'last';
 }

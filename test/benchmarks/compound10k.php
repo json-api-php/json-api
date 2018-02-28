@@ -19,12 +19,11 @@ use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Meta;
-use JsonApiPhp\JsonApi\MultiLinkage;
-use JsonApiPhp\JsonApi\Relationship;
+use JsonApiPhp\JsonApi\ResourceCollection;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
 use JsonApiPhp\JsonApi\ResourceObject;
-use JsonApiPhp\JsonApi\ResourceObjectSet;
-use JsonApiPhp\JsonApi\SingleLinkage;
+use JsonApiPhp\JsonApi\ToMany;
+use JsonApiPhp\JsonApi\ToOne;
 
 require_once __DIR__.'/../../vendor/autoload.php';
 
@@ -45,7 +44,7 @@ for ($count = 0; $count < 10000; $count++) {
         '5',
         new Attribute('body', 'First!'),
         new SelfLink('http://example.com/comments/5'),
-        new Relationship('author', new SingleLinkage(new ResourceIdentifier('people', '2')))
+        new ToOne('author', new ResourceIdentifier('people', '2'))
 
     );
     $comment12 = new ResourceObject(
@@ -53,28 +52,26 @@ for ($count = 0; $count < 10000; $count++) {
         '12',
         new Attribute('body', 'I like XML better'),
         new SelfLink('http://example.com/comments/12'),
-        new Relationship('author', new SingleLinkage($dan->identifier()))
+        new ToOne('author', $dan->identifier())
     );
 
     $data_document = new CompoundDocument(
-        new ResourceObjectSet(
+        new ResourceCollection(
             new ResourceObject(
                 'articles',
                 '1',
                 new Attribute('title', 'JSON API paints my bikeshed!'),
                 new SelfLink('http://example.com/articles/1'),
-                new Relationship(
+                new ToOne(
                     'author',
-                    new SingleLinkage($dan->identifier()),
+                    $dan->identifier(),
                     new SelfLink('http://example.com/articles/1/relationships/author'),
                     new RelatedLink('http://example.com/articles/1/author')
                 ),
-                new Relationship(
+                new ToMany(
                     'comments',
-                    new MultiLinkage(
-                        $comment05->identifier(),
-                        $comment12->identifier()
-                    ),
+                    $comment05->identifier(),
+                    $comment12->identifier(),
                     new SelfLink('http://example.com/articles/1/relationships/comments'),
                     new RelatedLink('http://example.com/articles/1/comments')
                 )

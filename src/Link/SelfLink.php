@@ -4,9 +4,10 @@ namespace JsonApiPhp\JsonApi\Link;
 
 use JsonApiPhp\JsonApi\DataDocumentMember;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
-use JsonApiPhp\JsonApi\RelationshipMember;
+use JsonApiPhp\JsonApi\ToManyMember;
+use JsonApiPhp\JsonApi\ToOneMember;
 
-final class SelfLink extends Link implements DataDocumentMember, ResourceMember, RelationshipMember
+final class SelfLink extends Link implements DataDocumentMember, ResourceMember, ToOneMember, ToManyMember
 {
     protected $name = 'self';
 }

@@ -19,7 +19,7 @@ final class CompoundDocument implements \JsonSerializable
                     continue 2;
                 }
             }
-            throw new \DomainException('Full linkage required for '.json_encode($resource->identifier()));
+            throw new \DomainException('Full linkage required for '.$resource->uniqueId());
         }
         $this->doc = combine($data, $included, ...$members);
     }

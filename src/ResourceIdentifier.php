@@ -4,7 +4,7 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 
-final class ResourceIdentifier implements PrimaryData, \JsonSerializable
+final class ResourceIdentifier implements PrimaryData, ToManyMember
 {
     private $type;
     private $id;
@@ -36,6 +36,11 @@ final class ResourceIdentifier implements PrimaryData, \JsonSerializable
     public function attachTo(object $o)
     {
         $o->data = $this->identifier;
+    }
+
+    public function attachToCollection(object $o): void
+    {
+        $o->data[] = $this->identifier;
     }
 
     public function jsonSerialize()

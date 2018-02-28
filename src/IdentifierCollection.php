@@ -4,7 +4,7 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 
-final class ResourceIdentifierSet implements PrimaryData
+final class IdentifierCollection implements PrimaryData
 {
     /**
      * @var ResourceIdentifier[]
@@ -28,6 +28,9 @@ final class ResourceIdentifierSet implements PrimaryData
 
     public function attachTo(object $o)
     {
-        $o->data = $this->identifiers;
+        $o->data = [];
+        foreach ($this->identifiers as $identifier) {
+            $identifier->attachToCollection($o);
+        }
     }
 }

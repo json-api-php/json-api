@@ -7,8 +7,8 @@ use JsonApiPhp\JsonApi\Link\FirstLink;
 use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\PrevLink;
+use JsonApiPhp\JsonApi\ResourceCollection;
 use JsonApiPhp\JsonApi\ResourceObject;
-use JsonApiPhp\JsonApi\ResourceObjectSet;
 
 class PaginationLinksTest extends BaseTestCase
 {
@@ -30,7 +30,7 @@ class PaginationLinksTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new ResourceObjectSet(
+                new ResourceCollection(
                     new ResourceObject('apples', '1'),
                     new ResourceObject('apples', '2')
                 ),
