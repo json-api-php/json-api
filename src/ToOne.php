@@ -4,9 +4,9 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Internal\Identifier;
 use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\RelationshipMember;
 use JsonApiPhp\JsonApi\Internal\ResourceField;
 use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
-use JsonApiPhp\JsonApi\Internal\ToOneMember;
 
 final class ToOne implements Identifier, ResourceField
 {
@@ -19,7 +19,7 @@ final class ToOne implements Identifier, ResourceField
 
     private $obj;
 
-    public function __construct(string $name, ResourceIdentifier $identifier, ToOneMember ...$members)
+    public function __construct(string $name, ResourceIdentifier $identifier, RelationshipMember ...$members)
     {
         $this->validateFieldName($name);
         $this->name = $name;

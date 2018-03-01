@@ -4,9 +4,8 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
-use JsonApiPhp\JsonApi\Internal\ToManyMember;
 
-class ResourceIdentifierCollection implements PrimaryData, ToManyMember
+class ResourceIdentifierCollection implements PrimaryData
 {
     /**
      * @var ResourceIdentifier[]

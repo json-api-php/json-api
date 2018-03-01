@@ -4,16 +4,15 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Internal\Identifier;
 use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\RelationshipMember;
 use JsonApiPhp\JsonApi\Internal\ResourceField;
 use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
-use JsonApiPhp\JsonApi\Internal\ToManyMember;
-use JsonApiPhp\JsonApi\Internal\ToOneMember;
 
 final class ToMany implements Identifier, ResourceField
 {
     use ResourceFieldTrait;
     /**
-     * @var ToOneMember[]
+     * @var RelationshipMember[]
      */
     private $members;
     /**
@@ -21,7 +20,7 @@ final class ToMany implements Identifier, ResourceField
      */
     private $collection;
 
-    public function __construct(string $name, ResourceIdentifierCollection $collection, ToManyMember ...$members)
+    public function __construct(string $name, ResourceIdentifierCollection $collection, RelationshipMember ...$members)
     {
         $this->validateFieldName($name);
         $this->name = $name;

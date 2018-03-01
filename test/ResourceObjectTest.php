@@ -246,4 +246,10 @@ class ResourceObjectTest extends BaseTestCase
             new DataDocument(new ResourceObject('apples', null, new Attribute('color', 'red')))
         );
     }
+
+    public function testNameValidation()
+    {
+        $this->expectException(\DomainException::class);
+        new ResourceObject('invalid:id', 'foo');
+    }
 }
