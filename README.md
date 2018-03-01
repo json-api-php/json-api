@@ -75,7 +75,7 @@ The library API and use-cases are expressed in comprehensive suite of tests.
 - [Compound Documents](./test/CompoundDocumentTest.php)
 - [Error Documents](./test/ErrorDocumentTest.php)
 - [Meta Documents (containing neither data nor errors)](./test/MetaDocumentTest.php)
-- [Pagination links](./test/PaginationLinksTest.php)
+- [Pagination](./test/PaginationTest.php)
 - [Link Objects](./test/LinkObjectTest.php)
 - [JSON API Object](./test/JsonApiTest.php)
 - [Meta Objects](./test/MetaTest.php)
