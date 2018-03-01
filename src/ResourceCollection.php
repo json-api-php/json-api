@@ -3,6 +3,7 @@
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
+use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
 
 final class ResourceCollection implements PrimaryData
 {
@@ -16,21 +17,18 @@ final class ResourceCollection implements PrimaryData
         $this->resources = $resources;
     }
 
-    public function identifies(ResourceObject $resource): bool
-    {
-        foreach ($this->resources as $myResource) {
-            if ($myResource->identifies($resource)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public function attachTo(object $o)
     {
         $o->data = [];
         foreach ($this->resources as $resource) {
             $resource->attachToCollection($o);
+        }
+    }
+
+    public function registerIn(IdentifierRegistry $registry)
+    {
+        foreach ($this->resources as $resource) {
+            $resource->registerIn($registry);
         }
     }
 }

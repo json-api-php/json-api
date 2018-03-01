@@ -4,30 +4,26 @@ declare(strict_types=1);
 namespace JsonApiPhp\JsonApi\ResourceObject;
 
 use JsonApiPhp\JsonApi\PrimaryData\Identifier;
-use JsonApiPhp\JsonApi\ResourceObject;
 
 /**
  * @internal
  */
 final class IdentifierRegistry implements Identifier
 {
-    /**
-     * @var Identifier[]
-     */
-    private $identifiers = [];
+    private $ids = [];
 
-    public function register(Identifier $identifier): void
+    public function add(string $id): void
     {
-        $this->identifiers[] = $identifier;
+        $this->ids[$id] = true;
     }
 
-    public function identifies(ResourceObject $resource): bool
+    public function has(string $id): bool
     {
-        foreach ($this->identifiers as $identifier) {
-            if ($identifier->identifies($resource)) {
-                return true;
-            }
-        }
-        return false;
+        return isset($this->ids[$id]);
+    }
+
+    public function registerIn(IdentifierRegistry $registry)
+    {
+        $registry->ids = array_merge($registry->ids, $this->ids);
     }
 }

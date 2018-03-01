@@ -3,11 +3,13 @@
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\Identifier;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceFieldTrait;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
 
-final class ToMany extends ResourceField implements Identifier
+final class ToMany implements ResourceMember
 {
+    use ResourceFieldTrait;
     /**
      * @var ToOneMember[]
      */
@@ -15,7 +17,8 @@ final class ToMany extends ResourceField implements Identifier
 
     public function __construct(string $name, ToManyMember ...$members)
     {
-        parent::__construct($name);
+        $this->validateFieldName($name);
+        $this->name = $name;
         $this->members = $members;
     }
 
@@ -32,18 +35,12 @@ final class ToMany extends ResourceField implements Identifier
         }
     }
 
-    public function identifies(ResourceObject $resource): bool
+    public function registerAsIdentifier(IdentifierRegistry $registry)
     {
         foreach ($this->members as $member) {
-            if ($member instanceof Identifier && $member->identifies($resource)) {
-                return true;
+            if ($member instanceof Identifier) {
+                $member->registerIn($registry);
             }
         }
-        return false;
-    }
-
-    public function registerIdentifier(IdentifierRegistry $registry)
-    {
-        $registry->register($this);
     }
 }

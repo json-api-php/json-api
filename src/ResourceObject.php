@@ -2,6 +2,7 @@
 
 namespace JsonApiPhp\JsonApi;
 
+use JsonApiPhp\JsonApi\PrimaryData\IdentityTrait;
 use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 use JsonApiPhp\JsonApi\ResourceObject\FieldRegistry;
@@ -9,21 +10,23 @@ use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
 
 final class ResourceObject implements PrimaryData
 {
-    private $type;
-    private $id;
+    use IdentityTrait;
     private $obj;
-    private $identifiers;
+    private $ids;
 
     public function __construct(string $type, string $id = null, ResourceMember ...$members)
     {
+        if (isValidName($type) === false) {
+            throw new \DomainException("Invalid type value: $type");
+        }
         $this->type = $type;
         $this->id = $id;
-        $this->identifiers = new IdentifierRegistry();
+        $this->ids = new IdentifierRegistry();
         $this->obj = (object) ['type' => $type, 'id' => $id];
-        $registry = new FieldRegistry();
+        $fields = new FieldRegistry();
         foreach ($members as $member) {
-            $member->registerResourceField($registry);
-            $member->registerIdentifier($this->identifiers);
+            $member->registerField($fields);
+            $member->registerAsIdentifier($this->ids);
             $member->attachTo($this->obj);
         }
     }
@@ -33,9 +36,9 @@ final class ResourceObject implements PrimaryData
         return new ResourceIdentifier($this->type, $this->id);
     }
 
-    public function identifies(ResourceObject $resource): bool
+    public function registerIn(IdentifierRegistry $registry)
     {
-        return $this->identifiers->identifies($resource);
+        $this->ids->registerIn($registry);
     }
 
     public function attachTo(object $o)
@@ -51,10 +54,5 @@ final class ResourceObject implements PrimaryData
     public function attachToCollection(object $o): void
     {
         $o->data[] = $this->obj;
-    }
-
-    public function uniqueId(): string
-    {
-        return "{$this->type}:{$this->id}";
     }
 }

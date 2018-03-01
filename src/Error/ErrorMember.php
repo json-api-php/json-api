@@ -2,11 +2,10 @@
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\Attachable;
-
 /**
  * @internal
  */
-interface ErrorMember extends Attachable
+interface ErrorMember
 {
+    public function attachTo(object $o);
 }

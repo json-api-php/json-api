@@ -3,16 +3,16 @@
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
+use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
 
 final class NullData implements PrimaryData, ToOneMember
 {
-    public function identifies(ResourceObject $resource): bool
-    {
-        return false;
-    }
-
     public function attachTo(object $o)
     {
         $o->data = null;
+    }
+
+    public function registerIn(IdentifierRegistry $registry)
+    {
     }
 }

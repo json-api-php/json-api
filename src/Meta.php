@@ -4,11 +4,12 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Error\ErrorMember;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
-use JsonApiPhp\JsonApi\ResourceObject\FieldRegistry;
-use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceMemberTrait;
 
 final class Meta implements ErrorMember, MetaDocumentMember, DataDocumentMember, ResourceMember, ToOneMember
 {
+    use ResourceMemberTrait;
+
     /**
      * @var string
      */
@@ -27,13 +28,5 @@ final class Meta implements ErrorMember, MetaDocumentMember, DataDocumentMember,
     public function attachTo(object $o)
     {
         child($o, 'meta')->{$this->key} = $this->value;
-    }
-
-    public function registerResourceField(FieldRegistry $registry)
-    {
-    }
-
-    public function registerIdentifier(IdentifierRegistry $registry)
-    {
     }
 }

@@ -4,20 +4,17 @@ namespace JsonApiPhp\JsonApi\Link;
 
 use JsonApiPhp\JsonApi\DataDocumentMember;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
-use JsonApiPhp\JsonApi\ResourceObject\FieldRegistry;
-use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceMemberTrait;
 use JsonApiPhp\JsonApi\ToManyMember;
 use JsonApiPhp\JsonApi\ToOneMember;
+use function JsonApiPhp\JsonApi\child;
 
-final class SelfLink extends Link implements DataDocumentMember, ResourceMember, ToOneMember, ToManyMember
+final class SelfLink implements DataDocumentMember, ResourceMember, ToOneMember, ToManyMember
 {
-    protected $name = 'self';
+    use ResourceMemberTrait, LinkTrait;
 
-    public function registerResourceField(FieldRegistry $registry)
+    public function attachTo(object $o): void
     {
-    }
-
-    public function registerIdentifier(IdentifierRegistry $registry)
-    {
+        child($o, 'links')->self = $this->link;
     }
 }

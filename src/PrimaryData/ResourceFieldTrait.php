@@ -8,11 +8,11 @@ use function JsonApiPhp\JsonApi\isValidName;
 /**
  * @internal
  */
-abstract class ResourceField implements ResourceMember
+trait ResourceFieldTrait
 {
-    protected $name;
+    private $name;
 
-    public function __construct(string $name)
+    private function validateFieldName(string $name): void
     {
         if (isValidName($name) === false) {
             throw new \DomainException("Invalid character in a member name '$name'");
@@ -20,10 +20,9 @@ abstract class ResourceField implements ResourceMember
         if ($name === 'id' || $name === 'type') {
             throw new \DomainException("Can not use '$name' as a resource field");
         }
-        $this->name = $name;
     }
 
-    public function registerResourceField(FieldRegistry $registry)
+    public function registerField(FieldRegistry $registry)
     {
         $registry->register($this->name);
     }

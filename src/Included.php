@@ -3,6 +3,7 @@
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
+use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
 
 final class Included implements Attachable
 {
@@ -11,29 +12,30 @@ final class Included implements Attachable
      */
     private $resources = [];
 
+    private $ids;
+
     public function __construct(ResourceObject ...$resources)
     {
+        $this->ids = new IdentifierRegistry();
         foreach ($resources as $resource) {
-            $string_id = $resource->uniqueId();
+            $string_id = $resource->identity();
             if (isset($this->resources[$string_id])) {
                 throw new \LogicException("Resource $string_id is already included");
             }
             $this->resources[$string_id] = $resource;
+            $resource->registerIn($this->ids);
         }
     }
 
     public function validateLinkage(PrimaryData $data): void
     {
+        $dataRegistry = new IdentifierRegistry();
+        $data->registerIn($dataRegistry);
         foreach ($this->resources as $resource) {
-            if ($data->identifies($resource)) {
+            if ($dataRegistry->has($resource->identity()) || $this->ids->has($resource->identity())) {
                 continue;
             }
-            foreach ($this->resources as $anotherResource) {
-                if ($resource !== $anotherResource && $anotherResource->identifies($resource)) {
-                    continue 2;
-                }
-            }
-            throw new \LogicException('Full linkage required for '.$resource->uniqueId());
+            throw new \LogicException('Full linkage required for '.$resource->identity());
         }
     }
 

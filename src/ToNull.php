@@ -2,11 +2,13 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceFieldTrait;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
 
-final class ToNull extends ResourceField
+final class ToNull implements ResourceMember
 {
+    use ResourceFieldTrait;
     /**
      * @var ToOneMember[]
      */
@@ -14,7 +16,8 @@ final class ToNull extends ResourceField
 
     public function __construct(string $name, ToOneMember ...$members)
     {
-        parent::__construct($name);
+        $this->validateFieldName($name);
+        $this->name = $name;
         $this->members = $members;
     }
 
@@ -25,7 +28,7 @@ final class ToNull extends ResourceField
         child($o, 'relationships')->{$this->name} = $val;
     }
 
-    public function registerIdentifier(IdentifierRegistry $registry)
+    public function registerAsIdentifier(IdentifierRegistry $registry)
     {
     }
 }

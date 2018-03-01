@@ -2,16 +2,19 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceFieldTrait;
+use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
 
-final class Attribute extends ResourceField
+final class Attribute implements ResourceMember
 {
+    use ResourceFieldTrait;
     private $val;
 
     public function __construct(string $name, $val)
     {
-        parent::__construct($name);
+        $this->validateFieldName($name);
+        $this->name = $name;
         $this->val = $val;
     }
 
@@ -20,7 +23,7 @@ final class Attribute extends ResourceField
         child($o, 'attributes')->{$this->name} = $this->val;
     }
 
-    public function registerIdentifier(IdentifierRegistry $registry)
+    public function registerAsIdentifier(IdentifierRegistry $registry)
     {
     }
 }

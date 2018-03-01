@@ -2,12 +2,12 @@
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
-use JsonApiPhp\JsonApi\ResourceObject;
+use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
 
 /**
  * @internal
  */
 interface Identifier
 {
-    public function identifies(ResourceObject $resource): bool;
+    public function registerIn(IdentifierRegistry $registry);
 }

@@ -11,6 +11,7 @@ use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
  */
 interface ResourceMember extends Attachable
 {
-    public function registerResourceField(FieldRegistry $registry);
-    public function registerIdentifier(IdentifierRegistry $registry);
+    public function registerField(FieldRegistry $registry);
+
+    public function registerAsIdentifier(IdentifierRegistry $registry);
 }

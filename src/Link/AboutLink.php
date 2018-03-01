@@ -3,8 +3,14 @@
 namespace JsonApiPhp\JsonApi\Link;
 
 use JsonApiPhp\JsonApi\Error\ErrorMember;
+use function JsonApiPhp\JsonApi\child;
 
-final class AboutLink extends Link implements ErrorMember
+final class AboutLink implements ErrorMember
 {
-    protected $name = 'about';
+    use LinkTrait;
+
+    public function attachTo(object $o)
+    {
+        child($o, 'links')->about = $this->link;
+    }
 }

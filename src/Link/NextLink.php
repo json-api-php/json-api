@@ -4,8 +4,14 @@ namespace JsonApiPhp\JsonApi\Link;
 
 use JsonApiPhp\JsonApi\DataDocumentMember;
 use JsonApiPhp\JsonApi\ToOneMember;
+use function JsonApiPhp\JsonApi\child;
 
-final class NextLink extends Link implements DataDocumentMember, ToOneMember
+final class NextLink implements DataDocumentMember, ToOneMember
 {
-    protected $name = 'next';
+    use LinkTrait;
+
+    public function attachTo(object $o)
+    {
+        child($o, 'links')->next = $this->link;
+    }
 }

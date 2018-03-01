@@ -4,8 +4,14 @@ namespace JsonApiPhp\JsonApi\Link;
 
 use JsonApiPhp\JsonApi\ToManyMember;
 use JsonApiPhp\JsonApi\ToOneMember;
+use function JsonApiPhp\JsonApi\child;
 
-final class RelatedLink extends Link implements ToOneMember, ToManyMember
+final class RelatedLink implements ToOneMember, ToManyMember
 {
-    protected $name = 'related';
+    use LinkTrait;
+
+    public function attachTo(object $o)
+    {
+        child($o, 'links')->related = $this->link;
+    }
 }
