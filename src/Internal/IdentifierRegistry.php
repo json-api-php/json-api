@@ -6,7 +6,7 @@ namespace JsonApiPhp\JsonApi\Internal;
 /**
  * @internal
  */
-final class IdentifierRegistry implements Identifier
+final class IdentifierRegistry
 {
     private $ids = [];
 
@@ -19,9 +19,8 @@ final class IdentifierRegistry implements Identifier
     {
         return isset($this->ids[$id]);
     }
-
-    public function registerIn(IdentifierRegistry $registry)
+    public function merge(IdentifierRegistry $registry)
     {
-        $registry->ids = array_merge($registry->ids, $this->ids);
+        $this->ids = array_merge($this->ids, $registry->ids);
     }
 }

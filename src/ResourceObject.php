@@ -12,7 +12,7 @@ final class ResourceObject implements PrimaryData
 {
     use IdentityTrait;
     private $obj;
-    private $ids;
+    private $registry;
 
     public function __construct(string $type, string $id = null, ResourceMember ...$members)
     {
@@ -21,12 +21,12 @@ final class ResourceObject implements PrimaryData
         }
         $this->type = $type;
         $this->id = $id;
-        $this->ids = new IdentifierRegistry();
+        $this->registry = new IdentifierRegistry();
         $this->obj = (object) ['type' => $type, 'id' => $id];
         $fields = new FieldRegistry();
         foreach ($members as $member) {
             $member->registerField($fields);
-            $member->registerIdentifier($this->ids);
+            $member->registerIdentifier($this->registry);
             $member->attachTo($this->obj);
         }
     }
@@ -38,7 +38,7 @@ final class ResourceObject implements PrimaryData
 
     public function registerIn(IdentifierRegistry $registry)
     {
-        $this->ids->registerIn($registry);
+        $registry->merge($this->registry);
     }
 
     public function attachTo(object $o)

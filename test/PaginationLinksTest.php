@@ -35,9 +35,9 @@ class PaginationLinksTest extends BaseTestCase
                     new ResourceObject('apples', '2')
                 ),
                 new FirstLink('http://example.com/fruits?page=first'),
-                new LastLink('http://example.com/fruits?page=last'),
                 new PrevLink('http://example.com/fruits?page=3'),
-                new NextLink('http://example.com/fruits?page=5')
+                new NextLink('http://example.com/fruits?page=5'),
+                new LastLink('http://example.com/fruits?page=last')
             )
         );
     }
