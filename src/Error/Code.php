@@ -2,15 +2,25 @@
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\AttachableValue;
+use JsonApiPhp\JsonApi\Internal\ErrorMember;
 
-final class Code extends AttachableValue implements ErrorMember
+final class Code implements ErrorMember
 {
+    /**
+     * @var string
+     */
+    private $code;
+
     /**
      * @param string $code an application-specific error code, expressed as a string value
      */
     public function __construct(string $code)
     {
-        parent::__construct('code', $code);
+        $this->code = $code;
+    }
+
+    public function attachTo(object $o): void
+    {
+        $o->code = $this->code;
     }
 }

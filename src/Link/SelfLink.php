@@ -2,14 +2,18 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\DataDocumentMember;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
-use JsonApiPhp\JsonApi\RelationshipMember;
+use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
+use JsonApiPhp\JsonApi\Internal\LinkTrait;
+use JsonApiPhp\JsonApi\Internal\RelationshipMember;
+use JsonApiPhp\JsonApi\Internal\ResourceMember;
+use function JsonApiPhp\JsonApi\child;
 
-final class SelfLink extends AttachableLink implements DataDocumentMember, ResourceMember, RelationshipMember
+final class SelfLink implements DataDocumentMember, ResourceMember, RelationshipMember
 {
-    public function __construct(Link $link)
+    use LinkTrait;
+
+    public function attachTo(object $o): void
     {
-        parent::__construct('self', $link);
+        child($o, 'links')->self = $this->link;
     }
 }

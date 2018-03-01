@@ -2,34 +2,44 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
+use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\IdentityTrait;
+use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
-final class ResourceIdentifier extends AttachableValue implements PrimaryData
+final class ResourceIdentifier implements PrimaryData
 {
-    private $type;
-    private $id;
+    use IdentityTrait;
+    private $obj;
 
     public function __construct(string $type, string $id, Meta $meta = null)
     {
-        $identifier = (object) [
+        if (isValidName($type) === false) {
+            throw new \DomainException("Invalid type value: $type");
+        }
+
+        $this->obj = (object) [
             'type' => $type,
             'id' => $id,
         ];
         if ($meta) {
-            $meta->attachTo($identifier);
+            $meta->attachTo($this->obj);
         }
-        parent::__construct('data', $identifier);
         $this->type = $type;
         $this->id = $id;
     }
 
-    public function identifies(ResourceObject $resource): bool
+    public function attachTo(object $o)
     {
-        return $resource->identifier()->equals($this);
+        $o->data = $this->obj;
     }
 
-    public function equals(ResourceIdentifier $that): bool
+    public function attachToCollection(object $o): void
     {
-        return $this->type === $that->type && $this->id === $that->id;
+        $o->data[] = $this->obj;
+    }
+
+    public function registerIn(IdentifierRegistry $registry)
+    {
+        $registry->add($this->key());
     }
 }

@@ -2,16 +2,26 @@
 
 namespace JsonApiPhp\JsonApi;
 
-final class JsonApi extends AttachableValue implements TopLevelDocumentMember, DataDocumentMember
+use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
+use JsonApiPhp\JsonApi\Internal\ErrorDocumentMember;
+use JsonApiPhp\JsonApi\Internal\MetaDocumentMember;
+
+final class JsonApi implements MetaDocumentMember, DataDocumentMember, ErrorDocumentMember
 {
+    private $jsonapi;
+
     public function __construct(string $version = '1.0', Meta $meta = null)
     {
-        $jsonapi = (object) [
+        $this->jsonapi = (object) [
             'version' => $version,
         ];
         if ($meta) {
-            $meta->attachTo($jsonapi);
+            $meta->attachTo($this->jsonapi);
         }
-        parent::__construct('jsonapi', $jsonapi);
+    }
+
+    public function attachTo(object $o)
+    {
+        $o->jsonapi = $this->jsonapi;
     }
 }

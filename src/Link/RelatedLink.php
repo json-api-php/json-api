@@ -2,12 +2,16 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\RelationshipMember;
+use JsonApiPhp\JsonApi\Internal\LinkTrait;
+use JsonApiPhp\JsonApi\Internal\RelationshipMember;
+use function JsonApiPhp\JsonApi\child;
 
-final class RelatedLink extends AttachableLink implements RelationshipMember
+final class RelatedLink implements RelationshipMember
 {
-    public function __construct(Link $link)
+    use LinkTrait;
+
+    public function attachTo(object $o)
     {
-        parent::__construct('related', $link);
+        child($o, 'links')->related = $this->link;
     }
 }

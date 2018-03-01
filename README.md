@@ -35,11 +35,9 @@ use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
-use JsonApiPhp\JsonApi\Link\Url;
-use JsonApiPhp\JsonApi\Relationship;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
 use JsonApiPhp\JsonApi\ResourceObject;
-use JsonApiPhp\JsonApi\SingleLinkage;
+use JsonApiPhp\JsonApi\ToOne;
 
 echo json_encode(
     new DataDocument(
@@ -47,11 +45,11 @@ echo json_encode(
             'articles',
             '1',
             new Attribute('title', 'Rails is Omakase'),
-            new Relationship(
+            new ToOne(
                 'author',
-                new SingleLinkage(new ResourceIdentifier('author', '9')),
-                new SelfLink(new Url('/articles/1/relationships/author')),
-                new RelatedLink(new Url('/articles/1/author'))
+                new ResourceIdentifier('author', '9'),
+                new SelfLink('/articles/1/relationships/author'),
+                new RelatedLink('/articles/1/author')
             )
         )
     ),
@@ -77,7 +75,7 @@ The library API and use-cases are expressed in comprehensive suite of tests.
 - [Compound Documents](./test/CompoundDocumentTest.php)
 - [Error Documents](./test/ErrorDocumentTest.php)
 - [Meta Documents (containing neither data nor errors)](./test/MetaDocumentTest.php)
-- [Pagination links](./test/PaginationLinksTest.php)
+- [Pagination](./test/PaginationTest.php)
 - [Link Objects](./test/LinkObjectTest.php)
 - [JSON API Object](./test/JsonApiTest.php)
 - [Meta Objects](./test/MetaTest.php)

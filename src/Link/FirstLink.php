@@ -2,14 +2,16 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\DataDocumentMember;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
-use JsonApiPhp\JsonApi\RelationshipMember;
+use JsonApiPhp\JsonApi\Internal\LinkTrait;
+use JsonApiPhp\JsonApi\Internal\PaginationLink;
+use function JsonApiPhp\JsonApi\child;
 
-final class FirstLink extends AttachableLink implements DataDocumentMember, ResourceMember, RelationshipMember
+final class FirstLink implements PaginationLink
 {
-    public function __construct(Link $link)
+    use LinkTrait;
+
+    public function attachTo(object $o)
     {
-        parent::__construct('first', $link);
+        child($o, 'links')->first = $this->link;
     }
 }

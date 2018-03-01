@@ -2,21 +2,26 @@
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\AttachableValue;
+use JsonApiPhp\JsonApi\Internal\ErrorMember;
 use function JsonApiPhp\JsonApi\child;
 
-final class Parameter extends AttachableValue implements ErrorMember
+final class SourceParameter implements ErrorMember
 {
+    /**
+     * @var string
+     */
+    private $parameter;
+
     /**
      * @param string $parameter a string indicating which URI query parameter caused the error.
      */
     public function __construct(string $parameter)
     {
-        parent::__construct('parameter', $parameter);
+        $this->parameter = $parameter;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
-        parent::attachTo(child($o, 'source'));
+        child($o, 'source')->parameter = $this->parameter;
     }
 }

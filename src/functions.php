@@ -2,18 +2,20 @@
 
 namespace JsonApiPhp\JsonApi;
 
-function combine(Attachable ...$things): object
+use JsonApiPhp\JsonApi\Internal\Attachable;
+
+function combine(Attachable ...$members): object
 {
     $obj = (object) [];
-    foreach ($things as $thing) {
-        $thing->attachTo($obj);
+    foreach ($members as $member) {
+        $member->attachTo($obj);
     }
     return $obj;
 }
 
 function child(object $o, string $name): object
 {
-    if (empty($o->{$name})) {
+    if (!isset($o->{$name})) {
         $o->{$name} = (object) [];
     }
     return $o->{$name};

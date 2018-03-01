@@ -6,10 +6,9 @@ use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Link\SelfLink;
-use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
+use JsonApiPhp\JsonApi\ResourceCollection;
 use JsonApiPhp\JsonApi\ResourceObject;
-use JsonApiPhp\JsonApi\ResourceObjectSet;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
 class ManyResourceObjectsTest extends BaseTestCase
@@ -23,7 +22,7 @@ class ManyResourceObjectsTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new ResourceObjectSet()
+                new ResourceCollection()
             )
         );
     }
@@ -60,7 +59,7 @@ class ManyResourceObjectsTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new ResourceObjectSet(
+                new ResourceCollection(
                     new ResourceObject(
                         'apples',
                         '1',
@@ -76,7 +75,7 @@ class ManyResourceObjectsTest extends BaseTestCase
                         new Meta('apple_meta', 'foo')
                     )
                 ),
-                new SelfLink(new Url('/apples')),
+                new SelfLink('/apples'),
                 new JsonApi(),
                 new Meta('document_meta', 'bar')
             )

@@ -2,63 +2,66 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\Identifier;
-use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
+use JsonApiPhp\JsonApi\Internal\Identifier;
+use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\IdentityTrait;
+use JsonApiPhp\JsonApi\Internal\PrimaryData;
+use JsonApiPhp\JsonApi\Internal\ResourceField;
+use JsonApiPhp\JsonApi\Internal\ResourceMember;
 
-final class ResourceObject extends AttachableValue implements PrimaryData
+final class ResourceObject implements PrimaryData
 {
-    private $type;
-    private $id;
+    use IdentityTrait;
+    private $obj;
+    private $registry;
 
-    /**
-     * @var Identifier[]
-     */
-    private $identifiers = [];
-
-    public function __construct(string $type, string $id = null, ResourceMember ...$members)
+    public function __construct(string $type, string $id, ResourceMember ...$members)
     {
-        $this->checkUniqueness(...$members);
-        $obj = combine(...$members);
-        $obj->type = $type;
-        $obj->id = $id;
-        parent::__construct('data', $obj);
+        if (isValidName($type) === false) {
+            throw new \DomainException("Invalid type value: $type");
+        }
         $this->type = $type;
         $this->id = $id;
+        $this->registry = new IdentifierRegistry();
+        $this->obj = (object) ['type' => $type, 'id' => $id];
+        $fields = [];
         foreach ($members as $member) {
             if ($member instanceof Identifier) {
-                $this->identifiers[] = $member;
+                $member->registerIn($this->registry);
             }
+            if ($member instanceof ResourceField) {
+                $name = $member->name();
+                if (isset($fields[$name])) {
+                    throw new \LogicException("Field '$name' already exists'");
+                }
+                $fields[$name] = true;
+            }
+            $member->attachTo($this->obj);
         }
     }
 
-    public function identifier(): ResourceIdentifier
+    public function toIdentifier(): ResourceIdentifier
     {
         return new ResourceIdentifier($this->type, $this->id);
     }
 
-    public function identifies(ResourceObject $resource): bool
+    public function registerIn(IdentifierRegistry $registry)
     {
-        foreach ($this->identifiers as $identifier) {
-            if ($identifier->identifies($resource)) {
-                return true;
-            }
-        }
-        return false;
+        $registry->merge($this->registry);
     }
 
-    private function checkUniqueness(ResourceMember ...$members): void
+    public function attachTo(object $o)
     {
-        $keys = [];
-        foreach ($members as $member) {
-            if ($member instanceof ResourceField) {
-                $key = $member->key();
-                if (isset($keys[$key])) {
-                    throw new \LogicException("Field '$key' already exists'");
-                }
-                $keys[$key] = true;
-            }
-        }
+        $o->data = $this->obj;
+    }
+
+    public function attachAsIncludedTo(object $o): void
+    {
+        $o->included[] = $this->obj;
+    }
+
+    public function attachToCollection(object $o): void
+    {
+        $o->data[] = $this->obj;
     }
 }

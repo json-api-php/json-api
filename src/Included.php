@@ -2,24 +2,48 @@
 
 namespace JsonApiPhp\JsonApi;
 
-final class Included extends AttachableValue implements DataDocumentMember, \IteratorAggregate
+use JsonApiPhp\JsonApi\Internal\Attachable;
+use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\PrimaryData;
+
+final class Included implements Attachable
 {
+    /**
+     * @var ResourceObject[]
+     */
     private $resources = [];
+
+    private $ids;
 
     public function __construct(ResourceObject ...$resources)
     {
+        $this->ids = new IdentifierRegistry();
         foreach ($resources as $resource) {
-            $string_id = json_encode($resource->identifier());
+            $string_id = $resource->key();
             if (isset($this->resources[$string_id])) {
                 throw new \LogicException("Resource $string_id is already included");
             }
             $this->resources[$string_id] = $resource;
+            $resource->registerIn($this->ids);
         }
-        parent::__construct('included', $resources);
     }
 
-    public function getIterator()
+    public function validateLinkage(PrimaryData $data): void
     {
-        return new \ArrayIterator($this->resources);
+        $dataRegistry = new IdentifierRegistry();
+        $data->registerIn($dataRegistry);
+        foreach ($this->resources as $resource) {
+            if ($dataRegistry->has($resource->key()) || $this->ids->has($resource->key())) {
+                continue;
+            }
+            throw new \LogicException('Full linkage required for '.$resource->key());
+        }
+    }
+
+    public function attachTo(object $o)
+    {
+        foreach ($this->resources as $resource) {
+            $resource->attachAsIncludedTo($o);
+        }
     }
 }

@@ -7,14 +7,13 @@ use JsonApiPhp\JsonApi\Error;
 use JsonApiPhp\JsonApi\Error\Code;
 use JsonApiPhp\JsonApi\Error\Detail;
 use JsonApiPhp\JsonApi\Error\Id;
-use JsonApiPhp\JsonApi\Error\Parameter;
-use JsonApiPhp\JsonApi\Error\Pointer;
+use JsonApiPhp\JsonApi\Error\SourceParameter;
+use JsonApiPhp\JsonApi\Error\SourcePointer;
 use JsonApiPhp\JsonApi\Error\Status;
 use JsonApiPhp\JsonApi\Error\Title;
 use JsonApiPhp\JsonApi\ErrorDocument;
 use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Link\AboutLink;
-use JsonApiPhp\JsonApi\Link\Url;
 use JsonApiPhp\JsonApi\Meta;
 
 class ErrorDocumentTest extends BaseTestCase
@@ -68,15 +67,13 @@ class ErrorDocumentTest extends BaseTestCase
             new ErrorDocument(
                 new Error(
                     new Id('1'),
-                    new AboutLink(
-                        new Url('/errors/not_found')
-                    ),
+                    new AboutLink('/errors/not_found'),
                     new Status('404'),
                     new Code('not_found'),
                     new Title('Resource not found'),
                     new Detail('We tried hard but could not find anything'),
-                    new Pointer('/data'),
-                    new Parameter('query_string'),
+                    new SourcePointer('/data'),
+                    new SourceParameter('query_string'),
                     new Meta('purpose', 'test')
                 ),
                 new Meta('purpose', 'test'),
@@ -109,12 +106,12 @@ class ErrorDocumentTest extends BaseTestCase
                 new Error(
                     new Id('1'),
                     new Code('invalid_parameter'),
-                    new Parameter('foo')
+                    new SourceParameter('foo')
                 ),
                 new Error(
                     new Id('2'),
                     new Code('invalid_parameter'),
-                    new Parameter('bar')
+                    new SourceParameter('bar')
                 )
             )
         );

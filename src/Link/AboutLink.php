@@ -2,12 +2,16 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\Error\ErrorMember;
+use JsonApiPhp\JsonApi\Internal\ErrorMember;
+use JsonApiPhp\JsonApi\Internal\LinkTrait;
+use function JsonApiPhp\JsonApi\child;
 
-final class AboutLink extends AttachableLink implements ErrorMember
+final class AboutLink implements ErrorMember
 {
-    public function __construct(Link $link)
+    use LinkTrait;
+
+    public function attachTo(object $o)
     {
-        parent::__construct('about', $link);
+        child($o, 'links')->about = $this->link;
     }
 }

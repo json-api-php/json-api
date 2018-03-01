@@ -2,17 +2,17 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
+use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
-final class NullData extends AttachableValue implements PrimaryData
+final class NullData implements PrimaryData
 {
-    public function __construct()
+    public function attachTo(object $o)
     {
-        parent::__construct('data', null);
+        $o->data = null;
     }
 
-    public function identifies(ResourceObject $resource): bool
+    public function registerIn(IdentifierRegistry $registry)
     {
-        return false;
     }
 }

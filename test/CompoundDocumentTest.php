@@ -9,15 +9,15 @@ use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
-use JsonApiPhp\JsonApi\Link\Url;
-use JsonApiPhp\JsonApi\MultiLinkage;
 use JsonApiPhp\JsonApi\NullData;
-use JsonApiPhp\JsonApi\Relationship;
+use JsonApiPhp\JsonApi\PaginatedResourceCollection;
+use JsonApiPhp\JsonApi\Pagination;
+use JsonApiPhp\JsonApi\ResourceCollection;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
-use JsonApiPhp\JsonApi\ResourceIdentifierSet;
+use JsonApiPhp\JsonApi\ResourceIdentifierCollection;
 use JsonApiPhp\JsonApi\ResourceObject;
-use JsonApiPhp\JsonApi\ResourceObjectSet;
-use JsonApiPhp\JsonApi\SingleLinkage;
+use JsonApiPhp\JsonApi\ToMany;
+use JsonApiPhp\JsonApi\ToOne;
 
 class CompoundDocumentTest extends BaseTestCase
 {
@@ -29,53 +29,55 @@ class CompoundDocumentTest extends BaseTestCase
             new Attribute('first-name', 'Dan'),
             new Attribute('last-name', 'Gebhardt'),
             new Attribute('twitter', 'dgeb'),
-            new SelfLink(new Url('http://example.com/people/9'))
+            new SelfLink('http://example.com/people/9')
         );
 
         $comment05 = new ResourceObject(
             'comments',
             '5',
             new Attribute('body', 'First!'),
-            new SelfLink(new Url('http://example.com/comments/5')),
-            new Relationship('author', new SingleLinkage(new ResourceIdentifier('people', '2')))
+            new SelfLink('http://example.com/comments/5'),
+            new ToOne('author', new ResourceIdentifier('people', '2'))
 
         );
         $comment12 = new ResourceObject(
             'comments',
             '12',
             new Attribute('body', 'I like XML better'),
-            new SelfLink(new Url('http://example.com/comments/12')),
-            new Relationship('author', new SingleLinkage($dan->identifier()))
+            new SelfLink('http://example.com/comments/12'),
+            new ToOne('author', $dan->toIdentifier())
         );
 
         $document = new CompoundDocument(
-            new ResourceObjectSet(
+            new PaginatedResourceCollection(
+                new Pagination(
+                    new NextLink('http://example.com/articles?page[offset]=2'),
+                    new LastLink('http://example.com/articles?page[offset]=10')
+                ),
                 new ResourceObject(
                     'articles',
                     '1',
                     new Attribute('title', 'JSON API paints my bikeshed!'),
-                    new SelfLink(new Url('http://example.com/articles/1')),
-                    new Relationship(
+                    new SelfLink('http://example.com/articles/1'),
+                    new ToOne(
                         'author',
-                        new SingleLinkage($dan->identifier()),
-                        new SelfLink(new Url('http://example.com/articles/1/relationships/author')),
-                        new RelatedLink(new Url('http://example.com/articles/1/author'))
+                        $dan->toIdentifier(),
+                        new SelfLink('http://example.com/articles/1/relationships/author'),
+                        new RelatedLink('http://example.com/articles/1/author')
                     ),
-                    new Relationship(
+                    new ToMany(
                         'comments',
-                        new MultiLinkage(
-                            $comment05->identifier(),
-                            $comment12->identifier()
+                        new ResourceIdentifierCollection(
+                            $comment05->toIdentifier(),
+                            $comment12->toIdentifier()
                         ),
-                        new SelfLink(new Url('http://example.com/articles/1/relationships/comments')),
-                        new RelatedLink(new Url('http://example.com/articles/1/comments'))
+                        new SelfLink('http://example.com/articles/1/relationships/comments'),
+                        new RelatedLink('http://example.com/articles/1/comments')
                     )
                 )
             ),
             new Included($dan, $comment05, $comment12),
-            new SelfLink(new Url('http://example.com/articles')),
-            new NextLink(new Url('http://example.com/articles?page[offset]=2')),
-            new LastLink(new Url('http://example.com/articles?page[offset]=10'))
+            new SelfLink('http://example.com/articles')
         );
         $this->assertEncodesTo(
             '
@@ -171,8 +173,8 @@ class CompoundDocumentTest extends BaseTestCase
      */
     public function testFullLinkage(callable $create_doc)
     {
-        $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage('Full linkage required for {"type":"apples","id":"1"}');
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Full linkage required for apples:1');
         $create_doc();
     }
 
@@ -187,7 +189,7 @@ class CompoundDocumentTest extends BaseTestCase
             ],
             [
                 function () use ($included) {
-                    return new CompoundDocument(new ResourceObjectSet(), $included);
+                    return new CompoundDocument(new ResourceCollection(), $included);
                 },
             ],
             [
@@ -198,7 +200,10 @@ class CompoundDocumentTest extends BaseTestCase
             [
                 function () use ($included) {
                     return new CompoundDocument(
-                        new ResourceIdentifierSet(new ResourceIdentifier('oranges', '1'), new ResourceIdentifier('oranges', '1')),
+                        new ResourceIdentifierCollection(
+                            new ResourceIdentifier('oranges', '1'),
+                            new ResourceIdentifier('oranges', '1')
+                        ),
                         $included
                     );
                 },
@@ -206,7 +211,7 @@ class CompoundDocumentTest extends BaseTestCase
             [
                 function () use ($included) {
                     return new CompoundDocument(
-                        new ResourceObjectSet(new ResourceObject('oranges', '1'), new ResourceObject('oranges', '1')),
+                        new ResourceCollection(new ResourceObject('oranges', '1'), new ResourceObject('oranges', '1')),
                         $included
                     );
                 },
@@ -220,7 +225,7 @@ class CompoundDocumentTest extends BaseTestCase
         $article = new ResourceObject(
             'articles',
             '1',
-            new Relationship('author', new SingleLinkage($author->identifier()))
+            new ToOne('author', $author->toIdentifier())
         );
         $doc = new CompoundDocument($article, new Included($author));
         $this->assertNotEmpty($doc);
@@ -233,12 +238,12 @@ class CompoundDocumentTest extends BaseTestCase
             'books',
             '2',
             new Attribute('name', 'Domain Driven Design'),
-            new Relationship('author', new SingleLinkage($writer->identifier()))
+            new ToOne('author', $writer->toIdentifier())
         );
         $cart = new ResourceObject(
             'shopping-carts',
             '1',
-            new Relationship('contents', new MultiLinkage($book->identifier()))
+            new ToMany('contents', new ResourceIdentifierCollection($book->toIdentifier()))
         );
         $doc = new CompoundDocument($cart, new Included($book, $writer));
         $this->assertNotEmpty($doc);
@@ -247,11 +252,11 @@ class CompoundDocumentTest extends BaseTestCase
     /**
      * A compound document MUST NOT include more than one resource object for each type and id pair.
      * @expectedException \LogicException
-     * @expectedExceptionMessage Resource {"type":"apples","id":"1"} is already included
+     * @expectedExceptionMessage Resource apples:1 is already included
      */
     public function testCanNotBeManyIncludedResourcesWithEqualIdentifiers()
     {
         $apple = new ResourceObject('apples', '1');
-        new CompoundDocument($apple->identifier(), new Included($apple, $apple));
+        new CompoundDocument($apple->toIdentifier(), new Included($apple, $apple));
     }
 }
