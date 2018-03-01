@@ -2,7 +2,7 @@
 
 namespace JsonApiPhp\JsonApi;
 
-final class JsonApi implements TopLevelDocumentMember, DataDocumentMember
+final class JsonApi implements MetaDocumentMember, DataDocumentMember
 {
     private $jsonapi;
 

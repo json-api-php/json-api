@@ -6,7 +6,7 @@ final class MetaDocument implements \JsonSerializable
 {
     private $doc;
 
-    public function __construct(Meta $meta, TopLevelDocumentMember ...$members)
+    public function __construct(Meta $meta, MetaDocumentMember ...$members)
     {
         $this->doc = combine($meta, ...$members);
     }

@@ -3,6 +3,7 @@
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
+use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
 
 final class ToNull extends ResourceField
 {
@@ -21,6 +22,10 @@ final class ToNull extends ResourceField
     {
         $val = combine(...$this->members);
         $val->data = null;
-        child($o, 'relationships')->{$this->name()} = $val;
+        child($o, 'relationships')->{$this->name} = $val;
+    }
+
+    public function registerIdentifier(IdentifierRegistry $registry)
+    {
     }
 }

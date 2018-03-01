@@ -3,10 +3,9 @@
 namespace JsonApiPhp\JsonApi\Link;
 
 use JsonApiPhp\JsonApi\DataDocumentMember;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
 use JsonApiPhp\JsonApi\ToOneMember;
 
-final class PrevLink extends Link implements DataDocumentMember, ResourceMember, ToOneMember
+final class PrevLink extends Link implements DataDocumentMember, ToOneMember
 {
     protected $name = 'prev';
 }

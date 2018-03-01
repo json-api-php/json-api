@@ -4,6 +4,7 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\Identifier;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
+use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
 
 final class ToMany extends ResourceField implements Identifier
 {
@@ -20,7 +21,7 @@ final class ToMany extends ResourceField implements Identifier
 
     public function attachTo(object $o)
     {
-        $rel = child(child($o, 'relationships'), $this->name());
+        $rel = child(child($o, 'relationships'), $this->name);
         $rel->data = [];
         foreach ($this->members as $member) {
             if ($member instanceof ResourceIdentifier) {
@@ -39,5 +40,10 @@ final class ToMany extends ResourceField implements Identifier
             }
         }
         return false;
+    }
+
+    public function registerIdentifier(IdentifierRegistry $registry)
+    {
+        $registry->register($this);
     }
 }

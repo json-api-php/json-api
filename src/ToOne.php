@@ -4,6 +4,7 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\Identifier;
 use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
+use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
 
 final class ToOne extends ResourceField implements Identifier
 {
@@ -23,11 +24,16 @@ final class ToOne extends ResourceField implements Identifier
 
     public function attachTo(object $o)
     {
-        child($o, 'relationships')->{$this->name()} = $this->val;
+        child($o, 'relationships')->{$this->name} = $this->val;
     }
 
     public function identifies(ResourceObject $resource): bool
     {
         return $this->identifier->identifies($resource);
+    }
+
+    public function registerIdentifier(IdentifierRegistry $registry)
+    {
+        $registry->register($this->identifier);
     }
 }

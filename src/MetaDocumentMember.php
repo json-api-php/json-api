@@ -5,6 +5,6 @@ namespace JsonApiPhp\JsonApi;
 /**
  * @internal
  */
-interface TopLevelDocumentMember extends ErrorDocumentMember
+interface MetaDocumentMember extends ErrorDocumentMember
 {
 }

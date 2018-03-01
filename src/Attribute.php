@@ -3,6 +3,7 @@
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\PrimaryData\ResourceField;
+use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
 
 final class Attribute extends ResourceField
 {
@@ -16,6 +17,10 @@ final class Attribute extends ResourceField
 
     public function attachTo(object $o)
     {
-        child($o, 'attributes')->{$this->name()} = $this->val;
+        child($o, 'attributes')->{$this->name} = $this->val;
+    }
+
+    public function registerIdentifier(IdentifierRegistry $registry)
+    {
     }
 }

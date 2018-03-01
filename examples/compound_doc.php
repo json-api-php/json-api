@@ -37,7 +37,7 @@ $comment12 = new ResourceObject(
     '12',
     new Attribute('body', 'I like XML better'),
     new SelfLink('http://example.com/comments/12'),
-    new ToOne('author', $dan->identifier())
+    new ToOne('author', $dan->toIdentifier())
 );
 
 $document = new CompoundDocument(
@@ -49,14 +49,14 @@ $document = new CompoundDocument(
             new SelfLink('http://example.com/articles/1'),
             new ToOne(
                 'author',
-                $dan->identifier(),
+                $dan->toIdentifier(),
                 new SelfLink('http://example.com/articles/1/relationships/author'),
                 new RelatedLink('http://example.com/articles/1/author')
             ),
             new ToMany(
                 'comments',
-                $comment05->identifier(),
-                $comment12->identifier(),
+                $comment05->toIdentifier(),
+                $comment12->toIdentifier(),
                 new SelfLink('http://example.com/articles/1/relationships/comments'),
                 new RelatedLink('http://example.com/articles/1/comments')
             )

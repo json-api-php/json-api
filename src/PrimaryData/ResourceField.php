@@ -2,6 +2,7 @@
 
 namespace JsonApiPhp\JsonApi\PrimaryData;
 
+use JsonApiPhp\JsonApi\ResourceObject\FieldRegistry;
 use function JsonApiPhp\JsonApi\isValidName;
 
 /**
@@ -9,7 +10,7 @@ use function JsonApiPhp\JsonApi\isValidName;
  */
 abstract class ResourceField implements ResourceMember
 {
-    private $name;
+    protected $name;
 
     public function __construct(string $name)
     {
@@ -22,8 +23,8 @@ abstract class ResourceField implements ResourceMember
         $this->name = $name;
     }
 
-    public function name(): string
+    public function registerResourceField(FieldRegistry $registry)
     {
-        return $this->name;
+        $registry->register($this->name);
     }
 }

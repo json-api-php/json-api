@@ -25,7 +25,7 @@ final class ResourceIdentifier implements PrimaryData, ToManyMember
 
     public function identifies(ResourceObject $resource): bool
     {
-        return $resource->identifier()->equals($this);
+        return $resource->toIdentifier()->equals($this);
     }
 
     public function equals(ResourceIdentifier $that): bool

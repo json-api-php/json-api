@@ -33,7 +33,7 @@ final class Included implements Attachable
                     continue 2;
                 }
             }
-            throw new \DomainException('Full linkage required for '.$resource->uniqueId());
+            throw new \LogicException('Full linkage required for '.$resource->uniqueId());
         }
     }
 

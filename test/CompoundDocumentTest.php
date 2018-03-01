@@ -43,7 +43,7 @@ class CompoundDocumentTest extends BaseTestCase
             '12',
             new Attribute('body', 'I like XML better'),
             new SelfLink('http://example.com/comments/12'),
-            new ToOne('author', $dan->identifier())
+            new ToOne('author', $dan->toIdentifier())
         );
 
         $document = new CompoundDocument(
@@ -55,14 +55,14 @@ class CompoundDocumentTest extends BaseTestCase
                     new SelfLink('http://example.com/articles/1'),
                     new ToOne(
                         'author',
-                        $dan->identifier(),
+                        $dan->toIdentifier(),
                         new SelfLink('http://example.com/articles/1/relationships/author'),
                         new RelatedLink('http://example.com/articles/1/author')
                     ),
                     new ToMany(
                         'comments',
-                        $comment05->identifier(),
-                        $comment12->identifier(),
+                        $comment05->toIdentifier(),
+                        $comment12->toIdentifier(),
                         new SelfLink('http://example.com/articles/1/relationships/comments'),
                         new RelatedLink('http://example.com/articles/1/comments')
                     )
@@ -167,7 +167,7 @@ class CompoundDocumentTest extends BaseTestCase
      */
     public function testFullLinkage(callable $create_doc)
     {
-        $this->expectException(\DomainException::class);
+        $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('Full linkage required for apples:1');
         $create_doc();
     }
@@ -219,7 +219,7 @@ class CompoundDocumentTest extends BaseTestCase
         $article = new ResourceObject(
             'articles',
             '1',
-            new ToOne('author', $author->identifier())
+            new ToOne('author', $author->toIdentifier())
         );
         $doc = new CompoundDocument($article, new Included($author));
         $this->assertNotEmpty($doc);
@@ -232,12 +232,12 @@ class CompoundDocumentTest extends BaseTestCase
             'books',
             '2',
             new Attribute('name', 'Domain Driven Design'),
-            new ToOne('author', $writer->identifier())
+            new ToOne('author', $writer->toIdentifier())
         );
         $cart = new ResourceObject(
             'shopping-carts',
             '1',
-            new ToMany('contents', $book->identifier())
+            new ToMany('contents', $book->toIdentifier())
         );
         $doc = new CompoundDocument($cart, new Included($book, $writer));
         $this->assertNotEmpty($doc);
@@ -251,6 +251,6 @@ class CompoundDocumentTest extends BaseTestCase
     public function testCanNotBeManyIncludedResourcesWithEqualIdentifiers()
     {
         $apple = new ResourceObject('apples', '1');
-        new CompoundDocument($apple->identifier(), new Included($apple, $apple));
+        new CompoundDocument($apple->toIdentifier(), new Included($apple, $apple));
     }
 }
