@@ -6,7 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [2.0.0-rc.0] - 2018-02-26
-Initial stable release
+## [2.0.0-rc.1] - 2018-03-01
+### Changed
+- BC-breaking! Improved performance
 
-[Unreleased]: https://github.com/json-api-php/json-api/compare/2.0.0-rc.0...HEAD
+## [2.0.0-rc.0] - 2018-02-26
+V2 release candidate
+
+[Unreleased]: https://github.com/json-api-php/json-api/compare/2.0.0-rc.1...HEAD
+[2.0.0-rc.1]: https://github.com/json-api-php/json-api/compare/2.0.0-rc.0...2.0.0-rc.1
