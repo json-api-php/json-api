@@ -3,9 +3,11 @@
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Internal\FieldRegistry;
+use JsonApiPhp\JsonApi\Internal\Identifier;
 use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\IdentityTrait;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
+use JsonApiPhp\JsonApi\Internal\ResourceField;
 use JsonApiPhp\JsonApi\Internal\ResourceMember;
 
 final class ResourceObject implements PrimaryData
@@ -23,10 +25,18 @@ final class ResourceObject implements PrimaryData
         $this->id = $id;
         $this->registry = new IdentifierRegistry();
         $this->obj = (object) ['type' => $type, 'id' => $id];
-        $fields = new FieldRegistry();
+        $fields = [];
         foreach ($members as $member) {
-            $member->registerField($fields);
-            $member->registerIn($this->registry);
+            if ($member instanceof Identifier) {
+                $member->registerIn($this->registry);
+            }
+            if ($member instanceof ResourceField) {
+                $name = $member->name();
+                if (isset($fields[$name])) {
+                    throw new \LogicException("Field '$name' already exists'");
+                }
+                $fields[$name] = true;
+            }
             $member->attachTo($this->obj);
         }
     }

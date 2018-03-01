@@ -146,7 +146,7 @@ class ResourceObjectTest extends BaseTestCase
                 new ResourceObject(
                     'basket',
                     '1',
-                    new ToMany('content')
+                    new ToMany('content', new ResourceIdentifierCollection())
                 )
             )
         );

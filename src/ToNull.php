@@ -3,11 +3,12 @@
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\ResourceField;
 use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
 use JsonApiPhp\JsonApi\Internal\ResourceMember;
 use JsonApiPhp\JsonApi\Internal\ToOneMember;
 
-final class ToNull implements ResourceMember
+final class ToNull implements ResourceField
 {
     use ResourceFieldTrait;
     /**
@@ -27,9 +28,5 @@ final class ToNull implements ResourceMember
         $obj = combine(...$this->members);
         $obj->data = null;
         child($o, 'relationships')->{$this->name} = $obj;
-    }
-
-    public function registerIn(IdentifierRegistry $registry)
-    {
     }
 }

@@ -2,11 +2,10 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\ResourceField;
 use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
-use JsonApiPhp\JsonApi\Internal\ResourceMember;
 
-final class Attribute implements ResourceMember
+final class Attribute implements ResourceField
 {
     use ResourceFieldTrait;
     private $val;
@@ -21,9 +20,5 @@ final class Attribute implements ResourceMember
     public function attachTo(object $o)
     {
         child($o, 'attributes')->{$this->name} = $this->val;
-    }
-
-    public function registerIn(IdentifierRegistry $registry)
-    {
     }
 }

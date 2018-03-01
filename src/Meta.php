@@ -9,9 +9,10 @@ use JsonApiPhp\JsonApi\Internal\FieldRegistry;
 use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\MetaDocumentMember;
 use JsonApiPhp\JsonApi\Internal\ResourceMember;
+use JsonApiPhp\JsonApi\Internal\ToManyMember;
 use JsonApiPhp\JsonApi\Internal\ToOneMember;
 
-final class Meta implements ErrorMember, ErrorDocumentMember, MetaDocumentMember, DataDocumentMember, ResourceMember, ToOneMember
+final class Meta implements ErrorMember, ErrorDocumentMember, MetaDocumentMember, DataDocumentMember, ResourceMember, ToOneMember, ToManyMember
 {
     /**
      * @var string
@@ -34,10 +35,6 @@ final class Meta implements ErrorMember, ErrorDocumentMember, MetaDocumentMember
     }
 
     public function registerField(FieldRegistry $registry)
-    {
-    }
-
-    public function registerIn(IdentifierRegistry $registry)
     {
     }
 }

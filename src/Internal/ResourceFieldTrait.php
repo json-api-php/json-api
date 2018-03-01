@@ -21,8 +21,8 @@ trait ResourceFieldTrait
         }
     }
 
-    public function registerField(FieldRegistry $registry)
+    public function name(): string
     {
-        $registry->register($this->name);
+        return $this->name;
     }
 }

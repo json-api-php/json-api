@@ -4,7 +4,6 @@ namespace JsonApiPhp\JsonApi\Link;
 
 use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
 use JsonApiPhp\JsonApi\Internal\FieldRegistry;
-use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\LinkTrait;
 use JsonApiPhp\JsonApi\Internal\ResourceMember;
 use JsonApiPhp\JsonApi\Internal\ToManyMember;
@@ -21,10 +20,6 @@ final class SelfLink implements DataDocumentMember, ResourceMember, ToOneMember,
     }
 
     public function registerField(FieldRegistry $registry)
-    {
-    }
-
-    public function registerIn(IdentifierRegistry $registry)
     {
     }
 }
