@@ -26,7 +26,7 @@ final class ResourceObject implements PrimaryData
         $fields = new FieldRegistry();
         foreach ($members as $member) {
             $member->registerField($fields);
-            $member->registerIdentifier($this->registry);
+            $member->registerIn($this->registry);
             $member->attachTo($this->obj);
         }
     }

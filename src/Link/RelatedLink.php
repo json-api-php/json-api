@@ -2,6 +2,7 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
+use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\LinkTrait;
 use JsonApiPhp\JsonApi\Internal\ToManyMember;
 use JsonApiPhp\JsonApi\Internal\ToOneMember;
@@ -14,5 +15,9 @@ final class RelatedLink implements ToOneMember, ToManyMember
     public function attachTo(object $o)
     {
         child($o, 'links')->related = $this->link;
+    }
+
+    public function registerIn(IdentifierRegistry $registry)
+    {
     }
 }

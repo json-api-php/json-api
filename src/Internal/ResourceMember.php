@@ -5,9 +5,7 @@ namespace JsonApiPhp\JsonApi\Internal;
 /**
  * @internal
  */
-interface ResourceMember extends Attachable
+interface ResourceMember extends Attachable, Identifier
 {
     public function registerField(FieldRegistry $registry);
-
-    public function registerIdentifier(IdentifierRegistry $registry);
 }

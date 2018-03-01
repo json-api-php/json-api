@@ -23,7 +23,7 @@ final class Attribute implements ResourceMember
         child($o, 'attributes')->{$this->name} = $this->val;
     }
 
-    public function registerIdentifier(IdentifierRegistry $registry)
+    public function registerIn(IdentifierRegistry $registry)
     {
     }
 }

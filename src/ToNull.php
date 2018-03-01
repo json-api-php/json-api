@@ -29,7 +29,7 @@ final class ToNull implements ResourceMember
         child($o, 'relationships')->{$this->name} = $obj;
     }
 
-    public function registerIdentifier(IdentifierRegistry $registry)
+    public function registerIn(IdentifierRegistry $registry)
     {
     }
 }

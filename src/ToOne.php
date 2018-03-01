@@ -31,7 +31,7 @@ final class ToOne implements ResourceMember
         child($o, 'relationships')->{$this->name} = $this->obj;
     }
 
-    public function registerIdentifier(IdentifierRegistry $registry)
+    public function registerIn(IdentifierRegistry $registry)
     {
         $this->identifier->registerIn($registry);
     }

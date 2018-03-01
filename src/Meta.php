@@ -37,7 +37,7 @@ final class Meta implements ErrorMember, ErrorDocumentMember, MetaDocumentMember
     {
     }
 
-    public function registerIdentifier(IdentifierRegistry $registry)
+    public function registerIn(IdentifierRegistry $registry)
     {
     }
 }

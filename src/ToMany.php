@@ -2,7 +2,6 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Internal\Identifier;
 use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
 use JsonApiPhp\JsonApi\Internal\ResourceMember;
@@ -33,12 +32,10 @@ final class ToMany implements ResourceMember
         }
     }
 
-    public function registerIdentifier(IdentifierRegistry $registry)
+    public function registerIn(IdentifierRegistry $registry)
     {
         foreach ($this->members as $member) {
-            if ($member instanceof Identifier) {
-                $member->registerIn($registry);
-            }
+            $member->registerIn($registry);
         }
     }
 }
