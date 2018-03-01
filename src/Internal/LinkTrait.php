@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Link;
+namespace JsonApiPhp\JsonApi\Internal;
 
 use JsonApiPhp\JsonApi\Meta;
 

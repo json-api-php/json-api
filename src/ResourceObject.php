@@ -2,11 +2,11 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\IdentityTrait;
-use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
-use JsonApiPhp\JsonApi\ResourceObject\FieldRegistry;
-use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\FieldRegistry;
+use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\IdentityTrait;
+use JsonApiPhp\JsonApi\Internal\PrimaryData;
+use JsonApiPhp\JsonApi\Internal\ResourceMember;
 
 final class ResourceObject implements PrimaryData
 {
@@ -26,7 +26,7 @@ final class ResourceObject implements PrimaryData
         $fields = new FieldRegistry();
         foreach ($members as $member) {
             $member->registerField($fields);
-            $member->registerAsIdentifier($this->ids);
+            $member->registerIdentifier($this->ids);
             $member->attachTo($this->obj);
         }
     }

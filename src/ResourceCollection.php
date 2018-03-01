@@ -2,8 +2,8 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
-use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
 final class ResourceCollection implements PrimaryData
 {

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\Error;
+namespace JsonApiPhp\JsonApi\Internal;
 
 /**
  * @internal

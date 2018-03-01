@@ -4,6 +4,7 @@ namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\DataDocument;
+use JsonApiPhp\JsonApi\IdentifierCollection;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Meta;
@@ -115,8 +116,10 @@ class ResourceObjectTest extends BaseTestCase
                     '1',
                     new ToMany(
                         'content',
-                        new ResourceIdentifier('apples', '1'),
-                        new ResourceIdentifier('pears', '2')
+                        new IdentifierCollection(
+                            new ResourceIdentifier('apples', '1'),
+                            new ResourceIdentifier('pears', '2')
+                        )
                     )
                 )
             )

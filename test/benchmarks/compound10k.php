@@ -11,6 +11,7 @@ use JsonApiPhp\JsonApi\Error\SourcePointer;
 use JsonApiPhp\JsonApi\Error\Status;
 use JsonApiPhp\JsonApi\Error\Title;
 use JsonApiPhp\JsonApi\ErrorDocument;
+use JsonApiPhp\JsonApi\IdentifierCollection;
 use JsonApiPhp\JsonApi\Included;
 use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Link\AboutLink;
@@ -70,8 +71,10 @@ for ($count = 0; $count < 10000; $count++) {
                 ),
                 new ToMany(
                     'comments',
-                    $comment05->toIdentifier(),
-                    $comment12->toIdentifier(),
+                    new IdentifierCollection(
+                        $comment05->toIdentifier(),
+                        $comment12->toIdentifier()
+                    ),
                     new SelfLink('http://example.com/articles/1/relationships/comments'),
                     new RelatedLink('http://example.com/articles/1/comments')
                 )

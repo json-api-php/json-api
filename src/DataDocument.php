@@ -2,7 +2,8 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
+use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
+use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
 final class DataDocument implements \JsonSerializable
 {

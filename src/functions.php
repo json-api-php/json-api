@@ -2,6 +2,8 @@
 
 namespace JsonApiPhp\JsonApi;
 
+use JsonApiPhp\JsonApi\Internal\Attachable;
+
 function combine(Attachable ...$members): object
 {
     $obj = (object) [];

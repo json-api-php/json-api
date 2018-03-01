@@ -2,6 +2,8 @@
 
 namespace JsonApiPhp\JsonApi;
 
+use JsonApiPhp\JsonApi\Internal\ErrorDocumentMember;
+
 final class ErrorDocument implements \JsonSerializable
 {
     private $doc;

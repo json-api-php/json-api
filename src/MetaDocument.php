@@ -2,6 +2,8 @@
 
 namespace JsonApiPhp\JsonApi;
 
+use JsonApiPhp\JsonApi\Internal\MetaDocumentMember;
+
 final class MetaDocument implements \JsonSerializable
 {
     private $doc;

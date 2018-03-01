@@ -2,9 +2,9 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\ResourceFieldTrait;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
-use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
+use JsonApiPhp\JsonApi\Internal\ResourceMember;
 
 final class Attribute implements ResourceMember
 {
@@ -23,7 +23,7 @@ final class Attribute implements ResourceMember
         child($o, 'attributes')->{$this->name} = $this->val;
     }
 
-    public function registerAsIdentifier(IdentifierRegistry $registry)
+    public function registerIdentifier(IdentifierRegistry $registry)
     {
     }
 }

@@ -2,11 +2,11 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\DataDocumentMember;
-use JsonApiPhp\JsonApi\ToOneMember;
+use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
+use JsonApiPhp\JsonApi\Internal\LinkTrait;
 use function JsonApiPhp\JsonApi\child;
 
-final class NextLink implements DataDocumentMember, ToOneMember
+final class NextLink implements DataDocumentMember
 {
     use LinkTrait;
 

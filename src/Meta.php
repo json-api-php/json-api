@@ -2,14 +2,17 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Error\ErrorMember;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceMemberTrait;
+use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
+use JsonApiPhp\JsonApi\Internal\ErrorDocumentMember;
+use JsonApiPhp\JsonApi\Internal\ErrorMember;
+use JsonApiPhp\JsonApi\Internal\FieldRegistry;
+use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\MetaDocumentMember;
+use JsonApiPhp\JsonApi\Internal\ResourceMember;
+use JsonApiPhp\JsonApi\Internal\ToOneMember;
 
-final class Meta implements ErrorMember, MetaDocumentMember, DataDocumentMember, ResourceMember, ToOneMember
+final class Meta implements ErrorMember, ErrorDocumentMember, MetaDocumentMember, DataDocumentMember, ResourceMember, ToOneMember
 {
-    use ResourceMemberTrait;
-
     /**
      * @var string
      */
@@ -28,5 +31,13 @@ final class Meta implements ErrorMember, MetaDocumentMember, DataDocumentMember,
     public function attachTo(object $o)
     {
         child($o, 'meta')->{$this->key} = $this->value;
+    }
+
+    public function registerField(FieldRegistry $registry)
+    {
+    }
+
+    public function registerIdentifier(IdentifierRegistry $registry)
+    {
     }
 }

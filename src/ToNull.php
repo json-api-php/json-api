@@ -2,9 +2,10 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\ResourceFieldTrait;
-use JsonApiPhp\JsonApi\PrimaryData\ResourceMember;
-use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
+use JsonApiPhp\JsonApi\Internal\ResourceMember;
+use JsonApiPhp\JsonApi\Internal\ToOneMember;
 
 final class ToNull implements ResourceMember
 {
@@ -23,12 +24,12 @@ final class ToNull implements ResourceMember
 
     public function attachTo(object $o)
     {
-        $val = combine(...$this->members);
-        $val->data = null;
-        child($o, 'relationships')->{$this->name} = $val;
+        $obj = combine(...$this->members);
+        $obj->data = null;
+        child($o, 'relationships')->{$this->name} = $obj;
     }
 
-    public function registerAsIdentifier(IdentifierRegistry $registry)
+    public function registerIdentifier(IdentifierRegistry $registry)
     {
     }
 }

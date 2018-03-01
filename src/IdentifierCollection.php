@@ -2,10 +2,11 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\PrimaryData\PrimaryData;
-use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\PrimaryData;
+use JsonApiPhp\JsonApi\Internal\ToManyMember;
 
-final class IdentifierCollection implements PrimaryData
+final class IdentifierCollection implements PrimaryData, ToManyMember
 {
     /**
      * @var ResourceIdentifier[]

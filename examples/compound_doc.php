@@ -2,6 +2,7 @@
 
 use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\CompoundDocument;
+use JsonApiPhp\JsonApi\IdentifierCollection;
 use JsonApiPhp\JsonApi\Included;
 use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
@@ -55,8 +56,10 @@ $document = new CompoundDocument(
             ),
             new ToMany(
                 'comments',
-                $comment05->toIdentifier(),
-                $comment12->toIdentifier(),
+                new IdentifierCollection(
+                    $comment05->toIdentifier(),
+                    $comment12->toIdentifier()
+                ),
                 new SelfLink('http://example.com/articles/1/relationships/comments'),
                 new RelatedLink('http://example.com/articles/1/comments')
             )

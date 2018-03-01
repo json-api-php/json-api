@@ -1,8 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace JsonApiPhp\JsonApi\PrimaryData;
-
-use JsonApiPhp\JsonApi\ResourceObject\IdentifierRegistry;
+namespace JsonApiPhp\JsonApi\Internal;
 
 /**
  * @internal

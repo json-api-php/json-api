@@ -2,6 +2,8 @@
 
 namespace JsonApiPhp\JsonApi\Error;
 
+use JsonApiPhp\JsonApi\Internal\ErrorMember;
+
 final class Id implements ErrorMember
 {
     /**

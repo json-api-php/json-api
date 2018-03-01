@@ -61,8 +61,10 @@ class CompoundDocumentTest extends BaseTestCase
                     ),
                     new ToMany(
                         'comments',
-                        $comment05->toIdentifier(),
-                        $comment12->toIdentifier(),
+                        new IdentifierCollection(
+                            $comment05->toIdentifier(),
+                            $comment12->toIdentifier()
+                        ),
                         new SelfLink('http://example.com/articles/1/relationships/comments'),
                         new RelatedLink('http://example.com/articles/1/comments')
                     )
@@ -237,7 +239,7 @@ class CompoundDocumentTest extends BaseTestCase
         $cart = new ResourceObject(
             'shopping-carts',
             '1',
-            new ToMany('contents', $book->toIdentifier())
+            new ToMany('contents', new IdentifierCollection($book->toIdentifier()))
         );
         $doc = new CompoundDocument($cart, new Included($book, $writer));
         $this->assertNotEmpty($doc);
