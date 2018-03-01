@@ -2,11 +2,11 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
 use JsonApiPhp\JsonApi\Internal\LinkTrait;
+use JsonApiPhp\JsonApi\Internal\PaginationLink;
 use function JsonApiPhp\JsonApi\child;
 
-final class PrevLink implements DataDocumentMember
+final class PrevLink implements PaginationLink
 {
     use LinkTrait;
 

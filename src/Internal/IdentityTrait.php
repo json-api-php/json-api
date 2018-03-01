@@ -22,7 +22,7 @@ trait IdentityTrait
      * @internal
      * @return string
      */
-    public function identity(): string
+    public function key(): string
     {
         return "{$this->type}:{$this->id}";
     }

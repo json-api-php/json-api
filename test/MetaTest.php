@@ -10,7 +10,7 @@ class MetaTest extends TestCase
     public function testKeyMustBeValid()
     {
         $this->expectException(\DomainException::class);
-        $this->expectExceptionMessage("Invalid character in a member name 'this+name&is<invalid>'");
-        new Meta('this+name&is<invalid>', '1');
+        $this->expectExceptionMessage("Invalid character in a member name 'invalid:name'");
+        new Meta('invalid:name', '1');
     }
 }

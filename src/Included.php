@@ -19,7 +19,7 @@ final class Included implements Attachable
     {
         $this->ids = new IdentifierRegistry();
         foreach ($resources as $resource) {
-            $string_id = $resource->identity();
+            $string_id = $resource->key();
             if (isset($this->resources[$string_id])) {
                 throw new \LogicException("Resource $string_id is already included");
             }
@@ -33,10 +33,10 @@ final class Included implements Attachable
         $dataRegistry = new IdentifierRegistry();
         $data->registerIn($dataRegistry);
         foreach ($this->resources as $resource) {
-            if ($dataRegistry->has($resource->identity()) || $this->ids->has($resource->identity())) {
+            if ($dataRegistry->has($resource->key()) || $this->ids->has($resource->key())) {
                 continue;
             }
-            throw new \LogicException('Full linkage required for '.$resource->identity());
+            throw new \LogicException('Full linkage required for '.$resource->key());
         }
     }
 

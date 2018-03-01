@@ -6,7 +6,7 @@ use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 use JsonApiPhp\JsonApi\Internal\ToManyMember;
 
-final class IdentifierCollection implements PrimaryData, ToManyMember
+class ResourceIdentifierCollection implements PrimaryData, ToManyMember
 {
     /**
      * @var ResourceIdentifier[]

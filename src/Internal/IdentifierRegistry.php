@@ -19,6 +19,7 @@ final class IdentifierRegistry
     {
         return isset($this->ids[$id]);
     }
+
     public function merge(IdentifierRegistry $registry)
     {
         $this->ids = array_merge($this->ids, $registry->ids);

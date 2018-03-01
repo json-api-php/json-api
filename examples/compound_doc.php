@@ -2,14 +2,15 @@
 
 use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\CompoundDocument;
-use JsonApiPhp\JsonApi\IdentifierCollection;
 use JsonApiPhp\JsonApi\Included;
 use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
-use JsonApiPhp\JsonApi\ResourceCollection;
+use JsonApiPhp\JsonApi\PaginatedResourceCollection;
+use JsonApiPhp\JsonApi\Pagination;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
+use JsonApiPhp\JsonApi\ResourceIdentifierCollection;
 use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\ToMany;
 use JsonApiPhp\JsonApi\ToOne;
@@ -42,7 +43,11 @@ $comment12 = new ResourceObject(
 );
 
 $document = new CompoundDocument(
-    new ResourceCollection(
+    new PaginatedResourceCollection(
+        new Pagination(
+            new NextLink('http://example.com/articles?page[offset]=2'),
+            new LastLink('http://example.com/articles?page[offset]=10')
+        ),
         new ResourceObject(
             'articles',
             '1',
@@ -56,7 +61,7 @@ $document = new CompoundDocument(
             ),
             new ToMany(
                 'comments',
-                new IdentifierCollection(
+                new ResourceIdentifierCollection(
                     $comment05->toIdentifier(),
                     $comment12->toIdentifier()
                 ),
@@ -66,9 +71,7 @@ $document = new CompoundDocument(
         )
     ),
     new Included($dan, $comment05, $comment12),
-    new SelfLink('http://example.com/articles'),
-    new NextLink('http://example.com/articles?page[offset]=2'),
-    new LastLink('http://example.com/articles?page[offset]=10')
+    new SelfLink('http://example.com/articles')
 );
 
 echo json_encode($document, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);

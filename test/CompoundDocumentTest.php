@@ -4,15 +4,17 @@ namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\CompoundDocument;
-use JsonApiPhp\JsonApi\IdentifierCollection;
 use JsonApiPhp\JsonApi\Included;
 use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\NullData;
+use JsonApiPhp\JsonApi\PaginatedResourceCollection;
+use JsonApiPhp\JsonApi\Pagination;
 use JsonApiPhp\JsonApi\ResourceCollection;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
+use JsonApiPhp\JsonApi\ResourceIdentifierCollection;
 use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\ToMany;
 use JsonApiPhp\JsonApi\ToOne;
@@ -47,7 +49,11 @@ class CompoundDocumentTest extends BaseTestCase
         );
 
         $document = new CompoundDocument(
-            new ResourceCollection(
+            new PaginatedResourceCollection(
+                new Pagination(
+                    new NextLink('http://example.com/articles?page[offset]=2'),
+                    new LastLink('http://example.com/articles?page[offset]=10')
+                ),
                 new ResourceObject(
                     'articles',
                     '1',
@@ -61,7 +67,7 @@ class CompoundDocumentTest extends BaseTestCase
                     ),
                     new ToMany(
                         'comments',
-                        new IdentifierCollection(
+                        new ResourceIdentifierCollection(
                             $comment05->toIdentifier(),
                             $comment12->toIdentifier()
                         ),
@@ -71,9 +77,7 @@ class CompoundDocumentTest extends BaseTestCase
                 )
             ),
             new Included($dan, $comment05, $comment12),
-            new SelfLink('http://example.com/articles'),
-            new NextLink('http://example.com/articles?page[offset]=2'),
-            new LastLink('http://example.com/articles?page[offset]=10')
+            new SelfLink('http://example.com/articles')
         );
         $this->assertEncodesTo(
             '
@@ -196,7 +200,7 @@ class CompoundDocumentTest extends BaseTestCase
             [
                 function () use ($included) {
                     return new CompoundDocument(
-                        new IdentifierCollection(
+                        new ResourceIdentifierCollection(
                             new ResourceIdentifier('oranges', '1'),
                             new ResourceIdentifier('oranges', '1')
                         ),
@@ -239,7 +243,7 @@ class CompoundDocumentTest extends BaseTestCase
         $cart = new ResourceObject(
             'shopping-carts',
             '1',
-            new ToMany('contents', new IdentifierCollection($book->toIdentifier()))
+            new ToMany('contents', new ResourceIdentifierCollection($book->toIdentifier()))
         );
         $doc = new CompoundDocument($cart, new Included($book, $writer));
         $this->assertNotEmpty($doc);

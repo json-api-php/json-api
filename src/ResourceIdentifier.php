@@ -40,6 +40,6 @@ final class ResourceIdentifier implements PrimaryData
 
     public function registerIn(IdentifierRegistry $registry)
     {
-        $registry->add($this->identity());
+        $registry->add($this->key());
     }
 }

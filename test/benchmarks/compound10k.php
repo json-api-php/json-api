@@ -11,7 +11,6 @@ use JsonApiPhp\JsonApi\Error\SourcePointer;
 use JsonApiPhp\JsonApi\Error\Status;
 use JsonApiPhp\JsonApi\Error\Title;
 use JsonApiPhp\JsonApi\ErrorDocument;
-use JsonApiPhp\JsonApi\IdentifierCollection;
 use JsonApiPhp\JsonApi\Included;
 use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Link\AboutLink;
@@ -20,8 +19,10 @@ use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Meta;
-use JsonApiPhp\JsonApi\ResourceCollection;
+use JsonApiPhp\JsonApi\PaginatedResourceCollection;
+use JsonApiPhp\JsonApi\Pagination;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
+use JsonApiPhp\JsonApi\ResourceIdentifierCollection;
 use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\ToMany;
 use JsonApiPhp\JsonApi\ToOne;
@@ -57,7 +58,11 @@ for ($count = 0; $count < 10000; $count++) {
     );
 
     $data_document = new CompoundDocument(
-        new ResourceCollection(
+        new PaginatedResourceCollection(
+            new Pagination(
+                new NextLink('http://example.com/articles?page[offset]=2'),
+                new LastLink('http://example.com/articles?page[offset]=10')
+            ),
             new ResourceObject(
                 'articles',
                 '1',
@@ -71,7 +76,7 @@ for ($count = 0; $count < 10000; $count++) {
                 ),
                 new ToMany(
                     'comments',
-                    new IdentifierCollection(
+                    new ResourceIdentifierCollection(
                         $comment05->toIdentifier(),
                         $comment12->toIdentifier()
                     ),
@@ -81,9 +86,7 @@ for ($count = 0; $count < 10000; $count++) {
             )
         ),
         new Included($dan, $comment05, $comment12),
-        new SelfLink('http://example.com/articles'),
-        new NextLink('http://example.com/articles?page[offset]=2'),
-        new LastLink('http://example.com/articles?page[offset]=10')
+        new SelfLink('http://example.com/articles')
     );
 
     $data_doc_json = json_encode($data_document);
