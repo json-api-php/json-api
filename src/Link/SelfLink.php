@@ -27,9 +27,4 @@ final class SelfLink implements DataDocumentMember, ResourceMember, ToOneMember,
     public function registerIdentifier(IdentifierRegistry $registry)
     {
     }
-
-    public function attachToCollection(object $o)
-    {
-        // TODO: Implement attachToCollection() method.
-    }
 }

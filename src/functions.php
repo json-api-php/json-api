@@ -15,7 +15,7 @@ function combine(Attachable ...$members): object
 
 function child(object $o, string $name): object
 {
-    if (empty($o->{$name})) {
+    if (!isset($o->{$name})) {
         $o->{$name} = (object) [];
     }
     return $o->{$name};

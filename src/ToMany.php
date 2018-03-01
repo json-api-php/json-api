@@ -29,11 +29,7 @@ final class ToMany implements ResourceMember
         $rel = child(child($o, 'relationships'), $this->name);
         $rel->data = [];
         foreach ($this->members as $member) {
-            if ($member instanceof ResourceIdentifier) {
-                $member->attachToCollection($rel);
-            } else {
-                $member->attachTo($rel);
-            }
+            $member->attachTo($rel);
         }
     }
 
