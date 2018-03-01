@@ -2,7 +2,6 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Internal\FieldRegistry;
 use JsonApiPhp\JsonApi\Internal\Identifier;
 use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\IdentityTrait;

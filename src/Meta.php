@@ -6,7 +6,6 @@ use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
 use JsonApiPhp\JsonApi\Internal\ErrorDocumentMember;
 use JsonApiPhp\JsonApi\Internal\ErrorMember;
 use JsonApiPhp\JsonApi\Internal\FieldRegistry;
-use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\MetaDocumentMember;
 use JsonApiPhp\JsonApi\Internal\ResourceMember;
 use JsonApiPhp\JsonApi\Internal\ToManyMember;

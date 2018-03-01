@@ -6,7 +6,6 @@ use JsonApiPhp\JsonApi\Internal\Identifier;
 use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\ResourceField;
 use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
-use JsonApiPhp\JsonApi\Internal\ResourceMember;
 use JsonApiPhp\JsonApi\Internal\ToOneMember;
 
 final class ToOne implements Identifier, ResourceField
