@@ -225,28 +225,6 @@ class ResourceObjectTest extends BaseTestCase
         );
     }
 
-    /**
-     * The id member is not required when the resource object originates at the client and represents
-     * a new resource to be created on the server.
-     */
-    public function testResourceIdCanBeOmitted()
-    {
-        $this->assertEncodesTo(
-            '
-            {
-                "data": {
-                    "type": "apples",
-                    "id": null,
-                    "attributes": {
-                        "color": "red"
-                    }
-                }
-            }
-            ',
-            new DataDocument(new ResourceObject('apples', null, new Attribute('color', 'red')))
-        );
-    }
-
     public function testNameValidation()
     {
         $this->expectException(\DomainException::class);

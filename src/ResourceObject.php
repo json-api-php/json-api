@@ -15,7 +15,7 @@ final class ResourceObject implements PrimaryData
     private $obj;
     private $registry;
 
-    public function __construct(string $type, string $id = null, ResourceMember ...$members)
+    public function __construct(string $type, string $id, ResourceMember ...$members)
     {
         if (isValidName($type) === false) {
             throw new \DomainException("Invalid type value: $type");
