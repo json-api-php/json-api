@@ -2,10 +2,10 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
+use JsonApiPhp\JsonApi\Internal\Collection;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
-class ResourceIdentifierCollection implements PrimaryData
+class ResourceIdentifierCollection implements PrimaryData, Collection
 {
     /**
      * @var ResourceIdentifier[]
@@ -17,7 +17,7 @@ class ResourceIdentifierCollection implements PrimaryData
         $this->identifiers = $identifiers;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $o->data = [];
         foreach ($this->identifiers as $identifier) {
@@ -25,7 +25,7 @@ class ResourceIdentifierCollection implements PrimaryData
         }
     }
 
-    public function registerIn(IdentifierRegistry $registry)
+    public function registerIn(array &$registry): void
     {
         foreach ($this->identifiers as $identifier) {
             $identifier->registerIn($registry);

@@ -2,14 +2,19 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
-use JsonApiPhp\JsonApi\Internal\IdentityTrait;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
 final class ResourceIdentifier implements PrimaryData
 {
-    use IdentityTrait;
     private $obj;
+    /**
+     * @var string
+     */
+    private $type;
+    /**
+     * @var string
+     */
+    private $id;
 
     public function __construct(string $type, string $id, Meta $meta = null)
     {
@@ -28,7 +33,7 @@ final class ResourceIdentifier implements PrimaryData
         $this->id = $id;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $o->data = $this->obj;
     }
@@ -38,8 +43,8 @@ final class ResourceIdentifier implements PrimaryData
         $o->data[] = $this->obj;
     }
 
-    public function registerIn(IdentifierRegistry $registry)
+    public function registerIn(array &$registry): void
     {
-        $registry->add($this->key());
+        $registry[compositeKey($this->type, $this->id)] = true;
     }
 }

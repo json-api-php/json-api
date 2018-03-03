@@ -5,6 +5,10 @@ namespace JsonApiPhp\JsonApi;
 use JsonApiPhp\JsonApi\Internal\ErrorDocumentMember;
 use JsonApiPhp\JsonApi\Internal\ErrorMember;
 
+/**
+ * An Error Object
+ * @see
+ */
 final class Error implements ErrorDocumentMember
 {
     private $error;
@@ -17,7 +21,7 @@ final class Error implements ErrorDocumentMember
         }
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $o->errors[] = $this->error;
     }

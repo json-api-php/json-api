@@ -10,7 +10,7 @@ use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\NullData;
-use JsonApiPhp\JsonApi\PaginatedResourceCollection;
+use JsonApiPhp\JsonApi\PaginatedCollection;
 use JsonApiPhp\JsonApi\Pagination;
 use JsonApiPhp\JsonApi\ResourceCollection;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
@@ -45,34 +45,36 @@ class CompoundDocumentTest extends BaseTestCase
             '12',
             new Attribute('body', 'I like XML better'),
             new SelfLink('http://example.com/comments/12'),
-            new ToOne('author', $dan->toIdentifier())
+            new ToOne('author', $dan->identifier())
         );
 
         $document = new CompoundDocument(
-            new PaginatedResourceCollection(
+            new PaginatedCollection(
                 new Pagination(
                     new NextLink('http://example.com/articles?page[offset]=2'),
                     new LastLink('http://example.com/articles?page[offset]=10')
                 ),
-                new ResourceObject(
-                    'articles',
-                    '1',
-                    new Attribute('title', 'JSON API paints my bikeshed!'),
-                    new SelfLink('http://example.com/articles/1'),
-                    new ToOne(
-                        'author',
-                        $dan->toIdentifier(),
-                        new SelfLink('http://example.com/articles/1/relationships/author'),
-                        new RelatedLink('http://example.com/articles/1/author')
-                    ),
-                    new ToMany(
-                        'comments',
-                        new ResourceIdentifierCollection(
-                            $comment05->toIdentifier(),
-                            $comment12->toIdentifier()
+                new ResourceCollection(
+                    new ResourceObject(
+                        'articles',
+                        '1',
+                        new Attribute('title', 'JSON API paints my bikeshed!'),
+                        new SelfLink('http://example.com/articles/1'),
+                        new ToOne(
+                            'author',
+                            $dan->identifier(),
+                            new SelfLink('http://example.com/articles/1/relationships/author'),
+                            new RelatedLink('http://example.com/articles/1/author')
                         ),
-                        new SelfLink('http://example.com/articles/1/relationships/comments'),
-                        new RelatedLink('http://example.com/articles/1/comments')
+                        new ToMany(
+                            'comments',
+                            new ResourceIdentifierCollection(
+                                $comment05->identifier(),
+                                $comment12->identifier()
+                            ),
+                            new SelfLink('http://example.com/articles/1/relationships/comments'),
+                            new RelatedLink('http://example.com/articles/1/comments')
+                        )
                     )
                 )
             ),
@@ -225,7 +227,7 @@ class CompoundDocumentTest extends BaseTestCase
         $article = new ResourceObject(
             'articles',
             '1',
-            new ToOne('author', $author->toIdentifier())
+            new ToOne('author', $author->identifier())
         );
         $doc = new CompoundDocument($article, new Included($author));
         $this->assertNotEmpty($doc);
@@ -238,12 +240,12 @@ class CompoundDocumentTest extends BaseTestCase
             'books',
             '2',
             new Attribute('name', 'Domain Driven Design'),
-            new ToOne('author', $writer->toIdentifier())
+            new ToOne('author', $writer->identifier())
         );
         $cart = new ResourceObject(
             'shopping-carts',
             '1',
-            new ToMany('contents', new ResourceIdentifierCollection($book->toIdentifier()))
+            new ToMany('contents', new ResourceIdentifierCollection($book->identifier()))
         );
         $doc = new CompoundDocument($cart, new Included($book, $writer));
         $this->assertNotEmpty($doc);
@@ -257,6 +259,6 @@ class CompoundDocumentTest extends BaseTestCase
     public function testCanNotBeManyIncludedResourcesWithEqualIdentifiers()
     {
         $apple = new ResourceObject('apples', '1');
-        new CompoundDocument($apple->toIdentifier(), new Included($apple, $apple));
+        new CompoundDocument($apple->identifier(), new Included($apple, $apple));
     }
 }

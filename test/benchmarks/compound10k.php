@@ -19,8 +19,9 @@ use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Meta;
-use JsonApiPhp\JsonApi\PaginatedResourceCollection;
+use JsonApiPhp\JsonApi\PaginatedCollection;
 use JsonApiPhp\JsonApi\Pagination;
+use JsonApiPhp\JsonApi\ResourceCollection;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
 use JsonApiPhp\JsonApi\ResourceIdentifierCollection;
 use JsonApiPhp\JsonApi\ResourceObject;
@@ -54,34 +55,36 @@ for ($count = 0; $count < 10000; $count++) {
         '12',
         new Attribute('body', 'I like XML better'),
         new SelfLink('http://example.com/comments/12'),
-        new ToOne('author', $dan->toIdentifier())
+        new ToOne('author', $dan->identifier())
     );
 
-    $data_document = new CompoundDocument(
-        new PaginatedResourceCollection(
+    $document = new CompoundDocument(
+        new PaginatedCollection(
             new Pagination(
                 new NextLink('http://example.com/articles?page[offset]=2'),
                 new LastLink('http://example.com/articles?page[offset]=10')
             ),
-            new ResourceObject(
-                'articles',
-                '1',
-                new Attribute('title', 'JSON API paints my bikeshed!'),
-                new SelfLink('http://example.com/articles/1'),
-                new ToOne(
-                    'author',
-                    $dan->toIdentifier(),
-                    new SelfLink('http://example.com/articles/1/relationships/author'),
-                    new RelatedLink('http://example.com/articles/1/author')
-                ),
-                new ToMany(
-                    'comments',
-                    new ResourceIdentifierCollection(
-                        $comment05->toIdentifier(),
-                        $comment12->toIdentifier()
+            new ResourceCollection(
+                new ResourceObject(
+                    'articles',
+                    '1',
+                    new Attribute('title', 'JSON API paints my bikeshed!'),
+                    new SelfLink('http://example.com/articles/1'),
+                    new ToOne(
+                        'author',
+                        $dan->identifier(),
+                        new SelfLink('http://example.com/articles/1/relationships/author'),
+                        new RelatedLink('http://example.com/articles/1/author')
                     ),
-                    new SelfLink('http://example.com/articles/1/relationships/comments'),
-                    new RelatedLink('http://example.com/articles/1/comments')
+                    new ToMany(
+                        'comments',
+                        new ResourceIdentifierCollection(
+                            $comment05->identifier(),
+                            $comment12->identifier()
+                        ),
+                        new SelfLink('http://example.com/articles/1/relationships/comments'),
+                        new RelatedLink('http://example.com/articles/1/comments')
+                    )
                 )
             )
         ),
@@ -89,11 +92,11 @@ for ($count = 0; $count < 10000; $count++) {
         new SelfLink('http://example.com/articles')
     );
 
-    $data_doc_json = json_encode($data_document);
+    $data_doc_json = json_encode($document);
 }
 
 for ($count = 0; $count < 1000; $count++) {
-    $error_doc = new ErrorDocument(
+    $error = new ErrorDocument(
         new Error(
             new Id('1'),
             new AboutLink('/errors/not_found'),
@@ -109,7 +112,7 @@ for ($count = 0; $count < 1000; $count++) {
         new JsonApi()
     );
 
-    $error_doc_json = json_encode($error_doc);
+    $error_doc_json = json_encode($error);
 }
 
 echo $data_doc_json;

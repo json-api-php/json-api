@@ -2,17 +2,16 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
 final class NullData implements PrimaryData
 {
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $o->data = null;
     }
 
-    public function registerIn(IdentifierRegistry $registry)
+    public function registerIn(array &$registry): void
     {
     }
 }

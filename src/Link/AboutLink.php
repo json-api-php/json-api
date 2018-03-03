@@ -10,7 +10,7 @@ final class AboutLink implements ErrorMember
 {
     use LinkTrait;
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         child($o, 'links')->about = $this->link;
     }

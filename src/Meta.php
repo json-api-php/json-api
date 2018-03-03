@@ -6,10 +6,10 @@ use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
 use JsonApiPhp\JsonApi\Internal\ErrorDocumentMember;
 use JsonApiPhp\JsonApi\Internal\ErrorMember;
 use JsonApiPhp\JsonApi\Internal\MetaDocumentMember;
-use JsonApiPhp\JsonApi\Internal\RelationshipMember;
 use JsonApiPhp\JsonApi\Internal\ResourceMember;
+use JsonApiPhp\JsonApi\Internal\ToOneMember;
 
-final class Meta implements ErrorMember, ErrorDocumentMember, MetaDocumentMember, DataDocumentMember, ResourceMember, RelationshipMember
+final class Meta implements ErrorMember, ErrorDocumentMember, MetaDocumentMember, DataDocumentMember, ResourceMember, ToOneMember
 {
     /**
      * @var string
@@ -26,7 +26,7 @@ final class Meta implements ErrorMember, ErrorDocumentMember, MetaDocumentMember
         $this->value = $value;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         child($o, 'meta')->{$this->key} = $this->value;
     }

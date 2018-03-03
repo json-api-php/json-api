@@ -5,7 +5,6 @@ namespace JsonApiPhp\JsonApi\Internal;
 /**
  * @internal
  */
-interface Attachable
+interface ToOneMember extends Attachable
 {
-    public function attachTo(object $o): void;
 }

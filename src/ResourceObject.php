@@ -3,26 +3,28 @@
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Internal\Identifier;
-use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
-use JsonApiPhp\JsonApi\Internal\IdentityTrait;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 use JsonApiPhp\JsonApi\Internal\ResourceField;
 use JsonApiPhp\JsonApi\Internal\ResourceMember;
 
 final class ResourceObject implements PrimaryData
 {
-    use IdentityTrait;
     private $obj;
-    private $registry;
+    private $registry = [];
+    /**
+     * @var string
+     */
+    private $type;
+    /**
+     * @var string
+     */
+    private $id;
 
     public function __construct(string $type, string $id, ResourceMember ...$members)
     {
         if (isValidName($type) === false) {
             throw new \DomainException("Invalid type value: $type");
         }
-        $this->type = $type;
-        $this->id = $id;
-        $this->registry = new IdentifierRegistry();
         $this->obj = (object) ['type' => $type, 'id' => $id];
         $fields = [];
         foreach ($members as $member) {
@@ -38,19 +40,26 @@ final class ResourceObject implements PrimaryData
             }
             $member->attachTo($this->obj);
         }
+        $this->type = $type;
+        $this->id = $id;
     }
 
-    public function toIdentifier(): ResourceIdentifier
+    public function identifier(): ResourceIdentifier
     {
         return new ResourceIdentifier($this->type, $this->id);
     }
 
-    public function registerIn(IdentifierRegistry $registry)
+    public function key(): string
     {
-        $registry->merge($this->registry);
+        return compositeKey($this->type, $this->id);
     }
 
-    public function attachTo(object $o)
+    public function registerIn(array &$registry): void
+    {
+        $registry = array_merge($registry, $this->registry);
+    }
+
+    public function attachTo(object $o): void
     {
         $o->data = $this->obj;
     }
@@ -63,5 +72,10 @@ final class ResourceObject implements PrimaryData
     public function attachToCollection(object $o): void
     {
         $o->data[] = $this->obj;
+    }
+
+    public function __toString(): string
+    {
+        return $this->key();
     }
 }

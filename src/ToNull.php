@@ -2,26 +2,26 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Internal\RelationshipMember;
 use JsonApiPhp\JsonApi\Internal\ResourceField;
 use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
+use JsonApiPhp\JsonApi\Internal\ToOneMember;
 
 final class ToNull implements ResourceField
 {
     use ResourceFieldTrait;
     /**
-     * @var RelationshipMember[]
+     * @var ToOneMember[]
      */
     private $members;
 
-    public function __construct(string $name, RelationshipMember ...$members)
+    public function __construct(string $name, ToOneMember ...$members)
     {
         $this->validateFieldName($name);
         $this->name = $name;
         $this->members = $members;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $obj = combine(...$this->members);
         $obj->data = null;
