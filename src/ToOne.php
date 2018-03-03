@@ -27,7 +27,7 @@ final class ToOne implements Identifier, ResourceField
         $this->identifier = $identifier;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         child($o, 'relationships')->{$this->name} = $this->obj;
     }

@@ -50,7 +50,7 @@ final class ResourceObject implements PrimaryData
         $registry->merge($this->registry);
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $o->data = $this->obj;
     }

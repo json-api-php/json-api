@@ -17,7 +17,7 @@ class ResourceCollection implements PrimaryData
         $this->resources = $resources;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $o->data = [];
         foreach ($this->resources as $resource) {

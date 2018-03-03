@@ -20,7 +20,7 @@ final class JsonApi implements MetaDocumentMember, DataDocumentMember, ErrorDocu
         }
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $o->jsonapi = $this->jsonapi;
     }

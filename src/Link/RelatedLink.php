@@ -10,7 +10,7 @@ final class RelatedLink implements RelationshipMember
 {
     use LinkTrait;
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         child($o, 'links')->related = $this->link;
     }

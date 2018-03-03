@@ -10,7 +10,7 @@ final class NextLink implements PaginationLink
 {
     use LinkTrait;
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         child($o, 'links')->next = $this->link;
     }

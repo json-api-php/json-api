@@ -17,7 +17,7 @@ class ResourceIdentifierCollection implements PrimaryData
         $this->identifiers = $identifiers;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $o->data = [];
         foreach ($this->identifiers as $identifier) {

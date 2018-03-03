@@ -7,5 +7,5 @@ namespace JsonApiPhp\JsonApi\Internal;
  */
 interface Attachable
 {
-    public function attachTo(object $o);
+    public function attachTo(object $o): void;
 }

@@ -18,7 +18,7 @@ class Pagination implements Attachable
         $this->links = $links;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         foreach ($this->links as $link) {
             $link->attachTo($o);

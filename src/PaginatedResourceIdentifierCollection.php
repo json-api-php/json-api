@@ -16,7 +16,7 @@ class PaginatedResourceIdentifierCollection extends ResourceIdentifierCollection
         $this->pagination = $pagination;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         parent::attachTo($o);
         $this->pagination->attachTo($o);

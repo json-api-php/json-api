@@ -10,7 +10,7 @@ final class LastLink implements PaginationLink
 {
     use LinkTrait;
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         child($o, 'links')->last = $this->link;
     }

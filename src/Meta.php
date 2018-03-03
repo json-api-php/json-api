@@ -26,7 +26,7 @@ final class Meta implements ErrorMember, ErrorDocumentMember, MetaDocumentMember
         $this->value = $value;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         child($o, 'meta')->{$this->key} = $this->value;
     }

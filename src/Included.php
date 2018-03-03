@@ -19,28 +19,28 @@ final class Included implements Attachable
     {
         $this->ids = new IdentifierRegistry();
         foreach ($resources as $resource) {
-            $string_id = $resource->key();
-            if (isset($this->resources[$string_id])) {
-                throw new \LogicException("Resource $string_id is already included");
+            $key = $resource->key();
+            if (isset($this->resources[$key])) {
+                throw new \LogicException("Resource $key is already included");
             }
-            $this->resources[$string_id] = $resource;
+            $this->resources[$key] = $resource;
             $resource->registerIn($this->ids);
         }
     }
 
     public function validateLinkage(PrimaryData $data): void
     {
-        $dataRegistry = new IdentifierRegistry();
-        $data->registerIn($dataRegistry);
+        $registry = new IdentifierRegistry();
+        $data->registerIn($registry);
         foreach ($this->resources as $resource) {
-            if ($dataRegistry->has($resource->key()) || $this->ids->has($resource->key())) {
+            if ($registry->has($resource->key()) || $this->ids->has($resource->key())) {
                 continue;
             }
             throw new \LogicException('Full linkage required for '.$resource->key());
         }
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         foreach ($this->resources as $resource) {
             $resource->attachAsIncludedTo($o);

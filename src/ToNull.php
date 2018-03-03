@@ -21,7 +21,7 @@ final class ToNull implements ResourceField
         $this->members = $members;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $obj = combine(...$this->members);
         $obj->data = null;

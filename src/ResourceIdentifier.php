@@ -28,7 +28,7 @@ final class ResourceIdentifier implements PrimaryData
         $this->id = $id;
     }
 
-    public function attachTo(object $o)
+    public function attachTo(object $o): void
     {
         $o->data = $this->obj;
     }
