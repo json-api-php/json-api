@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
-class PaginatedResourceCollection extends ResourceCollection
+final class PaginatedResourceCollection extends ResourceCollection
 {
     /**
      * @var Pagination

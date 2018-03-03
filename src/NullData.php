@@ -2,7 +2,6 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
 final class NullData implements PrimaryData
@@ -12,7 +11,7 @@ final class NullData implements PrimaryData
         $o->data = null;
     }
 
-    public function registerIn(IdentifierRegistry $registry)
+    public function registerIn(array &$registry): void
     {
     }
 }

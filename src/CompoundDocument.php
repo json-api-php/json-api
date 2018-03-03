@@ -5,6 +5,10 @@ namespace JsonApiPhp\JsonApi;
 use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
+/**
+ * A Document with the "included" member
+ * @see http://jsonapi.org/format/#document-compound-documents
+ */
 final class CompoundDocument implements \JsonSerializable
 {
     private $doc;

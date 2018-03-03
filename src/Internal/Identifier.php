@@ -7,5 +7,9 @@ namespace JsonApiPhp\JsonApi\Internal;
  */
 interface Identifier
 {
-    public function registerIn(IdentifierRegistry $registry);
+    /**
+     * @internal
+     * @param array $registry
+     */
+    public function registerIn(array &$registry): void;
 }

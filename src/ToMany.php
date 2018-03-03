@@ -3,7 +3,6 @@
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Internal\Identifier;
-use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\RelationshipMember;
 use JsonApiPhp\JsonApi\Internal\ResourceField;
 use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
@@ -38,7 +37,7 @@ final class ToMany implements Identifier, ResourceField
         }
     }
 
-    public function registerIn(IdentifierRegistry $registry)
+    public function registerIn(array &$registry): void
     {
         $this->collection->registerIn($registry);
     }

@@ -3,7 +3,6 @@
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Internal\Identifier;
-use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\RelationshipMember;
 use JsonApiPhp\JsonApi\Internal\ResourceField;
 use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
@@ -32,7 +31,7 @@ final class ToOne implements Identifier, ResourceField
         child($o, 'relationships')->{$this->name} = $this->obj;
     }
 
-    public function registerIn(IdentifierRegistry $registry)
+    public function registerIn(array &$registry): void
     {
         $this->identifier->registerIn($registry);
     }

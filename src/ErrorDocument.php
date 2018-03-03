@@ -4,21 +4,25 @@ namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Internal\ErrorDocumentMember;
 
+/**
+ * A Document containing an array of Error objects
+ * @see http://jsonapi.org/format/#document-top-level
+ */
 final class ErrorDocument implements \JsonSerializable
 {
-    private $doc;
+    private $obj;
 
     public function __construct(Error $error, ErrorDocumentMember ...$members)
     {
-        $this->doc = (object) [];
-        $error->attachTo($this->doc);
+        $this->obj = (object) [];
+        $error->attachTo($this->obj);
         foreach ($members as $member) {
-            $member->attachTo($this->doc);
+            $member->attachTo($this->obj);
         }
     }
 
     public function jsonSerialize()
     {
-        return $this->doc;
+        return $this->obj;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Internal\IdentifierRegistry;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
 class ResourceIdentifierCollection implements PrimaryData
@@ -25,7 +24,7 @@ class ResourceIdentifierCollection implements PrimaryData
         }
     }
 
-    public function registerIn(IdentifierRegistry $registry)
+    public function registerIn(array &$registry): void
     {
         foreach ($this->identifiers as $identifier) {
             $identifier->registerIn($registry);

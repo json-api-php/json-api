@@ -5,6 +5,9 @@ namespace JsonApiPhp\JsonApi;
 use JsonApiPhp\JsonApi\Internal\ResourceField;
 use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
 
+/**
+ * @see http://jsonapi.org/format/#document-resource-object-attributes
+ */
 final class Attribute implements ResourceField
 {
     use ResourceFieldTrait;
