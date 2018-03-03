@@ -2,7 +2,6 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Internal\Identifiable;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
 final class ResourceIdentifier implements PrimaryData
