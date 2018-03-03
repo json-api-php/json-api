@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Internal\Attachable;
 use JsonApiPhp\JsonApi\Internal\PaginationLink;
+use JsonApiPhp\JsonApi\Internal\ToManyMember;
 
-class Pagination implements Attachable
+class Pagination implements ToManyMember
 {
     /**
      * @var PaginationLink[]

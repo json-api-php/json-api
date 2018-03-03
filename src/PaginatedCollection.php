@@ -5,7 +5,7 @@ namespace JsonApiPhp\JsonApi;
 use JsonApiPhp\JsonApi\Internal\Collection;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
-class PaginatedCollection implements PrimaryData
+final class PaginatedCollection implements PrimaryData
 {
     /**
      * @var Pagination

@@ -11,10 +11,10 @@ use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\PrevLink;
 use JsonApiPhp\JsonApi\PaginatedCollection;
-use JsonApiPhp\JsonApi\PaginatedResourceIdentifierCollection;
 use JsonApiPhp\JsonApi\Pagination;
 use JsonApiPhp\JsonApi\ResourceCollection;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
+use JsonApiPhp\JsonApi\ResourceIdentifierCollection;
 use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\ToMany;
 
@@ -89,15 +89,15 @@ class PaginationTest extends BaseTestCase
                     '1',
                     new ToMany(
                         'fruits',
-                        new PaginatedResourceIdentifierCollection(
-                            new Pagination(
-                                new FirstLink('http://example.com/basket/1/fruits?page=first'),
-                                new PrevLink('http://example.com/basket/1/fruits?page=3'),
-                                new NextLink('http://example.com/basket/1/fruits?page=5'),
-                                new LastLink('http://example.com/basket/1/fruits?page=last')
-                            ),
+                        new ResourceIdentifierCollection(
                             new ResourceIdentifier('apples', '1'),
                             new ResourceIdentifier('apples', '2')
+                        ),
+                        new Pagination(
+                            new FirstLink('http://example.com/basket/1/fruits?page=first'),
+                            new PrevLink('http://example.com/basket/1/fruits?page=3'),
+                            new NextLink('http://example.com/basket/1/fruits?page=5'),
+                            new LastLink('http://example.com/basket/1/fruits?page=last')
                         )
                     )
                 ),

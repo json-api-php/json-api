@@ -2,9 +2,10 @@
 
 namespace JsonApiPhp\JsonApi;
 
+use JsonApiPhp\JsonApi\Internal\Collection;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
-class ResourceIdentifierCollection implements PrimaryData
+class ResourceIdentifierCollection implements PrimaryData, Collection
 {
     /**
      * @var ResourceIdentifier[]
