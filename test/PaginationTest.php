@@ -10,9 +10,10 @@ use JsonApiPhp\JsonApi\Link\FirstLink;
 use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\PrevLink;
-use JsonApiPhp\JsonApi\PaginatedResourceCollection;
+use JsonApiPhp\JsonApi\PaginatedCollection;
 use JsonApiPhp\JsonApi\PaginatedResourceIdentifierCollection;
 use JsonApiPhp\JsonApi\Pagination;
+use JsonApiPhp\JsonApi\ResourceCollection;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
 use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\ToMany;
@@ -37,15 +38,17 @@ class PaginationTest extends BaseTestCase
             }
             ',
             new DataDocument(
-                new PaginatedResourceCollection(
+                new PaginatedCollection(
                     new Pagination(
                         new FirstLink('http://example.com/fruits?page=first'),
                         new PrevLink('http://example.com/fruits?page=3'),
                         new NextLink('http://example.com/fruits?page=5'),
                         new LastLink('http://example.com/fruits?page=last')
                     ),
-                    new ResourceObject('apples', '1'),
-                    new ResourceObject('apples', '2')
+                    new ResourceCollection(
+                        new ResourceObject('apples', '1'),
+                        new ResourceObject('apples', '2')
+                    )
                 )
             )
         );
