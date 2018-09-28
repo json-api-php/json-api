@@ -5,6 +5,6 @@ namespace JsonApiPhp\JsonApi\Internal;
 /**
  * @internal
  */
-interface MetaDocumentMember
+interface MetaDocumentMember extends Attachable
 {
 }
