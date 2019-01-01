@@ -22,7 +22,10 @@ final class PaginatedCollection implements PrimaryData
         $this->collection = $collection;
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         $this->collection->attachTo($o);
         $this->pagination->attachTo($o);

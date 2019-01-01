@@ -19,7 +19,10 @@ final class Detail implements ErrorMember
         $this->detail = $detail;
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         $o->detail = $this->detail;
     }

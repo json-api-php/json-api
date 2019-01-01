@@ -21,7 +21,10 @@ final class Error implements ErrorDocumentMember
         }
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         $o->errors[] = $this->error;
     }

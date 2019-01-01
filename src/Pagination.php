@@ -18,7 +18,10 @@ class Pagination implements ToManyMember
         $this->links = $links;
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         foreach ($this->links as $link) {
             $link->attachTo($o);

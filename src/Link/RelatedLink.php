@@ -10,7 +10,10 @@ final class RelatedLink implements ToOneMember
 {
     use LinkTrait;
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         child($o, 'links')->related = $this->link;
     }

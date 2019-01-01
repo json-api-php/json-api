@@ -12,7 +12,10 @@ final class SelfLink implements DataDocumentMember, ResourceMember, ToOneMember
 {
     use LinkTrait;
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         child($o, 'links')->self = $this->link;
     }

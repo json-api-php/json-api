@@ -19,7 +19,10 @@ final class Id implements ErrorMember
         $this->id = $id;
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         $o->id = $this->id;
     }

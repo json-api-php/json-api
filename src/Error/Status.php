@@ -19,7 +19,10 @@ final class Status implements ErrorMember
         $this->status = $status;
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         $o->status = $this->status;
     }

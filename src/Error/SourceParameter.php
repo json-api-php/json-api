@@ -20,7 +20,10 @@ final class SourceParameter implements ErrorMember
         $this->parameter = $parameter;
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         child($o, 'source')->parameter = $this->parameter;
     }

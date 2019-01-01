@@ -19,7 +19,10 @@ final class Code implements ErrorMember
         $this->code = $code;
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         $o->code = $this->code;
     }

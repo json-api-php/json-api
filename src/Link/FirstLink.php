@@ -10,7 +10,10 @@ final class FirstLink implements PaginationLink
 {
     use LinkTrait;
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         child($o, 'links')->first = $this->link;
     }

@@ -59,17 +59,26 @@ final class ResourceObject implements PrimaryData
         $registry = array_merge($registry, $this->registry);
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         $o->data = $this->obj;
     }
 
-    public function attachAsIncludedTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachAsIncludedTo($o): void
     {
         $o->included[] = $this->obj;
     }
 
-    public function attachToCollection(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachToCollection($o): void
     {
         $o->data[] = $this->obj;
     }

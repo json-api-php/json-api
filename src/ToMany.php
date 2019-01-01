@@ -27,7 +27,10 @@ final class ToMany implements Identifier, ResourceField
         $this->collection = $collection;
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         $rel = child(child($o, 'relationships'), $this->name);
         $rel->data = [];
