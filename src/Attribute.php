@@ -20,7 +20,10 @@ final class Attribute implements ResourceField
         $this->val = $val;
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         child($o, 'attributes')->{$this->name} = $this->val;
     }

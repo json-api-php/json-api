@@ -20,7 +20,10 @@ final class Title implements ErrorMember
         $this->title = $title;
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         $o->title = $this->title;
     }

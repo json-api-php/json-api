@@ -38,7 +38,10 @@ final class Included implements Attachable
         }
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         foreach ($this->resources as $resource) {
             $resource->attachAsIncludedTo($o);

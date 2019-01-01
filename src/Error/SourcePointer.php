@@ -17,7 +17,10 @@ final class SourcePointer implements ErrorMember
         $this->pointer = $pointer;
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         child($o, 'source')->pointer = $this->pointer;
     }

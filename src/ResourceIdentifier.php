@@ -33,12 +33,18 @@ final class ResourceIdentifier implements PrimaryData
         $this->id = $id;
     }
 
-    public function attachTo(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachTo($o): void
     {
         $o->data = $this->obj;
     }
 
-    public function attachToCollection(object $o): void
+    /**
+     * @param object $o
+     */
+    public function attachToCollection($o): void
     {
         $o->data[] = $this->obj;
     }
