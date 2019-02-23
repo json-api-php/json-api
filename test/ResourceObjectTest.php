@@ -14,7 +14,6 @@ use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\ToMany;
 use JsonApiPhp\JsonApi\ToNull;
 use JsonApiPhp\JsonApi\ToOne;
-use PhpCsFixer\Fixer\Casing\LowercaseKeywordsFixer;
 
 class ResourceObjectTest extends BaseTestCase
 {

@@ -15,7 +15,7 @@ final class Error implements ErrorDocumentMember
 
     public function __construct(ErrorMember ...$members)
     {
-        $this->error = (object) [];
+        $this->error = (object)[];
         foreach ($members as $member) {
             $member->attachTo($this->error);
         }

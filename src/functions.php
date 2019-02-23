@@ -6,7 +6,7 @@ use JsonApiPhp\JsonApi\Internal\Attachable;
 
 function combine(Attachable ...$members)
 {
-    $obj = (object) [];
+    $obj = (object)[];
     foreach ($members as $member) {
         $member->attachTo($obj);
     }
@@ -16,7 +16,7 @@ function combine(Attachable ...$members)
 function child($o, string $name)
 {
     if (!isset($o->{$name})) {
-        $o->{$name} = (object) [];
+        $o->{$name} = (object)[];
     }
     return $o->{$name};
 }

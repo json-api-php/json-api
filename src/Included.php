@@ -34,7 +34,7 @@ final class Included implements Attachable
             if (isset($registry[$resource->key()]) || isset($this->identifiers[$resource->key()])) {
                 continue;
             }
-            throw new \LogicException('Full linkage required for '.$resource);
+            throw new \LogicException('Full linkage required for ' . $resource);
         }
     }
 

@@ -6,8 +6,6 @@ use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
 use JsonApiPhp\JsonApi\Internal\LinkTrait;
 use JsonApiPhp\JsonApi\Internal\RelationshipMember;
 use JsonApiPhp\JsonApi\Internal\ResourceMember;
-use JsonApiPhp\JsonApi\Internal\ToManyMember;
-use JsonApiPhp\JsonApi\Internal\ToOneMember;
 use function JsonApiPhp\JsonApi\child;
 
 final class SelfLink implements DataDocumentMember, ResourceMember, RelationshipMember

@@ -25,7 +25,7 @@ final class ResourceObject implements PrimaryData
         if (isValidName($type) === false) {
             throw new \DomainException("Invalid type value: $type");
         }
-        $this->obj = (object) ['type' => $type, 'id' => $id];
+        $this->obj = (object)['type' => $type, 'id' => $id];
         $fields = [];
         foreach ($members as $member) {
             if ($member instanceof Identifier) {

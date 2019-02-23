@@ -14,7 +14,7 @@ final class ErrorDocument implements \JsonSerializable
 
     public function __construct(Error $error, ErrorDocumentMember ...$members)
     {
-        $this->obj = (object) [];
+        $this->obj = (object)[];
         $error->attachTo($this->obj);
         foreach ($members as $member) {
             $member->attachTo($this->obj);
