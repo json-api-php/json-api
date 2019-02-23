@@ -12,7 +12,7 @@ final class JsonApi implements MetaDocumentMember, DataDocumentMember, ErrorDocu
 
     public function __construct(string $version = '1.0', Meta $meta = null)
     {
-        $this->obj = (object)[
+        $this->obj = (object) [
             'version' => $version,
         ];
         if ($meta) {

@@ -28,7 +28,7 @@ use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\ToMany;
 use JsonApiPhp\JsonApi\ToOne;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__.'/../../vendor/autoload.php';
 
 // Generate the compound document from the spec 10k times
 

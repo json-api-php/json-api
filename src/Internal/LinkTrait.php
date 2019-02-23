@@ -17,7 +17,7 @@ trait LinkTrait
     public function __construct(string $url, Meta ...$metas)
     {
         if ($metas) {
-            $this->link = (object)['href' => $url];
+            $this->link = (object) ['href' => $url];
             foreach ($metas as $meta) {
                 $meta->attachTo($this->link);
             }

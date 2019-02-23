@@ -2,9 +2,9 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
+use function JsonApiPhp\JsonApi\child;
 use JsonApiPhp\JsonApi\Internal\ErrorMember;
 use JsonApiPhp\JsonApi\Internal\LinkTrait;
-use function JsonApiPhp\JsonApi\child;
 
 final class AboutLink implements ErrorMember
 {

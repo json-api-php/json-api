@@ -2,9 +2,9 @@
 
 namespace JsonApiPhp\JsonApi\Link;
 
+use function JsonApiPhp\JsonApi\child;
 use JsonApiPhp\JsonApi\Internal\LinkTrait;
 use JsonApiPhp\JsonApi\Internal\RelationshipMember;
-use function JsonApiPhp\JsonApi\child;
 
 final class RelatedLink implements RelationshipMember
 {

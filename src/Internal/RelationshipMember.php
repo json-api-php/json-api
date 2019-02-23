@@ -7,5 +7,4 @@ namespace JsonApiPhp\JsonApi\Internal;
  */
 interface RelationshipMember extends ToOneMember, ToManyMember
 {
-
 }

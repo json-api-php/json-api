@@ -19,8 +19,8 @@ class ExamplesTest extends TestCase
     public function examples()
     {
         return [
-            [__DIR__ . '/../examples/compound_doc.php'],
-            [__DIR__ . '/../examples/simple_doc.php'],
+            [__DIR__.'/../examples/compound_doc.php'],
+            [__DIR__.'/../examples/simple_doc.php'],
         ];
     }
 }
