@@ -253,11 +253,11 @@ class CompoundDocumentTest extends BaseTestCase
 
     /**
      * A compound document MUST NOT include more than one resource object for each type and id pair.
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Resource apples:1 is already included
      */
     public function testCanNotBeManyIncludedResourcesWithEqualIdentifiers()
     {
+        $this->expectException('LogicException');
+        $this->expectExceptionMessage('Resource apples:1 is already included');
         $apple = new ResourceObject('apples', '1');
         new CompoundDocument($apple->identifier(), new Included($apple, $apple));
     }
