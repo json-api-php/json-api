@@ -4,6 +4,7 @@ namespace JsonApiPhp\JsonApi\Test;
 
 use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\DataDocument;
+use JsonApiPhp\JsonApi\EmptyRelationship;
 use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Meta;
@@ -13,6 +14,7 @@ use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\ToMany;
 use JsonApiPhp\JsonApi\ToNull;
 use JsonApiPhp\JsonApi\ToOne;
+use PhpCsFixer\Fixer\Casing\LowercaseKeywordsFixer;
 
 class ResourceObjectTest extends BaseTestCase
 {
@@ -147,6 +149,63 @@ class ResourceObjectTest extends BaseTestCase
                     'basket',
                     '1',
                     new ToMany('content', new ResourceIdentifierCollection())
+                )
+            )
+        );
+    }
+
+    public function testRelationshipWithNoData()
+    {
+        $this->assertEncodesTo(
+            '
+            {
+                "data": {
+                    "type": "basket",
+                    "id": "1",
+                    "relationships": {
+                        "empty": {
+                            "links": {
+                                "related": "/foo"
+                            }
+                        }
+                    }
+                }
+            }
+            ',
+            new DataDocument(
+                new ResourceObject(
+                    'basket',
+                    '1',
+                    new EmptyRelationship('empty', new RelatedLink('/foo'))
+                )
+            )
+        );
+
+        $this->assertEncodesTo(
+            '
+            {
+                "data": {
+                    "type": "basket",
+                    "id": "1",
+                    "relationships": {
+                        "empty": {
+                            "links": {
+                                "related": "/foo",
+                                "self": "/bar"
+                            },
+                            "meta": {
+                                "foo": "bar"
+                            }
+                        }
+                    }
+                }
+            }
+            ',
+            new DataDocument(
+                new ResourceObject(
+                    'basket',
+                    '1',
+                    new EmptyRelationship('empty', new RelatedLink('/foo'), new SelfLink('/bar'), new Meta('foo', 'bar'))
                 )
             )
         );

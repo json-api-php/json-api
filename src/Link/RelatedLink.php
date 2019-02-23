@@ -3,10 +3,10 @@
 namespace JsonApiPhp\JsonApi\Link;
 
 use JsonApiPhp\JsonApi\Internal\LinkTrait;
-use JsonApiPhp\JsonApi\Internal\ToOneMember;
 use function JsonApiPhp\JsonApi\child;
+use JsonApiPhp\JsonApi\Internal\RelationshipMember;
 
-final class RelatedLink implements ToOneMember
+final class RelatedLink implements RelationshipMember
 {
     use LinkTrait;
 

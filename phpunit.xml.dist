@@ -3,8 +3,7 @@
         bootstrap="vendor/autoload.php"
         stopOnFailure="false"
         verbose="true"
-        colors="true"
-        syntaxCheck="true">
+        colors="true">
     <testsuites>
         <testsuite name="Main">
             <directory>./test</directory>

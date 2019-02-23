@@ -5,6 +5,7 @@ namespace JsonApiPhp\JsonApi\Internal;
 /**
  * @internal
  */
-interface ToManyMember extends Attachable
+interface RelationshipMember extends ToOneMember, ToManyMember
 {
+
 }
