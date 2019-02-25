@@ -2,8 +2,8 @@
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use JsonApiPhp\JsonApi\Internal\ErrorMember;
 use function JsonApiPhp\JsonApi\child;
+use JsonApiPhp\JsonApi\Internal\ErrorMember;
 
 final class SourcePointer implements ErrorMember
 {
