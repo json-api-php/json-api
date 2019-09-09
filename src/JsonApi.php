@@ -8,15 +8,13 @@ use JsonApiPhp\JsonApi\Internal\MetaDocumentMember;
 
 final class JsonApi implements MetaDocumentMember, DataDocumentMember, ErrorDocumentMember
 {
-    private $obj;
+    public $version;
 
     public function __construct(string $version = '1.0', Meta $meta = null)
     {
-        $this->obj = (object) [
-            'version' => $version,
-        ];
+        $this->version = $version;
         if ($meta) {
-            $meta->attachTo($this->obj);
+            $meta->attachTo($this);
         }
     }
 
@@ -25,6 +23,6 @@ final class JsonApi implements MetaDocumentMember, DataDocumentMember, ErrorDocu
      */
     public function attachTo($o): void
     {
-        $o->jsonapi = $this->obj;
+        $o->jsonapi = $this;
     }
 }

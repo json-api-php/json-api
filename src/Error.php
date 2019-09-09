@@ -11,13 +11,10 @@ use JsonApiPhp\JsonApi\Internal\ErrorMember;
  */
 final class Error implements ErrorDocumentMember
 {
-    private $error;
-
     public function __construct(ErrorMember ...$members)
     {
-        $this->error = (object) [];
         foreach ($members as $member) {
-            $member->attachTo($this->error);
+            $member->attachTo($this);
         }
     }
 
@@ -26,6 +23,6 @@ final class Error implements ErrorDocumentMember
      */
     public function attachTo($o): void
     {
-        $o->errors[] = $this->error;
+        $o->errors[] = $this;
     }
 }
