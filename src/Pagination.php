@@ -20,6 +20,7 @@ class Pagination implements ToManyMember
 
     /**
      * @param object $o
+     * @internal
      */
     public function attachTo($o): void
     {

@@ -14,6 +14,7 @@ final class SelfLink implements DataDocumentMember, ResourceMember, Relationship
 
     /**
      * @param object $o
+     * @internal
      */
     public function attachTo($o): void
     {
