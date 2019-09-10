@@ -63,7 +63,7 @@ First, take a look at the examples. All of them are runnable.
 - [Simple Document](./examples/simple_doc.php) (the same as above)
 - [Extensive Compound Document](./examples/compound_doc.php)
 
-The library API and use-cases are expressed in comprehensive suite of tests.
+The library API and use-cases are expressed in a comprehensive suite of tests.
 - Data Documents (containing primary data)
     -  [with a single Resource Object](./test/DataDocument/SingleResourceObjectTest.php)
     -  [with a single Resource Identifier](./test/DataDocument/SingleResourceIdentifierTest.php)
