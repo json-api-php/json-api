@@ -28,6 +28,7 @@ final class ToOne implements Identifier, ResourceField
 
     /**
      * @param object $o
+     * @internal
      */
     public function attachTo($o): void
     {

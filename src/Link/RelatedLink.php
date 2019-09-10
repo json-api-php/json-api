@@ -12,6 +12,7 @@ final class RelatedLink implements RelationshipMember
 
     /**
      * @param object $o
+     * @internal
      */
     public function attachTo($o): void
     {

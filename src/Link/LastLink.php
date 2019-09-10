@@ -12,6 +12,7 @@ final class LastLink implements PaginationLink
 
     /**
      * @param object $o
+     * @internal
      */
     public function attachTo($o): void
     {
