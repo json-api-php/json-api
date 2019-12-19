@@ -19,6 +19,7 @@ class ResourceIdentifierCollection implements PrimaryData, Collection
 
     /**
      * @param object $o
+     * @internal
      */
     public function attachTo($o): void
     {

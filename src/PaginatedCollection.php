@@ -24,6 +24,7 @@ final class PaginatedCollection implements PrimaryData
 
     /**
      * @param object $o
+     * @internal
      */
     public function attachTo($o): void
     {
