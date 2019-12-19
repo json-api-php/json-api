@@ -22,7 +22,7 @@ final class ResourceIdentifier implements PrimaryData
             throw new \DomainException("Invalid type value: $type");
         }
 
-        $this->obj = (object)[
+        $this->obj = (object) [
             'type' => $type,
             'id' => $id,
         ];
