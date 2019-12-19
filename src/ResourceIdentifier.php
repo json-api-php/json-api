@@ -16,7 +16,7 @@ final class ResourceIdentifier implements PrimaryData
      */
     private $id;
 
-    public function __construct(string $type, string $id, Meta $meta = null)
+    public function __construct(string $type, string $id, Meta ...$metas)
     {
         if (isValidName($type) === false) {
             throw new \DomainException("Invalid type value: $type");
@@ -26,7 +26,7 @@ final class ResourceIdentifier implements PrimaryData
             'type' => $type,
             'id' => $id,
         ];
-        if ($meta) {
+        foreach ($metas as $meta) {
             $meta->attachTo($this->obj);
         }
         $this->type = $type;
