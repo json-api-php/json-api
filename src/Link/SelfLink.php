@@ -7,8 +7,9 @@ use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
 use JsonApiPhp\JsonApi\Internal\LinkTrait;
 use JsonApiPhp\JsonApi\Internal\RelationshipMember;
 use JsonApiPhp\JsonApi\Internal\ResourceMember;
+use JsonApiPhp\JsonApi\Internal\PaginationLink;
 
-final class SelfLink implements DataDocumentMember, ResourceMember, RelationshipMember
+final class SelfLink implements DataDocumentMember, ResourceMember, RelationshipMember, PaginationLink
 {
     use LinkTrait;
 
