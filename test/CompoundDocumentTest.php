@@ -38,8 +38,8 @@ class CompoundDocumentTest extends BaseTestCase
             new Attribute('body', 'First!'),
             new SelfLink('http://example.com/comments/5'),
             new ToOne('author', new ResourceIdentifier('people', '2'))
-
         );
+
         $comment12 = new ResourceObject(
             'comments',
             '12',

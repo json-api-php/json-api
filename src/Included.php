@@ -40,6 +40,7 @@ final class Included implements Attachable
 
     /**
      * @param object $o
+     * @internal
      */
     public function attachTo($o): void
     {

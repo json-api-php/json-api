@@ -36,7 +36,10 @@ class SingleResourceIdentifierTest extends BaseTestCase
                 "data": {
                     "type": "apples",
                     "id": "1",
-                    "meta": {"apple_meta": "foo"}
+                    "meta": {
+                        "apple_meta": "foo", 
+                        "bar": [42]
+                    }
                 },
                 "links": {
                     "self": "/apples/1"
@@ -51,7 +54,8 @@ class SingleResourceIdentifierTest extends BaseTestCase
                 new ResourceIdentifier(
                     'apples',
                     '1',
-                    new Meta('apple_meta', 'foo')
+                    new Meta('apple_meta', 'foo'),
+                    new Meta('bar', [42])
                 ),
                 new SelfLink('/apples/1'),
                 new JsonApi(),

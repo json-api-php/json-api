@@ -19,6 +19,7 @@ final class SourcePointer implements ErrorMember
 
     /**
      * @param object $o
+     * @internal
      */
     public function attachTo($o): void
     {

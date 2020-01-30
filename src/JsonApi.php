@@ -22,6 +22,7 @@ final class JsonApi implements MetaDocumentMember, DataDocumentMember, ErrorDocu
 
     /**
      * @param object $o
+     * @internal
      */
     public function attachTo($o): void
     {
