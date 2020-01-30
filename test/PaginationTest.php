@@ -10,6 +10,7 @@ use JsonApiPhp\JsonApi\Link\FirstLink;
 use JsonApiPhp\JsonApi\Link\LastLink;
 use JsonApiPhp\JsonApi\Link\NextLink;
 use JsonApiPhp\JsonApi\Link\PrevLink;
+use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\PaginatedCollection;
 use JsonApiPhp\JsonApi\Pagination;
 use JsonApiPhp\JsonApi\ResourceCollection;
@@ -33,7 +34,8 @@ class PaginationTest extends BaseTestCase
                     "first": "http://example.com/fruits?page=first",
                     "last": "http://example.com/fruits?page=last",
                     "prev": "http://example.com/fruits?page=3",
-                    "next": "http://example.com/fruits?page=5"
+                    "next": "http://example.com/fruits?page=5",
+                    "self": "http://example.com/fruits?page=4"
                 }
             }
             ',
@@ -49,7 +51,8 @@ class PaginationTest extends BaseTestCase
                         new ResourceObject('apples', '1'),
                         new ResourceObject('apples', '2')
                     )
-                )
+                ),
+                new SelfLink('http://example.com/fruits?page=4')
             )
         );
     }
