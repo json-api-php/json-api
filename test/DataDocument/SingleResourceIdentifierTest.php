@@ -4,6 +4,7 @@ namespace JsonApiPhp\JsonApi\Test\DataDocument;
 
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\JsonApi;
+use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
@@ -17,13 +18,13 @@ class SingleResourceIdentifierTest extends BaseTestCase
             '
             {
                 "data": {
-                    "type": "apples",
+                    "type": "companies",
                     "id": "1"
                 }
             }
             ',
             new DataDocument(
-                new ResourceIdentifier('apples', '1')
+                new ResourceIdentifier('companies', '1')
             )
         );
     }
@@ -34,7 +35,7 @@ class SingleResourceIdentifierTest extends BaseTestCase
             '
             {
                 "data": {
-                    "type": "apples",
+                    "type": "companies",
                     "id": "1",
                     "meta": {
                         "apple_meta": "foo", 
@@ -42,7 +43,8 @@ class SingleResourceIdentifierTest extends BaseTestCase
                     }
                 },
                 "links": {
-                    "self": "/apples/1"
+                    "self": "/books/123/relationships/publisher",
+                    "related": "/books/123/publisher"
                 },
                 "jsonapi": {
                     "version": "1.0"
@@ -52,12 +54,13 @@ class SingleResourceIdentifierTest extends BaseTestCase
             ',
             new DataDocument(
                 new ResourceIdentifier(
-                    'apples',
+                    'companies',
                     '1',
                     new Meta('apple_meta', 'foo'),
                     new Meta('bar', [42])
                 ),
-                new SelfLink('/apples/1'),
+                new SelfLink('/books/123/relationships/publisher'),
+                new RelatedLink('/books/123/publisher'),
                 new JsonApi(),
                 new Meta('document_meta', 'bar')
             )

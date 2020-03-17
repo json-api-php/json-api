@@ -33,8 +33,8 @@ final class PaginatedCollection implements PrimaryData
     }
 
     /**
-     * @internal
      * @param array $registry
+     * @internal
      */
     public function registerIn(array &$registry): void
     {

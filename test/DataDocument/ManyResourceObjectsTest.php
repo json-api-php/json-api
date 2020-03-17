@@ -5,6 +5,7 @@ namespace JsonApiPhp\JsonApi\Test\DataDocument;
 use JsonApiPhp\JsonApi\Attribute;
 use JsonApiPhp\JsonApi\DataDocument;
 use JsonApiPhp\JsonApi\JsonApi;
+use JsonApiPhp\JsonApi\Link\RelatedLink;
 use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\ResourceCollection;
@@ -33,24 +34,23 @@ class ManyResourceObjectsTest extends BaseTestCase
             '
             {
                 "data": [{
-                    "type": "apples",
+                    "type": "people",
                     "id": "1",
                     "attributes": {
-                        "color": "red",
-                        "sort": "Fuji"
+                        "name": "Martin Fowler"
                     },
                     "meta": {"apple_meta": "foo"}
                 },{
-                    "type": "apples",
+                    "type": "people",
                     "id": "2",
                     "attributes": {
-                        "color": "yellow",
-                        "sort": "Gala"
+                        "name": "Kent Beck"
                     },
                     "meta": {"apple_meta": "foo"}
                 }],
                 "links": {
-                    "self": "/apples"
+                    "self": "/books/123/relationship/authors",
+                    "related": "/books/123/authors"
                 },
                 "jsonapi": {
                     "version": "1.0"
@@ -61,21 +61,20 @@ class ManyResourceObjectsTest extends BaseTestCase
             new DataDocument(
                 new ResourceCollection(
                     new ResourceObject(
-                        'apples',
+                        'people',
                         '1',
-                        new Attribute('color', 'red'),
-                        new Attribute('sort', 'Fuji'),
+                        new Attribute('name', 'Martin Fowler'),
                         new Meta('apple_meta', 'foo')
                     ),
                     new ResourceObject(
-                        'apples',
+                        'people',
                         '2',
-                        new Attribute('color', 'yellow'),
-                        new Attribute('sort', 'Gala'),
+                        new Attribute('name', 'Kent Beck'),
                         new Meta('apple_meta', 'foo')
                     )
                 ),
-                new SelfLink('/apples'),
+                new SelfLink('/books/123/relationship/authors'),
+                new RelatedLink('/books/123/authors'),
                 new JsonApi(),
                 new Meta('document_meta', 'bar')
             )
