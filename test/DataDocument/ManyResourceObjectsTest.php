@@ -49,7 +49,7 @@ class ManyResourceObjectsTest extends BaseTestCase
                     "meta": {"apple_meta": "foo"}
                 }],
                 "links": {
-                    "self": "/books/123/relationship/authors",
+                    "self": "/books/123/relationships/authors",
                     "related": "/books/123/authors"
                 },
                 "jsonapi": {
@@ -73,7 +73,7 @@ class ManyResourceObjectsTest extends BaseTestCase
                         new Meta('apple_meta', 'foo')
                     )
                 ),
-                new SelfLink('/books/123/relationship/authors'),
+                new SelfLink('/books/123/relationships/authors'),
                 new RelatedLink('/books/123/authors'),
                 new JsonApi(),
                 new Meta('document_meta', 'bar')
