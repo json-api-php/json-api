@@ -2,19 +2,12 @@
 
 namespace JsonApiPhp\JsonApi;
 
-use JsonApiPhp\JsonApi\Internal\Identifier;
+use JsonApiPhp\JsonApi\Internal\BaseResource;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
-use JsonApiPhp\JsonApi\Internal\ResourceField;
 use JsonApiPhp\JsonApi\Internal\ResourceMember;
 
-final class ResourceObject implements PrimaryData
+final class ResourceObject extends BaseResource implements PrimaryData
 {
-    private $obj;
-    private $registry = [];
-    /**
-     * @var string
-     */
-    private $type;
     /**
      * @var string
      */
@@ -22,24 +15,8 @@ final class ResourceObject implements PrimaryData
 
     public function __construct(string $type, string $id, ResourceMember ...$members)
     {
-        if (isValidName($type) === false) {
-            throw new \DomainException("Invalid type value: $type");
-        }
-        $this->obj = (object) ['type' => $type, 'id' => $id];
-        $fields = [];
-        foreach ($members as $member) {
-            if ($member instanceof Identifier) {
-                $member->registerIn($this->registry);
-            }
-            if ($member instanceof ResourceField) {
-                $name = $member->name();
-                if (isset($fields[$name])) {
-                    throw new \LogicException("Field '$name' already exists'");
-                }
-                $fields[$name] = true;
-            }
-            $member->attachTo($this->obj);
-        }
+        parent::__construct($type, ...$members);
+        $this->obj->id = $id;
         $this->type = $type;
         $this->id = $id;
     }
