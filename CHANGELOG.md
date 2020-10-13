@@ -6,13 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.0] - 2020-10-12
+### Added
+- `NewResourceObject` to allow omitting `id` in resources to-be-created (#108)
+
 ## [2.1.2] - 2020-03-16
 ### Fixed
 - Related links must be allowed inside relationship documents (#104)
 
 ## [2.1.1] - 2019-12-19
 ### Fixed
-- ResourceIdentifier does not allow multiple meta members (#99)
+- `ResourceIdentifier` does not allow multiple meta members (#99)
 
 ## [2.1.0] - 2019-02-25
 ### Fixed
@@ -26,7 +30,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - v2 initial release
 
-[Unreleased]: https://github.com/json-api-php/json-api/compare/2.1.2...HEAD
+[Unreleased]: https://github.com/json-api-php/json-api/compare/2.2.0...HEAD
+[2.2.0]: https://github.com/json-api-php/json-api/compare/2.1.2...2.2.0
 [2.1.2]: https://github.com/json-api-php/json-api/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/json-api-php/json-api/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/json-api-php/json-api/compare/2.0.1...2.1.0

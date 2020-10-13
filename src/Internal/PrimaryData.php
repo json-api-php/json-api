@@ -5,6 +5,6 @@ namespace JsonApiPhp\JsonApi\Internal;
 /**
  * @internal
  */
-interface PrimaryData extends Attachable, Identifier
+interface PrimaryData extends Attachable
 {
 }

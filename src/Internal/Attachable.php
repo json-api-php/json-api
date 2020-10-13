@@ -8,6 +8,7 @@ namespace JsonApiPhp\JsonApi\Internal;
 interface Attachable
 {
     /**
+     * Adds this object's data to $o
      * @param object $o
      * @internal
      */

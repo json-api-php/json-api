@@ -70,6 +70,7 @@ The library API and use-cases are expressed in a comprehensive suite of tests.
     -  [with null data](./test/DataDocument/NullDataTest.php)
     -  [with multiple Resource Objects](./test/DataDocument/ManyResourceObjectsTest.php)
     -  [with multiple Resource Identifiers](./test/DataDocument/ManyResourceIdentifiersTest.php)
+    -  [with a new Resource (no id)](./test/NewResourceObjectTest.php)
 - [Compound Documents](./test/CompoundDocumentTest.php)
 - [Error Documents](./test/ErrorDocumentTest.php)
 - [Meta Documents (containing neither data nor errors)](./test/MetaDocumentTest.php)
