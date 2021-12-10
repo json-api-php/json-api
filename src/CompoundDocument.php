@@ -2,6 +2,7 @@
 
 namespace JsonApiPhp\JsonApi;
 
+use JsonApiPhp\JsonApi\Internal\ArrayableTrait;
 use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
@@ -11,6 +12,8 @@ use JsonApiPhp\JsonApi\Internal\PrimaryData;
  */
 final class CompoundDocument implements \JsonSerializable
 {
+    use ArrayableTrait;
+
     private $doc;
 
     public function __construct(PrimaryData $data, Included $included, DataDocumentMember ...$members)

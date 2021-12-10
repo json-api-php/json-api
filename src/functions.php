@@ -30,3 +30,11 @@ function compositeKey(string $type, string $id): string
 {
     return "{$type}:{$id}";
 }
+
+/**
+ * @param object $o
+ */
+function oToArray($o): array
+{
+    return json_decode(json_encode($o), true);
+}

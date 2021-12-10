@@ -38,15 +38,6 @@ final class ResourceObject extends BaseResource implements PrimaryData
 
     /**
      * @param object $o
-     * @internal
-     */
-    public function attachTo($o): void
-    {
-        $o->data = $this->obj;
-    }
-
-    /**
-     * @param object $o
      */
     public function attachAsIncludedTo($o): void
     {

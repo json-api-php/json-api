@@ -3,12 +3,13 @@
 namespace JsonApiPhp\JsonApi\Internal;
 
 use function JsonApiPhp\JsonApi\isValidName;
+use function JsonApiPhp\JsonApi\oToArray;
 
 /**
  * Class BaseResource
  * @internal
  */
-class BaseResource implements Attachable
+class BaseResource implements Attachable, Arrayable
 {
     /**
      * @var string
@@ -57,5 +58,10 @@ class BaseResource implements Attachable
     public function attachTo($o): void
     {
         $o->data = $this->obj;
+    }
+
+    public function toArray(): array
+    {
+        return oToArray($this->obj);
     }
 }

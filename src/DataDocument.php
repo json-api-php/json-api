@@ -2,6 +2,8 @@
 
 namespace JsonApiPhp\JsonApi;
 
+use JsonApiPhp\JsonApi\Internal\Arrayable;
+use JsonApiPhp\JsonApi\Internal\ArrayableTrait;
 use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
@@ -9,8 +11,10 @@ use JsonApiPhp\JsonApi\Internal\PrimaryData;
  * A Document containing the "data" member
  * @see http://jsonapi.org/format/#document-top-level
  */
-final class DataDocument implements \JsonSerializable
+final class DataDocument implements \JsonSerializable, Arrayable
 {
+    use ArrayableTrait;
+
     private $value;
 
     public function __construct(PrimaryData $data, DataDocumentMember ...$members)

@@ -210,6 +210,48 @@ class ResourceObjectTest extends BaseTestCase
         );
     }
 
+    public function testArrayRepresentation(): void
+    {
+        $this->assertEquals(
+            json_decode('
+            {
+                "type": "apples",
+                 "id": "1",
+                 "attributes": {
+                     "title": "Rails is Omakase"
+                 },
+                 "meta": {"foo": "bar"},
+                 "links": {
+                     "self": "http://self"
+                 },
+                 "relationships": {
+                     "author": {
+                         "meta": {"foo": "bar"},
+                         "links": {
+                             "self": "http://rel/author",
+                             "related": "http://author"
+                         },
+                         "data": null
+                     }
+                 }
+            }
+            ', true),
+            (new ResourceObject(
+                'apples',
+                '1',
+                new Meta('foo', 'bar'),
+                new Attribute('title', 'Rails is Omakase'),
+                new SelfLink('http://self'),
+                new ToNull(
+                    'author',
+                    new Meta('foo', 'bar'),
+                    new SelfLink('http://rel/author'),
+                    new RelatedLink('http://author')
+                )
+            ))->toArray()
+        );
+    }
+
     public function testCanNotCreateIdAttribute()
     {
         $this->expectException(\DomainException::class);
