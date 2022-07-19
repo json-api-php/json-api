@@ -19,6 +19,7 @@ final class CompoundDocument implements \JsonSerializable
         $this->doc = combine($data, $included, ...$members);
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->doc;

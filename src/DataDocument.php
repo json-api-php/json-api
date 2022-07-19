@@ -18,6 +18,7 @@ final class DataDocument implements \JsonSerializable
         $this->value = combine($data, ...$members);
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->value;

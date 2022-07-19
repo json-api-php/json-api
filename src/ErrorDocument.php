@@ -20,6 +20,7 @@ final class ErrorDocument implements \JsonSerializable
         }
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->obj;
