@@ -13,6 +13,7 @@ final class MetaDocument implements \JsonSerializable
         $this->doc = combine($meta, ...$members);
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->doc;
