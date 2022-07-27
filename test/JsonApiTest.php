@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
@@ -6,10 +8,8 @@ use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\MetaDocument;
 
-class JsonApiTest extends BaseTestCase
-{
-    public function testJsonApiMayContainVersionAndMeta()
-    {
+class JsonApiTest extends BaseTestCase {
+    public function testJsonApiMayContainVersionAndMeta() {
         $this->assertEncodesTo(
             '
             {

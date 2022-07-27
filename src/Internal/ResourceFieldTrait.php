@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Internal;
 
@@ -7,22 +9,19 @@ use function JsonApiPhp\JsonApi\isValidName;
 /**
  * @internal
  */
-trait ResourceFieldTrait
-{
-    private $name;
+trait ResourceFieldTrait {
+    private readonly string $name;
 
-    private function validateFieldName(string $name): void
-    {
-        if (isValidName($name) === false) {
-            throw new \DomainException("Invalid character in a member name '$name'");
+    private function validateFieldName(string $fieldName): void {
+        if (isValidName($fieldName) === false) {
+            throw new \DomainException("Invalid character in a member name '$fieldName'");
         }
-        if ($name === 'id' || $name === 'type') {
-            throw new \DomainException("Can not use '$name' as a resource field");
+        if ($fieldName === 'id' || $fieldName === 'type') {
+            throw new \DomainException("Can not use '$fieldName' as a resource field");
         }
     }
 
-    public function name(): string
-    {
+    public function name(): string {
         return $this->name;
     }
 }

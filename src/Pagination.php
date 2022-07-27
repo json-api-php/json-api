@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
@@ -6,15 +7,13 @@ namespace JsonApiPhp\JsonApi;
 use JsonApiPhp\JsonApi\Internal\PaginationLink;
 use JsonApiPhp\JsonApi\Internal\ToManyMember;
 
-class Pagination implements ToManyMember
-{
+class Pagination implements ToManyMember {
     /**
      * @var PaginationLink[]
      */
-    private $links;
+    private readonly array $links;
 
-    public function __construct(PaginationLink ...$links)
-    {
+    public function __construct(PaginationLink ...$links) {
         $this->links = $links;
     }
 
@@ -22,8 +21,7 @@ class Pagination implements ToManyMember
      * @param object $o
      * @internal
      */
-    public function attachTo($o): void
-    {
+    public function attachTo(object $o): void {
         foreach ($this->links as $link) {
             $link->attachTo($o);
         }

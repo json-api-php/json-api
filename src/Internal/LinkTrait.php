@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Internal;
 
@@ -7,17 +9,12 @@ use JsonApiPhp\JsonApi\Meta;
 /**
  * @internal
  */
-trait LinkTrait
-{
-    /**
-     * @var string|object
-     */
-    private $link;
+trait LinkTrait {
+    private string|object $link;
 
-    public function __construct(string $url, Meta ...$metas)
-    {
+    public function __construct(string $url, Meta ...$metas) {
         if ($metas) {
-            $this->link = (object) ['href' => $url];
+            $this->link = (object)['href' => $url];
             foreach ($metas as $meta) {
                 $meta->attachTo($this->link);
             }

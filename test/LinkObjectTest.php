@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
@@ -7,10 +9,8 @@ use JsonApiPhp\JsonApi\Link\SelfLink;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\ResourceIdentifier;
 
-class LinkObjectTest extends BaseTestCase
-{
-    public function testLinkObject()
-    {
+class LinkObjectTest extends BaseTestCase {
+    public function testLinkObject() {
         $this->assertEncodesTo(
             '{
                 "data": {"type": "apples", "id": "1"},

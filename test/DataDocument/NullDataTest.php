@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\DataDocument;
@@ -10,10 +11,8 @@ use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\NullData;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
-class NullDataTest extends BaseTestCase
-{
-    public function testMinimalDocument()
-    {
+class NullDataTest extends BaseTestCase {
+    public function testMinimalDocument() {
         $this->assertEncodesTo(
             '
             {
@@ -26,8 +25,7 @@ class NullDataTest extends BaseTestCase
         );
     }
 
-    public function testExtendedDocument()
-    {
+    public function testExtendedDocument() {
         $this->assertEncodesTo(
             '
             {

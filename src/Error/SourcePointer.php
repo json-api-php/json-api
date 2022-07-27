@@ -1,28 +1,25 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Error;
 
-use function JsonApiPhp\JsonApi\child;
 use JsonApiPhp\JsonApi\Internal\ErrorMember;
 
-final class SourcePointer implements ErrorMember
-{
-    private $pointer;
+use function JsonApiPhp\JsonApi\child;
 
+final class SourcePointer implements ErrorMember {
     /**
      * @param string $pointer JSON Pointer [RFC6901] to the associated entity in the request document
      */
-    public function __construct(string $pointer)
-    {
-        $this->pointer = $pointer;
+    public function __construct(private readonly string $pointer) {
     }
 
     /**
      * @param object $o
      * @internal
      */
-    public function attachTo($o): void
-    {
+    public function attachTo(object $o): void {
         child($o, 'source')->pointer = $this->pointer;
     }
 }

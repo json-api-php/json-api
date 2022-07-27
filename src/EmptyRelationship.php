@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
@@ -9,15 +11,16 @@ use JsonApiPhp\JsonApi\Internal\ResourceFieldTrait;
 /**
  * A relationship with no data
  */
-class EmptyRelationship implements ResourceField
-{
+class EmptyRelationship implements ResourceField {
     use ResourceFieldTrait;
 
-    private $obj;
+    private object $obj;
 
-    public function __construct(string $name, RelationshipMember $member, RelationshipMember ...$members)
-    {
-        $this->name = $name;
+    public function __construct(
+        private readonly string $name,
+        RelationshipMember $member,
+        RelationshipMember ...$members
+    ) {
         $this->obj = combine($member, ...$members);
     }
 
@@ -25,8 +28,7 @@ class EmptyRelationship implements ResourceField
      * @param object $o
      * @internal
      */
-    public function attachTo($o): void
-    {
+    public function attachTo(object $o): void {
         child($o, 'relationships')->{$this->name} = $this->obj;
     }
 }

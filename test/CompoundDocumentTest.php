@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
@@ -19,10 +21,8 @@ use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\ToMany;
 use JsonApiPhp\JsonApi\ToOne;
 
-class CompoundDocumentTest extends BaseTestCase
-{
-    public function testOfficialDocsExample()
-    {
+class CompoundDocumentTest extends BaseTestCase {
+    public function testOfficialDocsExample() {
         $dan = new ResourceObject(
             'people',
             '9',
@@ -164,65 +164,7 @@ class CompoundDocumentTest extends BaseTestCase
         );
     }
 
-    /**
-     * Compound documents require “full linkage”, meaning that every included resource MUST be identified
-     * by at least one resource identifier object in the same document.
-     * These resource identifier objects could either be primary data or represent resource linkage
-     * contained within primary or included resources.
-     *
-     * @dataProvider documentsWithoutFullLinkage
-     * @param callable $create_doc
-     */
-    public function testFullLinkage(callable $create_doc)
-    {
-        $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('Full linkage required for apples:1');
-        $create_doc();
-    }
-
-    public function documentsWithoutFullLinkage(): array
-    {
-        $included = new Included(new ResourceObject('apples', '1'));
-        return [
-            [
-                function () use ($included) {
-                    return new CompoundDocument(new NullData(), $included);
-                },
-            ],
-            [
-                function () use ($included) {
-                    return new CompoundDocument(new ResourceCollection(), $included);
-                },
-            ],
-            [
-                function () use ($included) {
-                    return new CompoundDocument(new ResourceIdentifier('oranges', '1'), $included);
-                },
-            ],
-            [
-                function () use ($included) {
-                    return new CompoundDocument(
-                        new ResourceIdentifierCollection(
-                            new ResourceIdentifier('oranges', '1'),
-                            new ResourceIdentifier('oranges', '1')
-                        ),
-                        $included
-                    );
-                },
-            ],
-            [
-                function () use ($included) {
-                    return new CompoundDocument(
-                        new ResourceCollection(new ResourceObject('oranges', '1'), new ResourceObject('oranges', '1')),
-                        $included
-                    );
-                },
-            ],
-        ];
-    }
-
-    public function testIncludedResourceMayBeIdentifiedByLinkageInPrimaryData()
-    {
+    public function testIncludedResourceMayBeIdentifiedByLinkageInPrimaryData() {
         $author = new ResourceObject('people', '9');
         $article = new ResourceObject(
             'articles',
@@ -233,8 +175,7 @@ class CompoundDocumentTest extends BaseTestCase
         $this->assertNotEmpty($doc);
     }
 
-    public function testIncludedResourceMayBeIdentifiedByAnotherLinkedResource()
-    {
+    public function testIncludedResourceMayBeIdentifiedByAnotherLinkedResource() {
         $writer = new ResourceObject('writers', '3', new Attribute('name', 'Eric Evans'));
         $book = new ResourceObject(
             'books',
@@ -254,8 +195,7 @@ class CompoundDocumentTest extends BaseTestCase
     /**
      * A compound document MUST NOT include more than one resource object for each type and id pair.
      */
-    public function testCanNotBeManyIncludedResourcesWithEqualIdentifiers()
-    {
+    public function testCanNotBeManyIncludedResourcesWithEqualIdentifiers() {
         $this->expectException('LogicException');
         $this->expectExceptionMessage('Resource apples:1 is already included');
         $apple = new ResourceObject('apples', '1');

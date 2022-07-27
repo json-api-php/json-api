@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
@@ -15,10 +17,8 @@ use JsonApiPhp\JsonApi\ToMany;
 use JsonApiPhp\JsonApi\ToNull;
 use JsonApiPhp\JsonApi\ToOne;
 
-class NewResourceObjectTest extends BaseTestCase
-{
-    public function testFullFledgedResourceObject()
-    {
+class NewResourceObjectTest extends BaseTestCase {
+    public function testFullFledgedResourceObject() {
         $this->assertEncodesTo(
             '
             {
@@ -51,8 +51,7 @@ class NewResourceObjectTest extends BaseTestCase
         );
     }
 
-    public function testRelationshipWithSingleIdLinkage()
-    {
+    public function testRelationshipWithSingleIdLinkage() {
         $this->assertEncodesTo(
             '
             {
@@ -75,8 +74,7 @@ class NewResourceObjectTest extends BaseTestCase
         );
     }
 
-    public function testRelationshipWithMultiIdLinkage()
-    {
+    public function testRelationshipWithMultiIdLinkage() {
         $this->assertEncodesTo(
             '
             {
@@ -111,8 +109,7 @@ class NewResourceObjectTest extends BaseTestCase
         );
     }
 
-    public function testRelationshipWithEmptyMultiIdLinkage()
-    {
+    public function testRelationshipWithEmptyMultiIdLinkage() {
         $this->assertEncodesTo(
             '
             {
@@ -135,8 +132,7 @@ class NewResourceObjectTest extends BaseTestCase
         );
     }
 
-    public function testRelationshipWithNoData()
-    {
+    public function testRelationshipWithNoData() {
         $this->assertEncodesTo(
             '
             {
@@ -188,8 +184,7 @@ class NewResourceObjectTest extends BaseTestCase
         );
     }
 
-    public function testResourceFieldsMustBeUnique()
-    {
+    public function testResourceFieldsMustBeUnique() {
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage("Field 'foo' already exists");
         new NewResourceObject(
@@ -199,8 +194,7 @@ class NewResourceObjectTest extends BaseTestCase
         );
     }
 
-    public function testNameValidation()
-    {
+    public function testNameValidation() {
         $this->expectException(\DomainException::class);
         new NewResourceObject('invalid:id');
     }

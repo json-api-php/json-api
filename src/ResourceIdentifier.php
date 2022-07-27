@@ -1,44 +1,33 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
+use DomainException;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
-final class ResourceIdentifier implements PrimaryData
-{
-    private $obj;
-    /**
-     * @var string
-     */
-    private $type;
-    /**
-     * @var string
-     */
-    private $id;
+final class ResourceIdentifier implements PrimaryData {
+    private readonly object $obj;
 
-    public function __construct(string $type, string $id, Meta ...$metas)
-    {
+    public function __construct(string $type, string $id, Meta ...$metas) {
         if (isValidName($type) === false) {
-            throw new \DomainException("Invalid type value: $type");
+            throw new DomainException("Invalid type value: $type");
         }
-
-        $this->obj = (object) [
+        $this->obj = (object)[
             'type' => $type,
             'id' => $id,
         ];
         foreach ($metas as $meta) {
             $meta->attachTo($this->obj);
         }
-        $this->type = $type;
-        $this->id = $id;
     }
 
     /**
      * @param object $o
      * @internal
      */
-    public function attachTo($o): void
-    {
+    public function attachTo(object $o): void {
         $o->data = $this->obj;
     }
 
@@ -46,13 +35,7 @@ final class ResourceIdentifier implements PrimaryData
      * @param object $o
      * @internal
      */
-    public function attachToCollection($o): void
-    {
+    public function attachToCollection(object $o): void {
         $o->data[] = $this->obj;
-    }
-
-    public function registerIn(array &$registry): void
-    {
-        $registry[compositeKey($this->type, $this->id)] = true;
     }
 }
