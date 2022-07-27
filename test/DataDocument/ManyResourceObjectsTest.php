@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\DataDocument;
 
@@ -12,10 +14,8 @@ use JsonApiPhp\JsonApi\ResourceCollection;
 use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
-class ManyResourceObjectsTest extends BaseTestCase
-{
-    public function testMinimalDocument()
-    {
+class ManyResourceObjectsTest extends BaseTestCase {
+    public function testMinimalDocument() {
         $this->assertEncodesTo(
             '
             {
@@ -28,8 +28,7 @@ class ManyResourceObjectsTest extends BaseTestCase
         );
     }
 
-    public function testExtendedDocument()
-    {
+    public function testExtendedDocument() {
         $this->assertEncodesTo(
             '
             {

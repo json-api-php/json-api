@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test\DataDocument;
 
@@ -10,10 +12,8 @@ use JsonApiPhp\JsonApi\ResourceIdentifier;
 use JsonApiPhp\JsonApi\ResourceIdentifierCollection;
 use JsonApiPhp\JsonApi\Test\BaseTestCase;
 
-class ManyResourceIdentifiersTest extends BaseTestCase
-{
-    public function testMinimalDocument()
-    {
+class ManyResourceIdentifiersTest extends BaseTestCase {
+    public function testMinimalDocument() {
         $this->assertEncodesTo(
             '
             {
@@ -26,8 +26,7 @@ class ManyResourceIdentifiersTest extends BaseTestCase
         );
     }
 
-    public function testExtendedDocument()
-    {
+    public function testExtendedDocument() {
         $this->assertEncodesTo(
             '
             {

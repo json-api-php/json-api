@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Internal;
 
 /**
  * @internal
  */
-interface ErrorDocumentMember extends Attachable
-{
+interface ErrorDocumentMember extends Attachable {
 }

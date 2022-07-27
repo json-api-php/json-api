@@ -1,21 +1,20 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Internal\MetaDocumentMember;
+use JsonSerializable;
 
-final class MetaDocument implements \JsonSerializable
-{
-    private $doc;
+final class MetaDocument implements JsonSerializable {
+    private readonly object $doc;
 
-    public function __construct(Meta $meta, MetaDocumentMember ...$members)
-    {
+    public function __construct(Meta $meta, MetaDocumentMember ...$members) {
         $this->doc = combine($meta, ...$members);
     }
 
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
-    {
+    public function jsonSerialize(): object {
         return $this->doc;
     }
 }

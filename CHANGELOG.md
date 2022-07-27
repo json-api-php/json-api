@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [3.0.0] - 2022-07-26
+### Changed
+- The package is migrated to PHP 8.1
+
+### Removed
+- Support for PHP 7 and older versions
+- Compound document validation logic is dropped
+
 ## [2.2.0] - 2020-10-12
 ### Added
 - `NewResourceObject` to allow omitting `id` in resources to-be-created (#108)
@@ -30,7 +38,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - v2 initial release
 
-[Unreleased]: https://github.com/json-api-php/json-api/compare/2.2.0...HEAD
+[Unreleased]: https://github.com/json-api-php/json-api/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/json-api-php/json-api/compare/2.2.2...3.0.0
 [2.2.0]: https://github.com/json-api-php/json-api/compare/2.1.2...2.2.0
 [2.1.2]: https://github.com/json-api-php/json-api/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/json-api-php/json-api/compare/2.1.0...2.1.1

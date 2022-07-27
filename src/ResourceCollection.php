@@ -1,19 +1,19 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Internal\Collection;
 use JsonApiPhp\JsonApi\Internal\PrimaryData;
 
-class ResourceCollection implements PrimaryData, Collection
-{
+class ResourceCollection implements PrimaryData, Collection {
     /**
      * @var ResourceObject[]
      */
-    private $resources;
+    private readonly array $resources;
 
-    public function __construct(ResourceObject ...$resources)
-    {
+    public function __construct(ResourceObject ...$resources) {
         $this->resources = $resources;
     }
 
@@ -21,18 +21,10 @@ class ResourceCollection implements PrimaryData, Collection
      * @param object $o
      * @internal
      */
-    public function attachTo($o): void
-    {
+    public function attachTo(object $o): void {
         $o->data = [];
         foreach ($this->resources as $resource) {
             $resource->attachToCollection($o);
-        }
-    }
-
-    public function registerIn(array &$registry): void
-    {
-        foreach ($this->resources as $resource) {
-            $resource->registerIn($registry);
         }
     }
 }

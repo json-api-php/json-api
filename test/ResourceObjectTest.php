@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
@@ -15,10 +17,8 @@ use JsonApiPhp\JsonApi\ToMany;
 use JsonApiPhp\JsonApi\ToNull;
 use JsonApiPhp\JsonApi\ToOne;
 
-class ResourceObjectTest extends BaseTestCase
-{
-    public function testFullFledgedResourceObject()
-    {
+class ResourceObjectTest extends BaseTestCase {
+    public function testFullFledgedResourceObject() {
         $this->assertEncodesTo(
             '
             {
@@ -63,8 +63,7 @@ class ResourceObjectTest extends BaseTestCase
         );
     }
 
-    public function testRelationshipWithSingleIdLinkage()
-    {
+    public function testRelationshipWithSingleIdLinkage() {
         $this->assertEncodesTo(
             '
             {
@@ -89,8 +88,7 @@ class ResourceObjectTest extends BaseTestCase
         );
     }
 
-    public function testRelationshipWithMultiIdLinkage()
-    {
+    public function testRelationshipWithMultiIdLinkage() {
         $this->assertEncodesTo(
             '
             {
@@ -127,8 +125,7 @@ class ResourceObjectTest extends BaseTestCase
         );
     }
 
-    public function testRelationshipWithEmptyMultiIdLinkage()
-    {
+    public function testRelationshipWithEmptyMultiIdLinkage() {
         $this->assertEncodesTo(
             '
             {
@@ -153,8 +150,7 @@ class ResourceObjectTest extends BaseTestCase
         );
     }
 
-    public function testRelationshipWithNoData()
-    {
+    public function testRelationshipWithNoData() {
         $this->assertEncodesTo(
             '
             {
@@ -210,29 +206,25 @@ class ResourceObjectTest extends BaseTestCase
         );
     }
 
-    public function testCanNotCreateIdAttribute()
-    {
+    public function testCanNotCreateIdAttribute() {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage("Can not use 'id' as a resource field");
         new Attribute('id', 'foo');
     }
 
-    public function testCanNotCreateTypeAttribute()
-    {
+    public function testCanNotCreateTypeAttribute() {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage("Can not use 'type' as a resource field");
         new Attribute('type', 'foo');
     }
 
-    public function testCanNotCreateIdRelationship()
-    {
+    public function testCanNotCreateIdRelationship() {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage("Can not use 'id' as a resource field");
         new ToOne('id', new ResourceIdentifier('apples', '1'));
     }
 
-    public function testCanNotCreateTypeRelationship()
-    {
+    public function testCanNotCreateTypeRelationship() {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage("Can not use 'type' as a resource field");
         new ToOne('type', new ResourceIdentifier('apples', '1'));
@@ -242,8 +234,7 @@ class ResourceObjectTest extends BaseTestCase
      * @dataProvider invalidCharacters
      * @param string $invalid_char
      */
-    public function testAttributeMustOnlyHaveAllowedCharacters(string $invalid_char)
-    {
+    public function testAttributeMustOnlyHaveAllowedCharacters(string $invalid_char) {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Invalid character in a member name');
         new Attribute("foo{$invalid_char}bar", 'plus can not be used');
@@ -253,15 +244,13 @@ class ResourceObjectTest extends BaseTestCase
      * @dataProvider invalidCharacters
      * @param string $invalid_char
      */
-    public function testRelationshipMustOnlyHaveAllowedCharacters(string $invalid_char)
-    {
+    public function testRelationshipMustOnlyHaveAllowedCharacters(string $invalid_char) {
         $this->expectException(\DomainException::class);
         $this->expectExceptionMessage('Invalid character in a member name');
         new ToNull("foo{$invalid_char}bar");
     }
 
-    public function invalidCharacters()
-    {
+    public function invalidCharacters() {
         return [
             ['+'],
             ['!'],
@@ -271,8 +260,7 @@ class ResourceObjectTest extends BaseTestCase
         ];
     }
 
-    public function testResourceFieldsMustBeUnique()
-    {
+    public function testResourceFieldsMustBeUnique() {
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage("Field 'foo' already exists");
         new ResourceObject(
@@ -283,8 +271,7 @@ class ResourceObjectTest extends BaseTestCase
         );
     }
 
-    public function testNameValidation()
-    {
+    public function testNameValidation() {
         $this->expectException(\DomainException::class);
         new ResourceObject('invalid:id', 'foo');
     }

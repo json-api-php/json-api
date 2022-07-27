@@ -1,22 +1,23 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use function JsonApiPhp\JsonApi\child;
 use JsonApiPhp\JsonApi\Internal\DataDocumentMember;
 use JsonApiPhp\JsonApi\Internal\LinkTrait;
 use JsonApiPhp\JsonApi\Internal\RelationshipMember;
 
-final class RelatedLink implements RelationshipMember, DataDocumentMember
-{
+use function JsonApiPhp\JsonApi\child;
+
+final class RelatedLink implements RelationshipMember, DataDocumentMember {
     use LinkTrait;
 
     /**
      * @param object $o
      * @internal
      */
-    public function attachTo($o): void
-    {
+    public function attachTo(object $o): void {
         child($o, 'links')->related = $this->link;
     }
 }

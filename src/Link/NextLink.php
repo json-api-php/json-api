@@ -1,21 +1,22 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Link;
 
-use function JsonApiPhp\JsonApi\child;
 use JsonApiPhp\JsonApi\Internal\LinkTrait;
 use JsonApiPhp\JsonApi\Internal\PaginationLink;
 
-final class NextLink implements PaginationLink
-{
+use function JsonApiPhp\JsonApi\child;
+
+final class NextLink implements PaginationLink {
     use LinkTrait;
 
     /**
      * @param object $o
      * @internal
      */
-    public function attachTo($o): void
-    {
+    public function attachTo(object $o): void {
         child($o, 'links')->next = $this->link;
     }
 }

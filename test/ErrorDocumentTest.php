@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
@@ -16,14 +17,12 @@ use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Link\AboutLink;
 use JsonApiPhp\JsonApi\Meta;
 
-class ErrorDocumentTest extends BaseTestCase
-{
+class ErrorDocumentTest extends BaseTestCase {
     /**
      * The spec does not define any mandatory error members,
      * so the minimal valid error document contains a single empty object
      */
-    public function testMinimalExample()
-    {
+    public function testMinimalExample() {
         $this->assertEncodesTo(
             '
             {
@@ -36,8 +35,7 @@ class ErrorDocumentTest extends BaseTestCase
         );
     }
 
-    public function testExtensiveExample()
-    {
+    public function testExtensiveExample() {
         $this->assertEncodesTo(
             '
             {
@@ -82,8 +80,7 @@ class ErrorDocumentTest extends BaseTestCase
         );
     }
 
-    public function testMultipleErrors()
-    {
+    public function testMultipleErrors() {
         $this->assertEncodesTo(
             '
             {

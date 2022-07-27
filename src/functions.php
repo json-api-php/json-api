@@ -1,32 +1,30 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
 use JsonApiPhp\JsonApi\Internal\Attachable;
 
-function combine(Attachable ...$members)
-{
-    $obj = (object) [];
+function combine(Attachable ...$members): object {
+    $obj = (object)[];
     foreach ($members as $member) {
         $member->attachTo($obj);
     }
     return $obj;
 }
 
-function child($o, string $name)
-{
+function child($o, string $name): mixed {
     if (!isset($o->{$name})) {
-        $o->{$name} = (object) [];
+        $o->{$name} = (object)[];
     }
     return $o->{$name};
 }
 
-function isValidName(string $name): bool
-{
+function isValidName(string $name): bool {
     return preg_match('/^(?=[^-_ ])[a-zA-Z0-9\x{0080}-\x{FFFF}-_ ]*(?<=[^-_ ])$/u', $name) === 1;
 }
 
-function compositeKey(string $type, string $id): string
-{
+function compositeKey(string $type, string $id): string {
     return "{$type}:{$id}";
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi;
 
@@ -11,10 +13,8 @@ use JsonApiPhp\JsonApi\Internal\ResourceMember;
  *
  * Class NewResourceObject
  */
-final class NewResourceObject extends BaseResource implements PrimaryData
-{
-    public function __construct(string $type, ResourceMember ...$members)
-    {
+final class NewResourceObject extends BaseResource implements PrimaryData {
+    public function __construct(string $type, ResourceMember ...$members) {
         parent::__construct($type, ...$members);
     }
 }

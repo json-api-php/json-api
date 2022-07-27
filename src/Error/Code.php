@@ -1,30 +1,23 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Error;
 
 use JsonApiPhp\JsonApi\Internal\ErrorMember;
 
-final class Code implements ErrorMember
-{
-    /**
-     * @var string
-     */
-    private $code;
-
+final class Code implements ErrorMember {
     /**
      * @param string $code an application-specific error code, expressed as a string value
      */
-    public function __construct(string $code)
-    {
-        $this->code = $code;
+    public function __construct(private readonly string $code) {
     }
 
     /**
      * @param object $o
      * @internal
      */
-    public function attachTo($o): void
-    {
+    public function attachTo(object $o): void {
         $o->code = $this->code;
     }
 }

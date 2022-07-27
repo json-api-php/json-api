@@ -1,6 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Internal;
+
+use DomainException;
+use LogicException;
 
 use function JsonApiPhp\JsonApi\isValidName;
 
@@ -8,22 +13,15 @@ use function JsonApiPhp\JsonApi\isValidName;
  * Class BaseResource
  * @internal
  */
-class BaseResource implements Attachable
-{
-    /**
-     * @var string
-     */
-    protected $type;
-    protected $obj;
-    protected $registry = [];
+class BaseResource implements Attachable {
+    protected object $obj;
+    protected array $registry = [];
 
-    public function __construct(string $type, ResourceMember ...$members)
-    {
+    public function __construct(protected string $type, ResourceMember ...$members) {
         if (isValidName($type) === false) {
-            throw new \DomainException("Invalid type value: $type");
+            throw new DomainException("Invalid type value: $type");
         }
-        $this->obj = (object) ['type' => $type];
-        $this->type = $type;
+        $this->obj = (object)['type' => $type];
 
         $this->addMembers(...$members);
     }
@@ -32,17 +30,13 @@ class BaseResource implements Attachable
      * @param ResourceMember ...$members
      * @internal
      */
-    protected function addMembers(ResourceMember ...$members): void
-    {
+    protected function addMembers(ResourceMember ...$members): void {
         $fields = [];
         foreach ($members as $member) {
-            if ($member instanceof Identifier) {
-                $member->registerIn($this->registry);
-            }
             if ($member instanceof ResourceField) {
                 $name = $member->name();
                 if (isset($fields[$name])) {
-                    throw new \LogicException("Field '$name' already exists'");
+                    throw new LogicException("Field '$name' already exists'");
                 }
                 $fields[$name] = true;
             }
@@ -54,8 +48,7 @@ class BaseResource implements Attachable
      * @param object $o
      * @internal
      */
-    public function attachTo($o): void
-    {
+    public function attachTo(object $o): void {
         $o->data = $this->obj;
     }
 }

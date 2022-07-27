@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
@@ -7,13 +8,11 @@ use JsonApiPhp\JsonApi\JsonApi;
 use JsonApiPhp\JsonApi\Meta;
 use JsonApiPhp\JsonApi\MetaDocument;
 
-class MetaDocumentTest extends BaseTestCase
-{
+class MetaDocumentTest extends BaseTestCase {
     /**
      * A valid document may contain just a meta object
      */
-    public function testMetaDocument()
-    {
+    public function testMetaDocument() {
         $this->assertEncodesTo(
             '
             {
@@ -29,8 +28,7 @@ class MetaDocumentTest extends BaseTestCase
     /**
      * A meta document may contain jsonapi member
      */
-    public function testMetaDocumentWithExtraMembers()
-    {
+    public function testMetaDocumentWithExtraMembers() {
         $this->assertEncodesTo(
             '
             {

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace JsonApiPhp\JsonApi\Test;
 
@@ -19,10 +21,8 @@ use JsonApiPhp\JsonApi\ResourceIdentifierCollection;
 use JsonApiPhp\JsonApi\ResourceObject;
 use JsonApiPhp\JsonApi\ToMany;
 
-class PaginationTest extends BaseTestCase
-{
-    public function testPaginatedResourceCollection()
-    {
+class PaginationTest extends BaseTestCase {
+    public function testPaginatedResourceCollection() {
         $this->assertEncodesTo(
             '
             {
@@ -57,8 +57,7 @@ class PaginationTest extends BaseTestCase
         );
     }
 
-    public function testPaginatedResourceIdentifierCollection()
-    {
+    public function testPaginatedResourceIdentifierCollection() {
         $this->assertEncodesTo(
             '
             {
